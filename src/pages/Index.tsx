@@ -1,5 +1,5 @@
 
-import { Award, Gift, MessageSquare, ArrowRight } from "lucide-react";
+import { Award, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Index = () => {
@@ -82,41 +82,6 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{step.title}</h3>
                 <p className="text-gray-600">{step.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose Us</h2>
-            <p className="text-xl text-gray-600">Benefits that make our program stand out</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {[
-              "Instant reward redemption",
-              "Multiple social platforms supported",
-              "Fair point system",
-              "Exclusive perks and bonuses"
-            ].map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="flex items-center p-6 bg-white rounded-xl border border-gray-100"
-              >
-                <div className="mr-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <ArrowRight className="w-6 h-6 text-primary" />
-                  </div>
-                </div>
-                <p className="text-lg text-gray-800 font-medium">{benefit}</p>
               </motion.div>
             ))}
           </div>
