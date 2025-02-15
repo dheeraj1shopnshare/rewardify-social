@@ -1,4 +1,3 @@
-
 import { Award, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -9,6 +8,11 @@ const Index = () => {
     const email = formData.get('email');
     console.log('Email submitted:', email);
     // Here you would typically handle the email submission to your backend
+  };
+
+  const scrollToHowItWorks = () => {
+    const howItWorksSection = document.querySelector('#how-it-works');
+    howItWorksSection?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -44,15 +48,16 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            onClick={scrollToHowItWorks}
             className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-4 rounded-full font-semibold text-lg transition-colors"
           >
-            Start Earning Rewards
+            Learn More
           </motion.button>
         </div>
       </section>
 
       {/* How it Works Section */}
-      <section className="bg-gray-50 py-20">
+      <section id="how-it-works" className="bg-gray-50 py-20">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
