@@ -1,4 +1,3 @@
-
 import { Award, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -84,6 +83,98 @@ const Index = () => {
                 <p className="text-gray-600">{step.description}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Social Media Showcase */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Join Our Community</h2>
+            <p className="text-xl text-gray-600">See how creators are earning rewards</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="aspect-[9/16] rounded-xl overflow-hidden relative group"
+            >
+              <img 
+                src="/tiktok1.jpg" 
+                alt="TikTok creator dancing"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-medium">@dancerlife</p>
+                  <p className="text-xs opacity-80">Earned 2.5k points</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="aspect-square rounded-xl overflow-hidden relative group"
+            >
+              <img 
+                src="/instagram1.jpg" 
+                alt="Instagram lifestyle post"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-medium">@lifestyleblog</p>
+                  <p className="text-xs opacity-80">Earned 1.8k points</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="aspect-[9/16] rounded-xl overflow-hidden relative group"
+            >
+              <img 
+                src="/tiktok2.jpg" 
+                alt="TikTok cooking tutorial"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-medium">@cookingmaster</p>
+                  <p className="text-xs opacity-80">Earned 3.2k points</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="aspect-square rounded-xl overflow-hidden relative group"
+            >
+              <img 
+                src="/instagram2.jpg" 
+                alt="Instagram travel post"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="text-sm font-medium">@traveldiaries</p>
+                  <p className="text-xs opacity-80">Earned 2.1k points</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
