@@ -21,7 +21,7 @@ const Brands = () => {
       {/* Navigation */}
       <nav className="absolute top-0 right-0 p-6 flex gap-8">
         <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          shopnshare.co
+          Shoppers
         </Link>
         <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
           Brands
