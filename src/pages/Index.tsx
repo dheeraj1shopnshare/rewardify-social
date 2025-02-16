@@ -1,6 +1,7 @@
 
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -8,7 +9,6 @@ const Index = () => {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email');
     console.log('Email submitted:', email);
-    // Here you would typically handle the email submission to your backend
   };
 
   const scrollToHowItWorks = () => {
@@ -18,6 +18,16 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white font-['Inter']">
+      {/* Navigation */}
+      <nav className="absolute top-0 right-0 p-6 flex gap-8">
+        <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+          Shoppers
+        </Link>
+        <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+          Brands
+        </Link>
+      </nav>
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32">
         <div className="text-center max-w-3xl mx-auto">
