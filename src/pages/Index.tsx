@@ -80,7 +80,7 @@ const Index = () => {
               {
                 icon: <Gift className="w-8 h-8 text-primary" />,
                 title: "Earn",
-                description: "Earn exclusive rewards and cashbacks"
+                description: "Earn exclusive rewards and cashbacks for your posts"
               }
             ].map((step, index) => (
               <motion.div
