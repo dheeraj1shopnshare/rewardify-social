@@ -80,12 +80,12 @@ const Brands = () => {
               {
                 icon: <ShoppingBag className="w-8 h-8 text-primary" />,
                 title: "List",
-                description: "Add your products to our platform and set your campaign goals"
+                description: "Add your products to our platform and set your rewards program"
               },
               {
-                icon: <MessageSquare className="w-8 h-8 text-primary" />,
-                title: "Connect",
-                description: "Get matched with creators who align with your brand values"
+                icon: <Gift className="w-8 h-8 text-primary" />,
+                title: "Reward",
+                description: "Reward your users for sharing about their purchase"
               },
               {
                 icon: <Gift className="w-8 h-8 text-primary" />,
