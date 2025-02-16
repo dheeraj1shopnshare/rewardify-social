@@ -43,7 +43,7 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-gray-600 mb-8"
           >
-            Turn your social media presence into rewards. Shop, share and earn rewards with every post.
+            Turn your social media presence into rewards. Share, engage, and earn points with every post.
           </motion.p>
           <motion.button 
             initial={{ opacity: 0, y: 20 }}
