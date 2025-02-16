@@ -1,6 +1,7 @@
 
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Brands = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,6 +18,16 @@ const Brands = () => {
 
   return (
     <div className="min-h-screen bg-white font-['Inter']">
+      {/* Navigation */}
+      <nav className="absolute top-0 right-0 p-6 flex gap-8">
+        <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+          Shoppers
+        </Link>
+        <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+          Brands
+        </Link>
+      </nav>
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32">
         <div className="text-center max-w-3xl mx-auto">
@@ -42,7 +53,7 @@ const Brands = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-gray-600 mb-8"
           >
-            Connect with authentic creators and boost your brand visibility through genuine social media content.
+            Reward your customers for sharing about their purchase. Real stories drive engagement and expand reach.
           </motion.p>
           <motion.button 
             initial={{ opacity: 0, y: 20 }}
