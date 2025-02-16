@@ -80,7 +80,7 @@ const Index = () => {
               {
                 icon: <Gift className="w-8 h-8 text-primary" />,
                 title: "Earn",
-                description: "Redeem your points for exclusive rewards and perks"
+                description: "Earn exclusive rewards and cashbacks"
               }
             ].map((step, index) => (
               <motion.div
