@@ -69,17 +69,17 @@ const Index = () => {
             {[
               {
                 icon: <ShoppingBag className="w-8 h-8 text-primary" />,
-                title: "Shop with Your Favorite Brands",
+                title: "Shop",
                 description: "Browse and shop from our curated selection of partner brands"
               },
               {
                 icon: <MessageSquare className="w-8 h-8 text-primary" />,
-                title: "Share Posts",
+                title: "Share",
                 description: "If you love the product, share it with your friends on your social media"
               },
               {
                 icon: <Gift className="w-8 h-8 text-primary" />,
-                title: "Claim Rewards",
+                title: "Earn",
                 description: "Redeem your points for exclusive rewards and perks"
               }
             ].map((step, index) => (
