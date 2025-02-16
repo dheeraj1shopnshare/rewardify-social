@@ -1,4 +1,5 @@
-import { Award, Gift, MessageSquare } from "lucide-react";
+
+import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Index = () => {
@@ -67,14 +68,14 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
-                icon: <MessageSquare className="w-8 h-8 text-primary" />,
-                title: "Share Posts",
-                description: "Create and share engaging content on your social media platforms"
+                icon: <ShoppingBag className="w-8 h-8 text-primary" />,
+                title: "Shop with Your Favorite Brands",
+                description: "Browse and shop from our curated selection of partner brands"
               },
               {
-                icon: <Award className="w-8 h-8 text-primary" />,
-                title: "Earn Points",
-                description: "Get points for engagement - likes, comments, and shares"
+                icon: <MessageSquare className="w-8 h-8 text-primary" />,
+                title: "Share Posts",
+                description: "If you love the product, share it with your friends on your social media"
               },
               {
                 icon: <Gift className="w-8 h-8 text-primary" />,
