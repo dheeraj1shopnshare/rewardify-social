@@ -1,4 +1,3 @@
-
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -25,6 +24,9 @@ const Index = () => {
         </Link>
         <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
           Brands
+        </Link>
+        <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+          Restaurants
         </Link>
       </nav>
 

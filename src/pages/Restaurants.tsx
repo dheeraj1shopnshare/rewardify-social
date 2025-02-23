@@ -1,8 +1,9 @@
-import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
+
+import { UtensilsCrossed, Gift, MessageSquare, Building } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const Brands = () => {
+const Restaurants = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -39,7 +40,7 @@ const Brands = () => {
             transition={{ duration: 0.5 }}
             className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium inline-block mb-6"
           >
-            Join Shop n Share as a Brand
+            Join Shop n Share as a Restaurant
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -47,7 +48,7 @@ const Brands = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
           >
-            Amplify Your Brand Through Social Media
+            Turn Diners into Brand Advocates
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +56,7 @@ const Brands = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-gray-600 mb-8"
           >
-            Reward your customers for sharing about their purchase. Real stories drive engagement and expand reach.
+            Reward your customers for sharing their dining experiences. Authentic stories drive engagement and attract new diners.
           </motion.p>
           <motion.button 
             initial={{ opacity: 0, y: 20 }}
@@ -74,25 +75,25 @@ const Brands = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
-            <p className="text-xl text-gray-600">Three simple steps to start partnering with creators</p>
+            <p className="text-xl text-gray-600">Three simple steps to start rewarding your diners</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
-                icon: <ShoppingBag className="w-8 h-8 text-primary" />,
-                title: "List",
-                description: "Add your products to our platform and set your rewards program"
+                icon: <UtensilsCrossed className="w-8 h-8 text-primary" />,
+                title: "Join",
+                description: "Register your restaurant and set up your rewards program"
               },
               {
                 icon: <Gift className="w-8 h-8 text-primary" />,
                 title: "Reward",
-                description: "Reward your users for sharing about their purchase"
+                description: "Reward your diners for sharing their experiences"
               },
               {
-                icon: <Gift className="w-8 h-8 text-primary" />,
+                icon: <Building className="w-8 h-8 text-primary" />,
                 title: "Grow",
-                description: "Watch your brand reach new audiences through authentic content"
+                description: "Watch your restaurant reach new audiences through authentic content"
               }
             ].map((step, index) => (
               <motion.div
@@ -122,13 +123,13 @@ const Brands = () => {
               Partner With Us Today
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Join our platform and start connecting with authentic creators.
+              Join our platform and start connecting with food enthusiasts.
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your business email"
+                placeholder="Enter your restaurant email"
                 required
                 className="flex-1 px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
@@ -146,4 +147,4 @@ const Brands = () => {
   );
 };
 
-export default Brands;
+export default Restaurants;
