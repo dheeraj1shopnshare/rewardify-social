@@ -1,4 +1,3 @@
-
 import { UtensilsCrossed, Gift, MessageSquare, Building } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -40,7 +39,7 @@ const Restaurants = () => {
             transition={{ duration: 0.5 }}
             className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium inline-block mb-6"
           >
-            Join Shop n Share as a Restaurant
+            Join Berry Rewards as a Restaurant
           </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
