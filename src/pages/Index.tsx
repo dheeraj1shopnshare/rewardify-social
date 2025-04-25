@@ -1,17 +1,17 @@
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
-import Logo from "/berry-rewards-logo.png";
 import { useEffect } from "react";
 
 const Index = () => {
   useEffect(() => {
     // Debug image loading
-    console.log("Logo import path:", Logo);
+    console.log("Logo import path:", "/berry-rewards-logo.png");
     const img = new Image();
     img.onload = () => console.log("Logo loaded successfully");
     img.onerror = (e) => console.error("Error loading logo:", e);
-    img.src = Logo;
+    img.src = "/berry-rewards-logo.png";
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,7 +32,7 @@ const Index = () => {
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img 
-            src={Logo} 
+            src="/berry-rewards-logo.png" 
             alt="Berry Rewards Logo" 
             className="h-10 w-auto mr-4"
             onError={(e) => {
