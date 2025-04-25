@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { UtensilsCrossed, Gift, MessageSquare, Building } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import Logo from "/berry-rewards-logo.png";
 
 const Restaurants = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,16 +19,25 @@ const Restaurants = () => {
   return (
     <div className="min-h-screen bg-white font-['Inter']">
       {/* Navigation */}
-      <nav className="absolute top-0 right-0 p-6 flex gap-8">
-        <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Shoppers
+      <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
+        <Link to="/" className="flex items-center">
+          <img 
+            src={Logo} 
+            alt="Berry Rewards Logo" 
+            className="h-10 w-auto mr-4"
+          />
         </Link>
-        <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Brands
-        </Link>
-        <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Restaurants
-        </Link>
+        <div className="flex gap-8">
+          <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+            Shoppers
+          </Link>
+          <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+            Brands
+          </Link>
+          <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+            Restaurants
+          </Link>
+        </div>
       </nav>
 
       {/* Hero Section */}
