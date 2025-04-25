@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { UtensilsCrossed, Gift, MessageSquare, Building } from "lucide-react";
 import { motion } from "framer-motion";
@@ -29,9 +28,8 @@ const Restaurants = () => {
           <img 
             src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
             alt="Berry Rewards Logo" 
-            className="h-10 w-auto mr-4"
+            className="h-10 w-auto"
           />
-          <span className="font-bold text-lg">Berry Rewards</span>
         </Link>
         <div className="flex gap-8">
           <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
