@@ -2,8 +2,14 @@ import { Link } from "react-router-dom";
 import { ShoppingBag, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import Logo from "/berry-rewards-logo.png";
+import { useEffect } from "react";
 
 const Brands = () => {
+  useEffect(() => {
+    // Debug image loading
+    console.log("Logo import path in Brands:", Logo);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -25,7 +31,12 @@ const Brands = () => {
             src={Logo} 
             alt="Berry Rewards Logo" 
             className="h-10 w-auto mr-4"
+            onError={(e) => {
+              console.error("Logo failed to load in Brands");
+              e.currentTarget.style.display = 'none';
+            }}
           />
+          <span className="font-bold text-lg">Berry Rewards</span>
         </Link>
         <div className="flex gap-8">
           <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
