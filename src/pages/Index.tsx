@@ -6,12 +6,26 @@ import { useEffect } from "react";
 
 const Index = () => {
   useEffect(() => {
-    // Debug image loading
-    console.log("Logo import path:", "/berry-rewards-logo.png");
+    // Comprehensive logo loading diagnostics
+    const logoPath = "/berry-rewards-logo.png";
+    console.log("Attempting to load logo from path:", logoPath);
+    
+    // Detailed image loading test
     const img = new Image();
-    img.onload = () => console.log("Logo loaded successfully");
-    img.onerror = (e) => console.error("Error loading logo:", e);
-    img.src = "/berry-rewards-logo.png";
+    img.onload = () => {
+      console.log("Logo loaded successfully!");
+      console.log("Image natural width:", img.naturalWidth);
+      console.log("Image natural height:", img.naturalHeight);
+    };
+    img.onerror = (e) => {
+      console.error("Error loading logo:", e);
+      console.error("Full error details:", {
+        src: img.src,
+        complete: img.complete,
+        currentSrc: img.currentSrc
+      });
+    };
+    img.src = logoPath;
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
