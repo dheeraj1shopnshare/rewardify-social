@@ -28,7 +28,7 @@ const Brands = () => {
           <img 
             src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
             alt="Logo" 
-            className="h-32 w-auto object-contain max-w-full" // Increased height to h-32 and added object-contain
+            className="h-24 w-auto object-contain max-w-full" // Reduced height to h-24
           />
         </Link>
         <div className="flex gap-8">
