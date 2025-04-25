@@ -28,7 +28,7 @@ const Index = () => {
           <img 
             src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
             alt="Logo" 
-            className="h-24 w-auto" // Increased height from h-16 to h-24
+            className="h-32 w-auto object-contain max-w-full" // Increased height to h-32 and added object-contain
           />
         </Link>
         <div className="flex gap-8">
