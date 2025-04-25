@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { ShoppingBag, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
@@ -25,7 +26,11 @@ const Brands = () => {
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <div className="h-10 w-10 bg-primary rounded-md flex items-center justify-center text-white font-bold mr-4">BR</div>
+          <img 
+            src="/berry-rewards-logo.png"
+            alt="Berry Rewards Logo" 
+            className="h-10 w-auto mr-4"
+          />
           <span className="font-bold text-lg">Berry Rewards</span>
         </Link>
         <div className="flex gap-8">
