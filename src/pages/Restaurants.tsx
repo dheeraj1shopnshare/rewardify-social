@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { UtensilsCrossed, Gift, MessageSquare, Building } from "lucide-react";
 import { motion } from "framer-motion";
-import Logo from "../public/berry-rewards-logo.png";
+import Logo from "/berry-rewards-logo.png";
 
 const Restaurants = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
