@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { ShoppingBag, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
@@ -6,8 +5,7 @@ import { useEffect } from "react";
 
 const Brands = () => {
   useEffect(() => {
-    // Debug image loading
-    console.log("Logo import path in Brands:", "./berry-rewards-logo.png");
+    console.log("Brands component mounted");
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,15 +25,7 @@ const Brands = () => {
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img 
-            src="./berry-rewards-logo.png" // Updated path to use relative path
-            alt="Berry Rewards Logo" 
-            className="h-10 w-auto mr-4"
-            onError={(e) => {
-              console.error("Logo failed to load in Brands");
-              e.currentTarget.style.display = 'none';
-            }}
-          />
+          <div className="h-10 w-10 bg-primary rounded-md flex items-center justify-center text-white font-bold mr-4">BR</div>
           <span className="font-bold text-lg">Berry Rewards</span>
         </Link>
         <div className="flex gap-8">

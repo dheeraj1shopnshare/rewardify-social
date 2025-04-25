@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
@@ -6,26 +5,7 @@ import { useEffect } from "react";
 
 const Index = () => {
   useEffect(() => {
-    // Comprehensive logo loading diagnostics
-    const logoPath = "./berry-rewards-logo.png"; // Updated path to use relative path
-    console.log("Attempting to load logo from path:", logoPath);
-    
-    // Detailed image loading test
-    const img = new Image();
-    img.onload = () => {
-      console.log("Logo loaded successfully!");
-      console.log("Image natural width:", img.naturalWidth);
-      console.log("Image natural height:", img.naturalHeight);
-    };
-    img.onerror = (e) => {
-      console.error("Error loading logo:", e);
-      console.error("Full error details:", {
-        src: img.src,
-        complete: img.complete,
-        currentSrc: img.currentSrc
-      });
-    };
-    img.src = logoPath;
+    console.log("Index component mounted");
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,15 +25,7 @@ const Index = () => {
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img 
-            src="./berry-rewards-logo.png" // Updated path to use relative path
-            alt="Berry Rewards Logo" 
-            className="h-10 w-auto mr-4"
-            onError={(e) => {
-              console.error("Logo failed to load");
-              e.currentTarget.style.display = 'none';
-            }}
-          />
+          <div className="h-10 w-10 bg-primary rounded-md flex items-center justify-center text-white font-bold mr-4">BR</div>
           <span className="font-bold text-lg">Berry Rewards</span>
         </Link>
         <div className="flex gap-8">
