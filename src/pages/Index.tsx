@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
@@ -22,13 +23,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white font-['Inter']">
-      {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img 
             src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
             alt="Berry Rewards Logo" 
-            className="h-10 w-auto"
+            className="h-16 w-auto" // Increased height from h-10 to h-16
           />
         </Link>
         <div className="flex gap-8">
