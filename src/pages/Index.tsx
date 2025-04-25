@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const Index = () => {
   useEffect(() => {
     // Comprehensive logo loading diagnostics
-    const logoPath = "/berry-rewards-logo.png";
+    const logoPath = "./berry-rewards-logo.png"; // Updated path to use relative path
     console.log("Attempting to load logo from path:", logoPath);
     
     // Detailed image loading test
@@ -46,7 +46,7 @@ const Index = () => {
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img 
-            src="/berry-rewards-logo.png" 
+            src="./berry-rewards-logo.png" // Updated path to use relative path
             alt="Berry Rewards Logo" 
             className="h-10 w-auto mr-4"
             onError={(e) => {

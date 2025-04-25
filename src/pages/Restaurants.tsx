@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const Restaurants = () => {
   useEffect(() => {
     // Debug image loading
-    console.log("Logo import path in Restaurants:", "/berry-rewards-logo.png");
+    console.log("Logo import path in Restaurants:", "./berry-rewards-logo.png");
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ const Restaurants = () => {
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img 
-            src="/berry-rewards-logo.png" 
+            src="./berry-rewards-logo.png" // Updated path to use relative path
             alt="Berry Rewards Logo" 
             className="h-10 w-auto mr-4"
             onError={(e) => {
