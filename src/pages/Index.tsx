@@ -27,8 +27,8 @@ const Index = () => {
         <Link to="/" className="flex items-center">
           <img 
             src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
-            alt="Berry Rewards Logo" 
-            className="h-16 w-auto" // Increased height from h-10 to h-16
+            alt="Logo" 
+            className="h-24 w-auto" // Increased height from h-16 to h-24
           />
         </Link>
         <div className="flex gap-8">
