@@ -27,7 +27,7 @@ const Brands = () => {
       <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <img 
-            src="/berry-rewards-logo.png"
+            src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
             alt="Berry Rewards Logo" 
             className="h-10 w-auto mr-4"
           />
