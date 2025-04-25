@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
-import Logo from "/berry-rewards-logo.png";
+import Logo from "../berry-rewards-logo.png";
 
 const Index = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
