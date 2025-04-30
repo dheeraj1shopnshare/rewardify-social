@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
@@ -44,8 +43,8 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
+      {/* Hero Section - Increasing top padding from py-20 to py-28 to create more space */}
+      <section className="container mx-auto px-4 py-28 md:py-40">
         <div className="text-center max-w-3xl mx-auto">
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
