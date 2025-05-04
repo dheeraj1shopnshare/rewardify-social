@@ -1,9 +1,13 @@
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Award, Gift, MessageSquare, ShoppingBag } from "lucide-react";
 import { useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const { toast } = useToast();
+
   useEffect(() => {
     console.log("Index component mounted");
   }, []);
@@ -11,8 +15,53 @@ const Index = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    console.log('Email submitted:', email);
+    const email = formData.get('email') as string;
+    
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Store email in localStorage
+    try {
+      // Get existing waitlist emails
+      const existingEmails = JSON.parse(localStorage.getItem('waitlistEmails') || '[]');
+      
+      // Check if email already exists
+      if (existingEmails.includes(email)) {
+        toast({
+          title: "Already registered",
+          description: "This email is already on our waitlist"
+        });
+        return;
+      }
+      
+      // Add new email and save back to localStorage
+      existingEmails.push(email);
+      localStorage.setItem('waitlistEmails', JSON.stringify(existingEmails));
+      
+      // Clear the form
+      (e.target as HTMLFormElement).reset();
+      
+      // Show success toast
+      toast({
+        title: "Success!",
+        description: "You've been added to our waitlist"
+      });
+      
+      console.log('Email submitted and saved:', email);
+    } catch (error) {
+      console.error('Error saving email:', error);
+      toast({
+        title: "Something went wrong",
+        description: "Unable to add you to the waitlist",
+        variant: "destructive"
+      });
+    }
   };
 
   const scrollToHowItWorks = () => {
