@@ -15,34 +15,39 @@ const Brands = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
+    const instagramHandle = formData.get('instagramHandle') as string;
     
-    if (!email || !email.includes('@')) {
+    if (!instagramHandle) {
       toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address",
+        title: "Invalid Instagram handle",
+        description: "Please enter your Instagram handle",
         variant: "destructive"
       });
       return;
     }
     
-    // Store email in localStorage
+    // Remove @ symbol if included
+    const cleanHandle = instagramHandle.startsWith('@') 
+      ? instagramHandle.substring(1) 
+      : instagramHandle;
+    
+    // Store handle in localStorage
     try {
-      // Get existing waitlist emails
-      const existingEmails = JSON.parse(localStorage.getItem('waitlistEmails') || '[]');
+      // Get existing waitlist handles
+      const existingHandles = JSON.parse(localStorage.getItem('waitlistHandles') || '[]');
       
-      // Check if email already exists
-      if (existingEmails.includes(email)) {
+      // Check if handle already exists
+      if (existingHandles.includes(cleanHandle)) {
         toast({
           title: "Already registered",
-          description: "This email is already on our waitlist"
+          description: "This Instagram handle is already on our waitlist"
         });
         return;
       }
       
-      // Add new email and save back to localStorage
-      existingEmails.push(email);
-      localStorage.setItem('waitlistEmails', JSON.stringify(existingEmails));
+      // Add new handle and save back to localStorage
+      existingHandles.push(cleanHandle);
+      localStorage.setItem('waitlistHandles', JSON.stringify(existingHandles));
       
       // Clear the form
       (e.target as HTMLFormElement).reset();
@@ -53,9 +58,9 @@ const Brands = () => {
         description: "You've been added to our waitlist"
       });
       
-      console.log('Email submitted and saved:', email);
+      console.log('Instagram handle submitted and saved:', cleanHandle);
     } catch (error) {
-      console.error('Error saving email:', error);
+      console.error('Error saving Instagram handle:', error);
       toast({
         title: "Something went wrong",
         description: "Unable to add you to the waitlist",
@@ -188,9 +193,9 @@ const Brands = () => {
             </p>
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <input
-                type="email"
-                name="email"
-                placeholder="Enter your business email"
+                type="text"
+                name="instagramHandle"
+                placeholder="Enter your Instagram handle"
                 required
                 className="flex-1 px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
               />
