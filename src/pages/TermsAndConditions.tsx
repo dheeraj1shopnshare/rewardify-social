@@ -1,0 +1,101 @@
+
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+
+const TermsAndConditions = () => {
+  return (
+    <div className="min-h-screen bg-white font-['Inter']">
+      <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
+        <Link to="/" className="flex items-center">
+          <img 
+            src="/lovable-uploads/f7fd8e9d-5949-42bc-9147-977a3f94ce15.png"
+            alt="Logo" 
+            className="h-24 w-auto object-contain max-w-full"
+          />
+        </Link>
+        <div className="flex gap-8">
+          <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+            Shoppers
+          </Link>
+          <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+            Brands
+          </Link>
+          <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+            Restaurants
+          </Link>
+        </div>
+      </nav>
+
+      <div className="container mx-auto px-4 py-32 max-w-4xl">
+        <Link 
+          to="/" 
+          className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Home
+        </Link>
+
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+          Terms and Conditions
+        </h1>
+
+        <div className="prose prose-lg max-w-none text-gray-600">
+          <p className="text-sm text-gray-500 mb-8">
+            Last updated: {new Date().toLocaleDateString()}
+          </p>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Acceptance of Terms</h2>
+            <p>
+              By accessing and using Berry Rewards, you accept and agree to be bound by the terms and provision of this agreement.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Use of the Service</h2>
+            <p>
+              Berry Rewards is a platform that connects shoppers, brands, and restaurants through a rewards system. Users may participate in our waitlist and receive updates about our services.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. User Responsibilities</h2>
+            <p>
+              Users are responsible for providing accurate information when joining our waitlist. You agree not to misuse our platform or violate any applicable laws.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Privacy</h2>
+            <p>
+              We collect and use information in accordance with our Privacy Policy. By using our service, you consent to such processing.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Limitation of Liability</h2>
+            <p>
+              Berry Rewards shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Changes to Terms</h2>
+            <p>
+              We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to the website.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Contact Information</h2>
+            <p>
+              If you have any questions about these Terms and Conditions, please contact us through our website.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TermsAndConditions;
