@@ -47,21 +47,24 @@ const TermsAndConditions = () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Acceptance of Terms</h2>
             <p>
-              By accessing and using Berry Rewards, you accept and agree to be bound by the terms and provision of this agreement.
+              These Terms & Conditions ("Agreement") govern your participation as a restaurant partner (“you” or “Restaurant”) in the Berry Rewards platform (“we,” “us,” or “Berry Rewards”). By submitting our onboarding form or agreeing verbally or in writing, you consent to the terms outlined below.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Use of the Service</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Program Overview</h2>
             <p>
-              Berry Rewards is a platform that connects shoppers, brands, and restaurants through a rewards system. Users may participate in our waitlist and receive updates about our services.
+              Berry Rewards connects local restaurants with real customers and content creators who share their dining experiences on social media. As a participating restaurant, your business will be visible to users and may be tagged in content shared by our community.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. User Responsibilities</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Consent to Listing and Promotion</h2>
             <p>
-              Users are responsible for providing accurate information when joining our waitlist. You agree not to misuse our platform or violate any applicable laws.
+              By participating in the program, you grant Berry Rewards permission to:
+•	List your restaurant on our website, social media pages, or platform directory.
+•	Display your business name, location, logo, and offer details submitted by you.
+•	Reshare publicly available content, including photos, videos, and stories, created and tagged by Berry Rewards users about your restaurant.
             </p>
           </section>
 
