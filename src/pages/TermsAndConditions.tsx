@@ -79,16 +79,20 @@ const TermsAndConditions = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Limitation of Liability</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Content and Brand Use</h2>
             <p>
-              Berry Rewards shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the service.
+              •	You grant Berry Rewards permission to use your logo and images solely to promote your restaurant within our platform, social channels, and marketing materials.
+•	You acknowledge that user-generated content is owned by the creator, but Berry Rewards may reshare content where your restaurant is tagged or mentioned.
+
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Changes to Terms</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Reward Availability</h2>
             <p>
-              We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to the website.
+             •	Berry Rewards offers are limited and may only be available to a set number of users. We reserve the right to determine the duration, availability, and value of any rewards at our sole discretion.
+•	There is no guarantee of user participation, reach, or business outcome.
+
             </p>
           </section>
 
