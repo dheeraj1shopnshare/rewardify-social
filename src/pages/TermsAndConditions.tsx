@@ -62,9 +62,9 @@ const TermsAndConditions = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. Consent to Listing and Promotion</h2>
             <p>
               By participating in the program, you grant Berry Rewards permission to:
-•	List your restaurant on our website, social media pages, or platform directory.
-•	Display your business name, location, logo, and offer details submitted by you.
-•	Reshare publicly available content, including photos, videos, and stories, created and tagged by Berry Rewards users about your restaurant.
+              •	List your restaurant on our website, social media pages, or platform directory.
+              •	Display your business name, location, logo, and offer details submitted by you.
+              •	Reshare publicly available content, including photos, videos, and stories, created and tagged by Berry Rewards users about your restaurant.
             </p>
           </section>
 
