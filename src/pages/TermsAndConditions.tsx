@@ -106,9 +106,41 @@ const TermsAndConditions = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Contact Information</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Termination</h2>
             <p>
-              If you have any questions about these Terms and Conditions, please contact us through our website.
+             •	You may opt out of the program at any time by providing written notice to ch.manjudheeraj@gmail.com.
+•	Berry Rewards reserves the right to remove or suspend your listing at any time for any reason, including non-compliance with these terms.
+
+
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Limitation of Liability</h2>
+            <p>
+             Berry Rewards is not liable for:
+•	The accuracy or tone of user-generated content,
+•	Customer behavior or feedback,
+•	Business performance results resulting from participation.
+Participation in this program is at your own discretion and risk.
+
+            </p>
+          </section>
+
+           <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Changes to Terms</h2>
+            <p>
+            Berry Rewards reserves the right to update these Terms & Conditions at any time. Continued participation following updates constitutes acceptance of the revised terms.
+
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Contact </h2>
+            <p>
+              If you have any questions or would like to update your listing, please contact us at:
+ch.manjudheeraj@gmail.com
+
             </p>
           </section>
         </div>
