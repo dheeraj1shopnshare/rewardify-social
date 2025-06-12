@@ -69,9 +69,12 @@ const TermsAndConditions = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Privacy</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Offer Participation</h2>
             <p>
-              We collect and use information in accordance with our Privacy Policy. By using our service, you consent to such processing.
+              •	Berry Rewards will not charge any fees from restaurants for participating in the program
+•	The restaurant is free to offer any additional discounts, promotions, or incentives to Berry Rewards users at its own discretion. These additional offers are optional and not managed or enforced by Berry Rewards.
+•	Participation in any reward-based activity is voluntary and non-binding until confirmed by you.
+
             </p>
           </section>
 
