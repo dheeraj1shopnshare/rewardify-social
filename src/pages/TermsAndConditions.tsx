@@ -96,6 +96,15 @@ const TermsAndConditions = () => {
             </p>
           </section>
 
+         <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Privacy and Communication</h2>
+            <p>
+             •	Any contact information you provide will only be used for communications related to your campaign or participation in the Berry Rewards program.
+•	We will not share your data with third parties without consent.
+
+            </p>
+          </section>
+
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Contact Information</h2>
             <p>
