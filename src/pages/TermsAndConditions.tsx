@@ -145,12 +145,14 @@ ch.manjudheeraj@gmail.com
 
             </p>
           </section>
-                    <section className="mb-8">
+
+<section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-             <p>For Creators</p>
-              1. Eligibility Criteria</h2>
+             <p>For Creators
+             </p>
+              1. Eligibility</h2>
             <p>
-              You must be at least 18 years old and reside in the United States.
+You must be at least 18 years old and reside in the United States.
 
 You must have an active and public Instagram account.
 
@@ -159,6 +161,25 @@ You must follow @berry_rewards on Instagram to qualify.
 Participation is open to individuals only. Businesses, agencies, or bots are not eligible.
             </p>
           </section>
+         <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. How the program works</h2>
+            <p>
+To receive a reward, you must:
+<p>
+Visit a participating location (restaurant, café, etc.).
+
+Post an Instagram Story or Feed Post featuring your visit.
+
+Tag @berry_rewards and mention the location in your post.
+
+Keep the post live for at least 24 hours.
+<p>
+You must send a direct message (DM) to @berry_rewards with a screenshot of your post to claim your reward.
+<p>
+            </p>
+          </section>
+
+          
         </div>
       </div>
     </div>
