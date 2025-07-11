@@ -46,10 +46,13 @@ const TermsAndConditions = () => {
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-             <p>For Brand Partners</p>
-              1. Acceptance of Terms</h2>
+              For Brand Partners
+            </h2>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              1. Acceptance of Terms
+            </h3>
             <p>
-              These Terms & Conditions ("Agreement") govern your participation as a restaurant partner (“you” or “Restaurant”) in the Berry Rewards platform (“we,” “us,” or “Berry Rewards”). By submitting our onboarding form or agreeing verbally or in writing, you consent to the terms outlined below.
+              These Terms & Conditions ("Agreement") govern your participation as a restaurant partner ("you" or "Restaurant") in the Berry Rewards platform ("we," "us," or "Berry Rewards"). By submitting our onboarding form or agreeing verbally or in writing, you consent to the terms outlined below.
             </p>
           </section>
 
@@ -74,9 +77,8 @@ const TermsAndConditions = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Offer Participation</h2>
             <p>
               •	Berry Rewards will not charge any fees from restaurants for participating in the program
-•	The restaurant is free to offer any additional discounts, promotions, or incentives to Berry Rewards users at its own discretion. These additional offers are optional and not managed or enforced by Berry Rewards.
-•	Participation in any reward-based activity is voluntary and non-binding until confirmed by you.
-
+              •	The restaurant is free to offer any additional discounts, promotions, or incentives to Berry Rewards users at its own discretion. These additional offers are optional and not managed or enforced by Berry Rewards.
+              •	Participation in any reward-based activity is voluntary and non-binding until confirmed by you.
             </p>
           </section>
 
@@ -84,102 +86,90 @@ const TermsAndConditions = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Content and Brand Use</h2>
             <p>
               •	You grant Berry Rewards permission to use your logo and images solely to promote your restaurant within our platform, social channels, and marketing materials.
-•	You acknowledge that user-generated content is owned by the creator, but Berry Rewards may reshare content where your restaurant is tagged or mentioned.
-
+              •	You acknowledge that user-generated content is owned by the creator, but Berry Rewards may reshare content where your restaurant is tagged or mentioned.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Reward Availability</h2>
             <p>
-             •	Berry Rewards offers are limited and may only be available to a set number of users. We reserve the right to determine the duration, availability, and value of any rewards at our sole discretion.
-•	There is no guarantee of user participation, reach, or business outcome.
-
+              •	Berry Rewards offers are limited and may only be available to a set number of users. We reserve the right to determine the duration, availability, and value of any rewards at our sole discretion.
+              •	There is no guarantee of user participation, reach, or business outcome.
             </p>
           </section>
 
-         <section className="mb-8">
+          <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Privacy and Communication</h2>
             <p>
-             •	Any contact information you provide will only be used for communications related to your campaign or participation in the Berry Rewards program.
-•	We will not share your data with third parties without consent.
-
+              •	Any contact information you provide will only be used for communications related to your campaign or participation in the Berry Rewards program.
+              •	We will not share your data with third parties without consent.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Termination</h2>
             <p>
-             •	You may opt out of the program at any time by providing written notice to ch.manjudheeraj@gmail.com.
-•	Berry Rewards reserves the right to remove or suspend your listing at any time for any reason, including non-compliance with these terms.
-
-
+              •	You may opt out of the program at any time by providing written notice to ch.manjudheeraj@gmail.com.
+              •	Berry Rewards reserves the right to remove or suspend your listing at any time for any reason, including non-compliance with these terms.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Limitation of Liability</h2>
             <p>
-             Berry Rewards is not liable for:
-•	The accuracy or tone of user-generated content,
-•	Customer behavior or feedback,
-•	Business performance results resulting from participation.
-Participation in this program is at your own discretion and risk.
-
-            </p>
-          </section>
-
-           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Changes to Terms</h2>
-            <p>
-            Berry Rewards reserves the right to update these Terms & Conditions at any time. Continued participation following updates constitutes acceptance of the revised terms.
-
+              Berry Rewards is not liable for:
+              •	The accuracy or tone of user-generated content,
+              •	Customer behavior or feedback,
+              •	Business performance results resulting from participation.
+              Participation in this program is at your own discretion and risk.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Contact </h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Changes to Terms</h2>
+            <p>
+              Berry Rewards reserves the right to update these Terms & Conditions at any time. Continued participation following updates constitutes acceptance of the revised terms.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Contact</h2>
             <p>
               If you have any questions or would like to update your listing, please contact us at:
-ch.manjudheeraj@gmail.com
-
+              ch.manjudheeraj@gmail.com
             </p>
           </section>
 
-<section className="mb-8">
+          <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-             <p>For Creators
-             </p>
-              1. Eligibility</h2>
+              For Creators
+            </h2>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              1. Eligibility
+            </h3>
             <p>
-You must be at least 18 years old and reside in the United States.
-
-You must have an active and public Instagram account.
-
-You must follow @berry_rewards on Instagram to qualify.
-
-Participation is open to individuals only. Businesses, agencies, or bots are not eligible.
+              You must be at least 18 years old and reside in the United States.
+              You must have an active and public Instagram account.
+              You must follow @berry_rewards on Instagram to qualify.
+              Participation is open to individuals only. Businesses, agencies, or bots are not eligible.
             </p>
           </section>
-         <section className="mb-8">
+
+          <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. How the program works</h2>
             <p>
-To receive a reward, you must:
-<p>
-Visit a participating location (restaurant, café, etc.).
-
-Post an Instagram Story or Feed Post featuring your visit.
-
-Tag @berry_rewards and mention the location in your post.
-
-Keep the post live for at least 24 hours.
-<p>
-You must send a direct message (DM) to @berry_rewards with a screenshot of your post to claim your reward.
-<p>
+              To receive a reward, you must:
+            </p>
+            <p>
+              Visit a participating location (restaurant, café, etc.).
+              Post an Instagram Story or Feed Post featuring your visit.
+              Tag @berry_rewards and mention the location in your post.
+              Keep the post live for at least 24 hours.
+            </p>
+            <p>
+              You must send a direct message (DM) to @berry_rewards with a screenshot of your post to claim your reward.
             </p>
           </section>
-
-          
         </div>
       </div>
     </div>
