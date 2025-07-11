@@ -45,7 +45,9 @@ const TermsAndConditions = () => {
           </p>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Acceptance of Terms</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              For Brand Partners:
+              1. Acceptance of Terms</h2>
             <p>
               These Terms & Conditions ("Agreement") govern your participation as a restaurant partner (“you” or “Restaurant”) in the Berry Rewards platform (“we,” “us,” or “Berry Rewards”). By submitting our onboarding form or agreeing verbally or in writing, you consent to the terms outlined below.
             </p>
