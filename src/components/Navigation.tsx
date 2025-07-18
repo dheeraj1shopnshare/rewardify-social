@@ -21,6 +21,9 @@ const Navigation = () => {
         <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
           Restaurants
         </Link>
+        <Link to="/marketplace" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+          Marketplace
+        </Link>
       </div>
     </nav>
   );
