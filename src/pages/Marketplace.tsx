@@ -34,15 +34,15 @@ const healthBeautyProducts = [
   },
   {
     id: 3,
-    name: "Neutrogena Hydrating Foaming Cleanser",
+    name: "EltaMD UV Clear Face Sunscreen SPF 46, Oil-Free Sunscreen with Zinc Oxide, Dermatologist Recommended",
     category: "Skincare",
-    price: "$8.97",
-    originalPrice: "$10.99",
-    rating: 4.4,
-    reviews: 12300,
-    image: "/lovable-uploads/bc8d61d5-a942-4897-a270-106a18d2e42b.png",
-    amazonUrl: "https://amazon.com/dp/example3",
-    description: "Gentle foaming facial cleanser with hyaluronic acid"
+    price: "$43.00",
+    originalPrice: "$43.00",
+    rating: 4.5,
+    reviews: 45000,
+    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+    amazonUrl: "https://amzn.to/44RJPva",
+    description: "EltaMD UV Clear Face Sunscreen is an oil free sunscreen made with Zinc Oxide. This SPF 46 facial sunscreen is lightweight and silky and helps calm and protect sensitive skin types prone to acne, rosacea and discoloration."
   },
   {
     id: 4,
