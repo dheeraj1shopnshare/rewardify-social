@@ -40,7 +40,7 @@ const healthBeautyProducts = [
     originalPrice: "$10.99",
     rating: 4.4,
     reviews: 12300,
-    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/bc8d61d5-a942-4897-a270-106a18d2e42b.png",
     amazonUrl: "https://amazon.com/dp/example3",
     description: "Gentle foaming facial cleanser with hyaluronic acid"
   },
