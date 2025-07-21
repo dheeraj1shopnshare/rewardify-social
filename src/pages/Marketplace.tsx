@@ -10,8 +10,7 @@ import { Search, Star, ExternalLink, Filter } from "lucide-react";
 const healthBeautyProducts = [
   {
     id: 1,
-    name: "La Roche-Posay Toleriane Double Repair Face Moisturizer, Daily Moisturizer Face Cream with Ceramide & Niacinamide for All Skin Types, Immediate Comfort & Long Lasting Hydration, Fragrance Free
-",
+    name: "La Roche-Posay Toleriane Double Repair Face Moisturizer, Daily Moisturizer Face Cream with Ceramide & Niacinamide for All Skin Types, Immediate Comfort & Long Lasting Hydration, Fragrance Free",
     category: "Skincare",
     price: "$23.99",
     originalPrice: "$23.99",
@@ -19,8 +18,7 @@ const healthBeautyProducts = [
     reviews: 68277,
     image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=300&fit=crop",
     amazonUrl: "https://amzn.to/3TLjOZo",
-    description: "Ultra hydrating face moisturizer helps restore skin barrier for healthy looking skin. Formulated with a high concentration of Prebiotic Thermal Water, Ceramide-3, Niacinamide & Glycerin. Fragrance free & oil free, wont clog pores
-"
+    description: "Ultra hydrating face moisturizer helps restore skin barrier for healthy looking skin. Formulated with a high concentration of Prebiotic Thermal Water, Ceramide-3, Niacinamide & Glycerin. Fragrance free & oil free, wont clog pores",
   },
   {
     id: 2,
