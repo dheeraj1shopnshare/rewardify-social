@@ -28,7 +28,7 @@ const healthBeautyProducts = [
     originalPrice: "$8.90",
     rating: 4.3,
     reviews: 8950,
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/81cbc84d-b796-4297-a718-0f8ee584fabc.png",
     amazonUrl: "https://amazon.com/dp/example2",
     description: "Serum for blemish-prone skin"
   },
