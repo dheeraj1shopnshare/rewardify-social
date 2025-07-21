@@ -16,7 +16,7 @@ const healthBeautyProducts = [
     originalPrice: "$23.99",
     rating: 4.6,
     reviews: 68277,
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/d806e2a4-8a3d-4bba-bde2-892fa83cfde0.png",
     amazonUrl: "https://amzn.to/3TLjOZo",
     description: "Ultra hydrating face moisturizer helps restore skin barrier for healthy looking skin. Formulated with a high concentration of Prebiotic Thermal Water, Ceramide-3, Niacinamide & Glycerin. Fragrance free & oil free, wont clog pores",
   },
