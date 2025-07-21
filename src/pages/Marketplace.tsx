@@ -22,15 +22,15 @@ const healthBeautyProducts = [
   },
   {
     id: 2,
-    name: "The Ordinary Niacinamide 10% + Zinc 1%",
-    category: "Skincare",
-    price: "$7.90",
-    originalPrice: "$8.90",
+    name: "COLOR WOW Dream Coat Supernatural Spray – Keep Your Hair Frizz-Free and Shiny No Matter the Weather with Award-Winning Anti-Humidity Treatment",
+    category: "Hair Care",
+    price: "$28.00",
+    originalPrice: "$28.00",
     rating: 4.3,
-    reviews: 8950,
+    reviews: 99000,
     image: "/lovable-uploads/81cbc84d-b796-4297-a718-0f8ee584fabc.png",
-    amazonUrl: "https://amazon.com/dp/example2",
-    description: "Serum for blemish-prone skin"
+    amazonUrl: "https://amzn.to/3GMvrwi",
+    description: "Heat-activated polymers in this breakthrough anti-humidity treatment help to block out moisture and banish frizz."
   },
   {
     id: 3,
