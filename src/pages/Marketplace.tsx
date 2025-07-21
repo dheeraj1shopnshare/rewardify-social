@@ -40,7 +40,7 @@ const healthBeautyProducts = [
     originalPrice: "$43.00",
     rating: 4.5,
     reviews: 45000,
-    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/9d1ba64e-de9e-4f82-8e5b-29666b3eaaff.png",
     amazonUrl: "https://amzn.to/44RJPva",
     description: "EltaMD UV Clear Face Sunscreen is an oil free sunscreen made with Zinc Oxide. This SPF 46 facial sunscreen is lightweight and silky and helps calm and protect sensitive skin types prone to acne, rosacea and discoloration."
   },
