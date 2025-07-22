@@ -46,15 +46,15 @@ const healthBeautyProducts = [
   },
   {
     id: 4,
-    name: "Maybelline Fit Me Foundation",
-    category: "Makeup",
-    price: "$7.42",
-    originalPrice: "$8.99",
-    rating: 4.2,
-    reviews: 9876,
+    name: "Olaplex No. 6 Bond Smoother, Leave-In Styling Hair Cream Treatment, Smooths, Conditions, & Strengthens, Frizz Control for Up to 72 Hours, For All Hair Types, 3.3 fl oz",
+    category: "Hair Care",
+    price: "$30.00",
+    originalPrice: "$30.00",
+    rating: 4.7,
+    reviews: 51000,
     image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=300&fit=crop",
-    amazonUrl: "https://amazon.com/dp/example4",
-    description: "Matte + poreless liquid foundation"
+    amazonUrl: "https://amzn.to/450c5vA",
+    description: "A leave-in reparative styling cream that eliminates frizz, hydrates, and protects all hair types. Cruelty free."
   },
   {
     id: 5,
