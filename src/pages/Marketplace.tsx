@@ -52,7 +52,7 @@ const healthBeautyProducts = [
     originalPrice: "$30.00",
     rating: 4.7,
     reviews: 51000,
-    image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/b4d7e090-2449-4a6a-a5e0-df24670e5ff6.png",
     amazonUrl: "https://amzn.to/450c5vA",
     description: "A leave-in reparative styling cream that eliminates frizz, hydrates, and protects all hair types. Cruelty free."
   },
