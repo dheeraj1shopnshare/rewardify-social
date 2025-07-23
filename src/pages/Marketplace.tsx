@@ -58,15 +58,15 @@ const healthBeautyProducts = [
   },
   {
     id: 5,
-    name: "amika perk up talc-free dry shampoo",
+    name: "Olaplex No. 3 Hair Perfector",
     category: "Hair Care",
-    price: "$29.00",
-    originalPrice: "$29.00",
-    rating: 4.6,
-    reviews: 11250,
+    price: "$28.00",
+    originalPrice: "$30.00",
+    rating: 4.2,
+    reviews: 50000,
     image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=300&h=300&fit=crop",
-    amazonUrl: "https://amzn.to/3H0xs83",
-    description: "The closest thing to washing your hair without water – a talc-free, true dry cleanser that absorbs oil and refreshes hair with natural rice starch. Leaves no white residue, ever."
+    amazonUrl: "https://amazon.com/dp/example5",
+    description: "At-home bond building hair treatment"
   },
   {
     id: 6,
