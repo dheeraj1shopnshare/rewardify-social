@@ -64,7 +64,7 @@ const healthBeautyProducts = [
     originalPrice: "$30.00",
     rating: 4.2,
     reviews: 50000,
-    image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/d347b7c1-8de7-438e-a1a7-9d95af768ad1.png",
     amazonUrl: "https://amazon.com/dp/example5",
     description: "At-home bond building hair treatment"
   },
