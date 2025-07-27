@@ -76,7 +76,7 @@ const healthBeautyProducts = [
     originalPrice: "$13.99",
     rating: 4.5,
     reviews: 7890,
-    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/883a36af-bb7f-4f68-9fce-8eaa741096d9.png",
     amazonUrl: "https://amazon.com/dp/example6",
     description: "Hair, skin and nail health supplement"
   }
