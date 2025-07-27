@@ -70,15 +70,16 @@ const healthBeautyProducts = [
   },
   {
     id: 6,
-    name: "Nature's Bounty Biotin Supplements",
-    category: "Supplements",
-    price: "$11.84",
-    originalPrice: "$13.99",
+    name: "CHI 44 Iron Guard Thermal Protection Spray, Nourishing Formula Helps Resist Heat Damage to Hair & Tame Frizz, 2 Oz",
+    category: "Hair Care",
+    price: "$4.55",
+    originalPrice: "$4.52",
     rating: 4.5,
-    reviews: 7890,
-    image: "/lovable-uploads/883a36af-bb7f-4f68-9fce-8eaa741096d9.png",
-    amazonUrl: "https://amazon.com/dp/example6",
-    description: "Hair, skin and nail health supplement"
+    reviews: 62000,
+    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+    amazonUrl: "https://amzn.to/45oNH8k",
+    description: "CHI 44 Iron Guard offers superior thermal protection from the inside out for all hair types. It will shield your hair from the harsh heat of hair styling tools like irons, curlers and dryers. Helps turn frizzy, dry hair into silky, manageable hair. Weightless formula. No build up. Ideal with all CHI Irons."
+    
   }
 ];
 
