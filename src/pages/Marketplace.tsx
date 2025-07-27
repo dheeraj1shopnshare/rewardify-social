@@ -76,10 +76,21 @@ const healthBeautyProducts = [
     originalPrice: "$4.52",
     rating: 4.5,
     reviews: 62000,
-    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=300&fit=crop",
+    image: "/lovable-uploads/883a36af-bb7f-4f68-9fce-8eaa741096d9.png",
     amazonUrl: "https://amzn.to/45oNH8k",
     description: "CHI 44 Iron Guard offers superior thermal protection from the inside out for all hair types. It will shield your hair from the harsh heat of hair styling tools like irons, curlers and dryers. Helps turn frizzy, dry hair into silky, manageable hair. Weightless formula. No build up. Ideal with all CHI Irons."
-    
+  },
+  {
+    id: 7,
+    name: "La Roche-Posay Effaclar Medicated Gel Cleanser, Salicylic Acid Face Wash for Oily Skin, Pore Refining, Oil-Free, Fragrance-Free",
+    category: "Skincare",
+    price: "$14.99",
+    originalPrice: "$16.99",
+    rating: 4.4,
+    reviews: 35000,
+    image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
+    amazonUrl: "https://amzn.to/3Effaclar",
+    description: "Medicated gel cleanser with salicylic acid targets excess oil while gently removing impurities. Ideal for oily, acne-prone skin. Oil-free and fragrance-free formula."
   }
 ];
 
