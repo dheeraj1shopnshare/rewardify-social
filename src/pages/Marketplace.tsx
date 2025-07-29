@@ -91,18 +91,19 @@ const healthBeautyProducts = [
     image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
     amazonUrl: "https://amzn.to/3Effaclar",
     description: "Medicated gel cleanser with salicylic acid targets excess oil while gently removing impurities. Ideal for oily, acne-prone skin. Oil-free and fragrance-free formula."
-  },
+  }
+
   {
     id: 8,
-    name: "GrandeLASH-MD Lash Enhancing Serum, Eyelash Growth Serum for Longer, Thicker Looking Lashes in 4-6 Weeks",
+    name: "Grande Cosmetics GrandeLASH-MD Lash Enhancing Serum",
     category: "Makeup",
-    price: "$65.00",
+    price: "$68.00",
     originalPrice: "$68.00",
-    rating: 4.3,
-    reviews: 28000,
-    image: "/lovable-uploads/7cb86697-2971-4415-ab05-81de8ae96266.png",
-    amazonUrl: "https://amzn.to/3GrandeLash",
-    description: "Ophthalmologist developed lash enhancing serum with vitamins, amino acids and peptides to promote longer, thicker looking lashes in 4-6 weeks. Safe for contact lens wearers."
+    rating: 4.2,
+    reviews: 55000,
+    image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
+    amazonUrl: "https://amzn.to/410zKer",
+    description: "Award-winning lash enhancing serum created with vitamins peptides & amino acids for the appearance of longer, thicker looking lashes in just 4-6 weeks with full improvement in 3 months. Winner of Harper’s BAZAAR Anti-aging Award & Cosmo Beauty Award"
   }
 ];
 
