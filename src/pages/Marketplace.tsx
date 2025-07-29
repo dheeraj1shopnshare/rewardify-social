@@ -115,6 +115,19 @@ const healthBeautyProducts = [
     image: "/lovable-uploads/d3e7062b-dbc0-4baa-a065-5baee0a331d3.png",
     amazonUrl: "https://amzn.to/4occ4gK",
     description: "Infused with micro-dosed soybean oil & stearic acid to help prevent color fade for up to 4 weeks* while adding shine *Consumer test after application of Color Last Shampoo & Conditioner."
+  },
+
+   {
+    id: 10,
+    name: "Paul Mitchell Extra-Body Sculpting Foam, Thickens + Builds Body, For Fine Hair",
+    category:"Hair Care",
+    price: "$16.50",
+    originalPrice: "$16.50",
+    rating: 4.3,
+    reviews: 16000,
+    image: "/lovable-uploads/d3e7062b-dbc0-4baa-a065-5baee0a331d3.png",
+    amazonUrl: "https://amzn.to/4l1Uqd0",
+    description: "Hair-thickening mousse gives fine hair extra body and boosts volume."
   }
 
 ];
