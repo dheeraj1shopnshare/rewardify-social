@@ -91,8 +91,7 @@ const healthBeautyProducts = [
     image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
     amazonUrl: "https://amzn.to/3Effaclar",
     description: "Medicated gel cleanser with salicylic acid targets excess oil while gently removing impurities. Ideal for oily, acne-prone skin. Oil-free and fragrance-free formula."
-  }
-
+  },
   {
     id: 8,
     name: "Grande Cosmetics GrandeLASH-MD Lash Enhancing Serum",
@@ -101,7 +100,7 @@ const healthBeautyProducts = [
     originalPrice: "$68.00",
     rating: 4.2,
     reviews: 55000,
-    image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
+    image: "/lovable-uploads/f5009d37-56f6-48c3-aacc-5fcfa4cf1eda.png",
     amazonUrl: "https://amzn.to/410zKer",
     description: "Award-winning lash enhancing serum created with vitamins peptides & amino acids for the appearance of longer, thicker looking lashes in just 4-6 weeks with full improvement in 3 months. Winner of Harper’s BAZAAR Anti-aging Award & Cosmo Beauty Award"
   }
