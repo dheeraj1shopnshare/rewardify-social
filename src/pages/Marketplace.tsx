@@ -125,7 +125,7 @@ const healthBeautyProducts = [
     originalPrice: "$16.50",
     rating: 4.3,
     reviews: 16000,
-    image: "/lovable-uploads/d3e7062b-dbc0-4baa-a065-5baee0a331d3.png",
+    image: "/lovable-uploads/f5009d37-56f6-48c3-aacc-5fcfa4cf1eda.png",
     amazonUrl: "https://amzn.to/4l1Uqd0",
     description: "Hair-thickening mousse gives fine hair extra body and boosts volume."
   }
