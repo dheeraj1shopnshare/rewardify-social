@@ -100,6 +100,7 @@ const healthBeautyProducts = [
     originalPrice: "$68.00",
     rating: 4.2,
     reviews: 55000,
+    image: "/lovable-uploads/d7a6f816-680a-4839-b0e5-30b9c863e633.png",
     amazonUrl: "https://amzn.to/410zKer",
     description: "Award-winning lash enhancing serum created with vitamins peptides & amino acids for the appearance of longer, thicker looking lashes in just 4-6 weeks with full improvement in 3 months. Winner of Harper’s BAZAAR Anti-aging Award & Cosmo Beauty Award"
   },
