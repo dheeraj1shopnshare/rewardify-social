@@ -112,7 +112,7 @@ const healthBeautyProducts = [
     originalPrice: "$45.00",
     rating: 4.7,
     reviews: 32000,
-    image: "/lovable-uploads/f5009d37-56f6-48c3-aacc-5fcfa4cf1eda.png",
+    image: "/lovable-uploads/d3e7062b-dbc0-4baa-a065-5baee0a331d3.png",
     amazonUrl: "https://amzn.to/4occ4gK",
     description: "Infused with micro-dosed soybean oil & stearic acid to help prevent color fade for up to 4 weeks* while adding shine *Consumer test after application of Color Last Shampoo & Conditioner."
   }
