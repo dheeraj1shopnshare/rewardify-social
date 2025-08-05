@@ -171,6 +171,22 @@ const TermsAndConditions = () => {
             </ul>
           </section>
 
+          <section className="mb-8">
+            </h2>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              3. Reward Details
+            </h3>
+            <p>
+              Rewards may include gift cards or other promotional items.
+
+Rewards are limited to one per participant per location, unless otherwise specified.
+
+Berry Rewards reserves the right to substitute a reward of equal or greater value if necessary.
+
+Rewards are subject to availability and may take up to 10 business days to be delivered digitally.
+            </p>
+          </section>
+
           
         </div>
       </div>
