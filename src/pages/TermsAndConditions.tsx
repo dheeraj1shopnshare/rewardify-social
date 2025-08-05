@@ -153,23 +153,22 @@ const TermsAndConditions = () => {
               You must follow @berry_rewards on Instagram to qualify.
               Participation is open to individuals only. Businesses, agencies, or bots are not eligible.
             </p>
+            2. How the Program Works
+          </p>
+          To receive a reward, you must:
+
+Visit a participating location (restaurant, café, etc.).
+
+Post an Instagram Story or Feed Post featuring your visit.
+
+Tag @berry_rewards and mention the location in your post.
+
+Keep the post live for at least 24 hours.
+
+You must send a direct message (DM) to @berry_rewards with a screenshot of your post to claim your reward.
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. How the program works</h2>
-            <p>
-              To receive a reward, you must:
-            </p>
-            <p>
-              Visit a participating location (restaurant, café, etc.).
-              Post an Instagram Story or Feed Post featuring your visit.
-              Tag @berry_rewards and mention the location in your post.
-              Keep the post live for at least 24 hours.
-            </p>
-            <p>
-              You must send a direct message (DM) to @berry_rewards with a screenshot of your post to claim your reward.
-            </p>
-          </section>
+          
         </div>
       </div>
     </div>
