@@ -188,6 +188,76 @@ const TermsAndConditions = () => {
               Rewards are subject to availability and may take up to 10 business days to be delivered digitally.
             </p>
           </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              4. Content Guidelines
+            </h3>
+            <p>
+              Your post must be original and created by you.
+            </p>
+            <p>
+              You agree that your post does not include:
+            </p>
+            <ul className="list-disc pl-6 mt-4 space-y-2">
+              <li>Offensive, inappropriate, or misleading content.</li>
+              <li>Content that infringes on the rights of others.</li>
+              <li>Misrepresentation of the brand or location.</li>
+            </ul>
+            <p className="mt-4">
+              Berry Rewards may use your content for promotional purposes on our social media, website, or marketing material, with credit to your username.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              5. Prohibited Behavior
+            </h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>No fake check-ins, recycled content, or location misrepresentation.</li>
+              <li>No automation or bot use to generate posts or submissions.</li>
+              <li>Any attempt to manipulate or abuse the Program may result in disqualification and ineligibility for future rewards.</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              6. Modifications & Termination
+            </h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Berry Rewards reserves the right to modify, suspend, or terminate the Program at any time without prior notice.</li>
+              <li>Changes to these Terms will be posted on our website or social media accounts.</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              7. Privacy
+            </h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Your participation may require sharing your Instagram username and post content.</li>
+              <li>We do not sell or share your personal data with third parties outside the scope of Program operations.</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              8. Limitation of Liability
+            </h3>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Berry Rewards is not responsible for any technical issues, delays, or miscommunications.</li>
+              <li>By participating, you release Berry Rewards from any liability related to your participation or the receipt and use of any reward.</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              9. Contact Us
+            </h3>
+            <p>
+              If you have any questions, please reach out via DM to @berry_rewards or email ch.manjudheeraj@gmail.com.
+            </p>
+          </section>
         </div>
       </div>
     </div>
