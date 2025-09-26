@@ -52,7 +52,7 @@ const TermsAndConditions = () => {
               1. Acceptance of Terms
             </h3>
             <p>
-              These Terms & Conditions ("Agreement") govern your participation as a restaurant partner ("you" or "Restaurant") in the Berry Rewards platform ("we," "us," or "Berry Rewards"). By submitting our onboarding form or agreeing verbally or in writing, you consent to the terms outlined below.
+              These Terms & Conditions ("Agreement") govern your participation as a restaurant partner ("you" or "Restaurant") in the Berry Rewards platform ("we," "us," or "Berry Rewards"). Berry Rewards is an Instagram page and not a legal entity. By submitting our onboarding form or agreeing verbally or in writing, you consent to the terms outlined below.
             </p>
           </section>
 
