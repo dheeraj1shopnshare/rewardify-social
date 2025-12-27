@@ -1,7 +1,11 @@
-
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { User } from "lucide-react";
 
 const Navigation = () => {
+  const { user } = useAuth();
+
   return (
     <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
       <Link to="/" className="flex items-center">
@@ -11,7 +15,7 @@ const Navigation = () => {
           className="h-24 w-auto object-contain max-w-full"
         />
       </Link>
-      <div className="flex gap-8">
+      <div className="flex gap-8 items-center">
         <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
           Shoppers
         </Link>
@@ -24,6 +28,18 @@ const Navigation = () => {
         <Link to="/marketplace" className="text-gray-900 font-semibold hover:text-primary transition-colors">
           Marketplace
         </Link>
+        {user ? (
+          <Link to="/profile">
+            <Button variant="outline" size="sm" className="gap-2">
+              <User className="h-4 w-4" />
+              Profile
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/auth">
+            <Button size="sm">Sign In</Button>
+          </Link>
+        )}
       </div>
     </nav>
   );
