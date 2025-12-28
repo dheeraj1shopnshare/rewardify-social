@@ -32,10 +32,23 @@ interface Profile {
   tiktok_id: string | null;
 }
 
+interface UserStats {
+  total_earned: number;
+  posts_submitted: number;
+  rewards_claimed: number;
+  current_streak: number;
+}
+
 const Dashboard = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [stats, setStats] = useState<UserStats>({
+    total_earned: 0,
+    posts_submitted: 0,
+    rewards_claimed: 0,
+    current_streak: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -45,37 +58,49 @@ const Dashboard = () => {
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfileAndStats = async () => {
       if (!user) return;
 
-      const { data, error } = await supabase
+      // Fetch profile
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
-      if (error) {
-        console.error('Error fetching profile:', error);
-      } else if (data) {
-        setProfile(data);
+      if (profileError) {
+        console.error('Error fetching profile:', profileError);
+      } else if (profileData) {
+        setProfile(profileData);
       }
+
+      // Fetch user stats
+      const { data: statsData, error: statsError } = await supabase
+        .from('user_stats')
+        .select('*')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (statsError) {
+        console.error('Error fetching stats:', statsError);
+      } else if (statsData) {
+        setStats({
+          total_earned: Number(statsData.total_earned) || 0,
+          posts_submitted: statsData.posts_submitted || 0,
+          rewards_claimed: statsData.rewards_claimed || 0,
+          current_streak: statsData.current_streak || 0,
+        });
+      }
+
       setLoading(false);
     };
 
     if (user) {
-      fetchProfile();
+      fetchProfileAndStats();
     }
   }, [user]);
 
   const hasConnectedSocial = profile?.instagram_id || profile?.tiktok_id;
-
-  // Mock data for dashboard (in real app, these would come from the database)
-  const stats = {
-    totalEarned: 250,
-    postsSubmitted: 5,
-    rewardsRedeemed: 2,
-    currentStreak: 3,
-  };
 
   
 
@@ -153,7 +178,7 @@ const Dashboard = () => {
                   <Gift className="h-8 w-8 text-primary" />
                   <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">Total</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">${stats.totalEarned}</p>
+                <p className="text-3xl font-bold text-foreground">${stats.total_earned}</p>
                 <p className="text-sm text-muted-foreground">Earned</p>
               </CardContent>
             </Card>
@@ -170,7 +195,7 @@ const Dashboard = () => {
                   <TrendingUp className="h-8 w-8 text-secondary-foreground" />
                   <span className="text-xs font-medium text-secondary-foreground bg-secondary/20 px-2 py-1 rounded-full">Posts</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">{stats.postsSubmitted}</p>
+                <p className="text-3xl font-bold text-foreground">{stats.posts_submitted}</p>
                 <p className="text-sm text-muted-foreground">Posts Submitted</p>
               </CardContent>
             </Card>
@@ -187,7 +212,7 @@ const Dashboard = () => {
                   <Award className="h-8 w-8 text-accent-foreground" />
                   <span className="text-xs font-medium text-accent-foreground bg-accent/30 px-2 py-1 rounded-full">Rewards</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">{stats.rewardsRedeemed}</p>
+                <p className="text-3xl font-bold text-foreground">{stats.rewards_claimed}</p>
                 <p className="text-sm text-muted-foreground">Rewards Claimed</p>
               </CardContent>
             </Card>
@@ -204,7 +229,7 @@ const Dashboard = () => {
                   <Star className="h-8 w-8 text-orange-500" />
                   <span className="text-xs font-medium text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/30 px-2 py-1 rounded-full">Streak</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">{stats.currentStreak} days</p>
+                <p className="text-3xl font-bold text-foreground">{stats.current_streak} days</p>
                 <p className="text-sm text-muted-foreground">Current Streak</p>
               </CardContent>
             </Card>
