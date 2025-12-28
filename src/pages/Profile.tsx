@@ -195,7 +195,7 @@ const Profile = () => {
             <div className="flex gap-3 pt-4">
               <Button 
                 onClick={handleSave} 
-                disabled={saving} 
+                disabled={saving || (!instagramId.trim() && !tiktokId.trim())} 
                 className="flex-1 h-11 font-medium shadow-md hover:shadow-lg transition-shadow"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
