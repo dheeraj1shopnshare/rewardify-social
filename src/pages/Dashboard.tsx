@@ -71,7 +71,7 @@ const Dashboard = () => {
 
   // Mock data for dashboard (in real app, these would come from the database)
   const stats = {
-    totalBerries: 250,
+    totalEarned: 250,
     postsSubmitted: 5,
     rewardsRedeemed: 2,
     currentStreak: 3,
@@ -129,7 +129,7 @@ const Dashboard = () => {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">Connect your social accounts</p>
-                    <p className="text-sm text-muted-foreground">Start earning berries by linking Instagram or TikTok</p>
+                    <p className="text-sm text-muted-foreground">Start earning by linking Instagram or TikTok</p>
                   </div>
                 </div>
                 <Button asChild size="sm">
@@ -153,8 +153,8 @@ const Dashboard = () => {
                   <Gift className="h-8 w-8 text-primary" />
                   <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">Total</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">{stats.totalBerries}</p>
-                <p className="text-sm text-muted-foreground">Berries Earned</p>
+                <p className="text-3xl font-bold text-foreground">${stats.totalEarned}</p>
+                <p className="text-sm text-muted-foreground">Earned</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -242,7 +242,7 @@ const Dashboard = () => {
                   </div>
                   <div className="text-right">
                     <p className="text-lg font-bold text-primary">35</p>
-                    <p className="text-xs text-muted-foreground">berries to go</p>
+                    <p className="text-xs text-muted-foreground">to next reward</p>
                   </div>
                 </div>
               </CardContent>
@@ -326,7 +326,7 @@ const Dashboard = () => {
             <CardContent className="py-6">
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <h3 className="font-semibold text-lg text-foreground">Ready to earn more berries?</h3>
+                  <h3 className="font-semibold text-lg text-foreground">Ready to earn more?</h3>
                   <p className="text-sm text-muted-foreground">Explore brands and restaurants with active reward campaigns</p>
                 </div>
                 <div className="flex gap-3">
