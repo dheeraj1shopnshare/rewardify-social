@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Home } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Auth = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/profile');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 
@@ -78,7 +79,7 @@ const Auth = () => {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/profile`,
+        emailRedirectTo: `${window.location.origin}/dashboard`,
       },
     });
 
@@ -134,7 +135,7 @@ const Auth = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/profile`,
+        redirectTo: `${window.location.origin}/dashboard`,
       },
     });
 
@@ -191,6 +192,10 @@ const Auth = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
+            <Home className="h-4 w-4" />
+            Back to Home
+          </Link>
           <CardTitle className="text-2xl font-bold">Welcome</CardTitle>
           <CardDescription>Sign in or create an account to continue</CardDescription>
         </CardHeader>
