@@ -122,71 +122,89 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       <Navigation />
-      <div className="pt-32 px-4 max-w-2xl mx-auto">
-        <Card>
-          <CardHeader className="text-center">
+      <div className="pt-32 pb-16 px-4 max-w-2xl mx-auto">
+        <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm overflow-hidden">
+          <div className="h-24 bg-gradient-to-r from-primary/20 via-primary/10 to-accent/20" />
+          <CardHeader className="text-center -mt-16 pb-2">
             <div className="flex justify-center mb-4">
-              <Avatar className="h-24 w-24">
+              <Avatar className="h-28 w-28 ring-4 ring-background shadow-lg">
                 <AvatarImage src={profile?.avatar_url || ''} />
-                <AvatarFallback className="text-2xl">
+                <AvatarFallback className="text-3xl font-semibold bg-primary/10 text-primary">
                   {displayName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || '?'}
                 </AvatarFallback>
               </Avatar>
             </div>
-            <CardTitle className="text-2xl font-bold">Your Profile</CardTitle>
-            <CardDescription>{user?.email}</CardDescription>
+            <CardTitle className="text-2xl font-bold tracking-tight">Your Profile</CardTitle>
+            <CardDescription className="text-muted-foreground">{user?.email}</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 px-6 pb-8">
             <div className="space-y-2">
-              <Label htmlFor="displayName">Display Name</Label>
+              <Label htmlFor="displayName" className="text-sm font-medium">Display Name</Label>
               <Input
                 id="displayName"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Your display name"
+                className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="instagramId" className="flex items-center gap-2">
-                <Instagram className="h-4 w-4" />
-                Instagram ID
-              </Label>
-              <Input
-                id="instagramId"
-                value={instagramId}
-                onChange={(e) => setInstagramId(e.target.value)}
-                placeholder="@yourusername"
-              />
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="instagramId" className="flex items-center gap-2 text-sm font-medium">
+                  <Instagram className="h-4 w-4 text-pink-500" />
+                  Instagram
+                </Label>
+                <Input
+                  id="instagramId"
+                  value={instagramId}
+                  onChange={(e) => setInstagramId(e.target.value)}
+                  placeholder="@username"
+                  className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tiktokId" className="flex items-center gap-2 text-sm font-medium">
+                  <TikTokIcon className="h-4 w-4" />
+                  TikTok
+                </Label>
+                <Input
+                  id="tiktokId"
+                  value={tiktokId}
+                  onChange={(e) => setTiktokId(e.target.value)}
+                  placeholder="@username"
+                  className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
+                />
+              </div>
             </div>
+            
             <div className="space-y-2">
-              <Label htmlFor="tiktokId" className="flex items-center gap-2">
-                <TikTokIcon className="h-4 w-4" />
-                TikTok ID
-              </Label>
-              <Input
-                id="tiktokId"
-                value={tiktokId}
-                onChange={(e) => setTiktokId(e.target.value)}
-                placeholder="@yourusername"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
+              <Label htmlFor="bio" className="text-sm font-medium">Bio</Label>
               <Textarea
                 id="bio"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Tell us about yourself..."
                 rows={4}
+                className="bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors resize-none"
               />
             </div>
-            <div className="flex gap-4">
-              <Button onClick={handleSave} disabled={saving} className="flex-1">
+            
+            <div className="flex gap-3 pt-4">
+              <Button 
+                onClick={handleSave} 
+                disabled={saving} 
+                className="flex-1 h-11 font-medium shadow-md hover:shadow-lg transition-shadow"
+              >
                 {saving ? 'Saving...' : 'Save Changes'}
               </Button>
-              <Button variant="outline" onClick={handleSignOut}>
+              <Button 
+                variant="outline" 
+                onClick={handleSignOut}
+                className="h-11 px-6 border-muted-foreground/20 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30 transition-colors"
+              >
                 Sign Out
               </Button>
             </div>
