@@ -30,6 +30,9 @@ const Navigation = () => {
         </Link>
         {user ? (
           <>
+            <Link to="/dashboard" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+              Dashboard
+            </Link>
             <Link to="/profile">
               <Button variant="outline" size="sm" className="gap-2">
                 <User className="h-4 w-4" />
