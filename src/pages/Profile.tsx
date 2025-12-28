@@ -149,16 +149,6 @@ const Profile = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
-              <Textarea
-                id="bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                placeholder="Tell us about yourself..."
-                rows={4}
-              />
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="instagramId" className="flex items-center gap-2">
                 <Instagram className="h-4 w-4" />
                 Instagram ID
@@ -180,6 +170,16 @@ const Profile = () => {
                 value={tiktokId}
                 onChange={(e) => setTiktokId(e.target.value)}
                 placeholder="@yourusername"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="bio">Bio</Label>
+              <Textarea
+                id="bio"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                placeholder="Tell us about yourself..."
+                rows={4}
               />
             </div>
             <div className="flex gap-4">
