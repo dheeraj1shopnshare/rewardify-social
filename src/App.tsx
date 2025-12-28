@@ -12,6 +12,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
+import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +28,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/brands" element={<Brands />} />
             <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/marketplace" element={<Marketplace />} />
