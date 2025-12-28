@@ -16,18 +16,22 @@ const Navigation = () => {
         />
       </Link>
       <div className="flex gap-8 items-center">
-        <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Shoppers
-        </Link>
-        <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Brands
-        </Link>
-        <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Restaurants
-        </Link>
-        <Link to="/marketplace" className="text-gray-900 font-semibold hover:text-primary transition-colors">
-          Marketplace
-        </Link>
+        {!user && (
+          <>
+            <Link to="/" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+              Shoppers
+            </Link>
+            <Link to="/brands" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+              Brands
+            </Link>
+            <Link to="/restaurants" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+              Restaurants
+            </Link>
+            <Link to="/marketplace" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+              Marketplace
+            </Link>
+          </>
+        )}
         {user ? (
           <>
             <Link to="/dashboard" className="text-gray-900 font-semibold hover:text-primary transition-colors">
