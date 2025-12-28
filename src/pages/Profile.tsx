@@ -18,6 +18,8 @@ interface Profile {
   display_name: string | null;
   avatar_url: string | null;
   bio: string | null;
+  instagram_id: string | null;
+  tiktok_id: string | null;
 }
 
 const Profile = () => {
@@ -29,6 +31,8 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
+  const [instagramId, setInstagramId] = useState('');
+  const [tiktokId, setTiktokId] = useState('');
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -52,6 +56,8 @@ const Profile = () => {
         setProfile(data);
         setDisplayName(data.display_name || '');
         setBio(data.bio || '');
+        setInstagramId(data.instagram_id || '');
+        setTiktokId(data.tiktok_id || '');
       }
       setLoading(false);
     };
@@ -70,6 +76,8 @@ const Profile = () => {
       .update({
         display_name: displayName,
         bio: bio,
+        instagram_id: instagramId,
+        tiktok_id: tiktokId,
       })
       .eq('user_id', user.id);
 
@@ -136,6 +144,24 @@ const Profile = () => {
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Tell us about yourself..."
                 rows={4}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="instagramId">Instagram ID</Label>
+              <Input
+                id="instagramId"
+                value={instagramId}
+                onChange={(e) => setInstagramId(e.target.value)}
+                placeholder="@yourusername"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tiktokId">TikTok ID</Label>
+              <Input
+                id="tiktokId"
+                value={tiktokId}
+                onChange={(e) => setTiktokId(e.target.value)}
+                placeholder="@yourusername"
               />
             </div>
             <div className="flex gap-4">
