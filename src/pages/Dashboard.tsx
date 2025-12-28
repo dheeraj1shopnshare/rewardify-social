@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+
 import Navigation from '@/components/Navigation';
 import { motion } from 'framer-motion';
 import { Gift, TrendingUp, Star, Instagram, Target, Award } from 'lucide-react';
@@ -77,7 +77,7 @@ const Dashboard = () => {
     currentStreak: 3,
   };
 
-  const progressToNextReward = 65;
+  
 
   if (authLoading || loading) {
     return (
@@ -211,109 +211,70 @@ const Dashboard = () => {
           </motion.div>
         </div>
 
-        {/* Progress & Connected Accounts */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Progress to Next Reward */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Card className="border-0 shadow-lg h-full">
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Gift className="h-5 w-5 text-primary" />
-                  Progress to Next Reward
-                </CardTitle>
-                <CardDescription>Keep posting to unlock your next reward!</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">Current Progress</span>
-                    <span className="font-medium text-primary">{progressToNextReward}%</span>
+        {/* Connected Accounts */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <Card className="border-0 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-lg">Connected Accounts</CardTitle>
+              <CardDescription>Your linked social media profiles</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
+                    <Instagram className="h-4 w-4 text-white" />
                   </div>
-                  <Progress value={progressToNextReward} className="h-3" />
-                </div>
-                <div className="flex items-center justify-between pt-2 border-t border-border/50">
                   <div>
-                    <p className="text-sm font-medium">Next Milestone</p>
-                    <p className="text-xs text-muted-foreground">Free dessert at any partner restaurant</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-primary">35</p>
-                    <p className="text-xs text-muted-foreground">to next reward</p>
+                    <p className="font-medium text-sm">Instagram</p>
+                    {profile?.instagram_id ? (
+                      <p className="text-xs text-muted-foreground">@{profile.instagram_id.replace('@', '')}</p>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">Not connected</p>
+                    )}
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+                {profile?.instagram_id ? (
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">Connected</span>
+                ) : (
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link to="/profile">Connect</Link>
+                  </Button>
+                )}
+              </div>
 
-          {/* Connected Accounts */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-          >
-            <Card className="border-0 shadow-lg h-full">
-              <CardHeader>
-                <CardTitle className="text-lg">Connected Accounts</CardTitle>
-                <CardDescription>Your linked social media profiles</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
-                      <Instagram className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">Instagram</p>
-                      {profile?.instagram_id ? (
-                        <p className="text-xs text-muted-foreground">@{profile.instagram_id.replace('@', '')}</p>
-                      ) : (
-                        <p className="text-xs text-muted-foreground">Not connected</p>
-                      )}
-                    </div>
+              <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-full bg-foreground">
+                    <TikTokIcon className="h-4 w-4 text-background" />
                   </div>
-                  {profile?.instagram_id ? (
-                    <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">Connected</span>
-                  ) : (
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link to="/profile">Connect</Link>
-                    </Button>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-foreground">
-                      <TikTokIcon className="h-4 w-4 text-background" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">TikTok</p>
-                      {profile?.tiktok_id ? (
-                        <p className="text-xs text-muted-foreground">@{profile.tiktok_id.replace('@', '')}</p>
-                      ) : (
-                        <p className="text-xs text-muted-foreground">Not connected</p>
-                      )}
-                    </div>
+                  <div>
+                    <p className="font-medium text-sm">TikTok</p>
+                    {profile?.tiktok_id ? (
+                      <p className="text-xs text-muted-foreground">@{profile.tiktok_id.replace('@', '')}</p>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">Not connected</p>
+                    )}
                   </div>
-                  {profile?.tiktok_id ? (
-                    <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">Connected</span>
-                  ) : (
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link to="/profile">Connect</Link>
-                    </Button>
-                  )}
                 </div>
+                {profile?.tiktok_id ? (
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-2 py-1 rounded-full">Connected</span>
+                ) : (
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link to="/profile">Connect</Link>
+                  </Button>
+                )}
+              </div>
 
-                <Button variant="outline" className="w-full mt-2" asChild>
-                  <Link to="/profile">Manage Profile</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
+              <Button variant="outline" className="w-full mt-2" asChild>
+                <Link to="/profile">Manage Profile</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Quick Actions */}
         <motion.div
