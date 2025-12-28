@@ -192,6 +192,12 @@ const Profile = () => {
               />
             </div>
             
+            {!instagramId.trim() && !tiktokId.trim() && (
+              <p className="text-sm text-muted-foreground text-center bg-muted/50 py-2 px-4 rounded-md">
+                Please add at least one social account to save your profile
+              </p>
+            )}
+            
             <div className="flex gap-3 pt-4">
               <Button 
                 onClick={handleSave} 
