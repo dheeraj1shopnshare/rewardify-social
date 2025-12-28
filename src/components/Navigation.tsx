@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 
 const Navigation = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   return (
     <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
@@ -29,12 +29,18 @@ const Navigation = () => {
           Marketplace
         </Link>
         {user ? (
-          <Link to="/profile">
-            <Button variant="outline" size="sm" className="gap-2">
-              <User className="h-4 w-4" />
-              Profile
+          <>
+            <Link to="/profile">
+              <Button variant="outline" size="sm" className="gap-2">
+                <User className="h-4 w-4" />
+                Profile
+              </Button>
+            </Link>
+            <Button variant="ghost" size="sm" className="gap-2" onClick={signOut}>
+              <LogOut className="h-4 w-4" />
+              Sign Out
             </Button>
-          </Link>
+          </>
         ) : (
           <Link to="/auth">
             <Button size="sm">Sign In</Button>
