@@ -242,16 +242,16 @@ const Profile = () => {
               />
             </div>
             
-            {(!email.trim() || !venmoId.trim()) && (
+            {!email.trim() && (
               <p className="text-sm text-muted-foreground text-center bg-muted/50 py-2 px-4 rounded-md">
-                Please enter both email and Venmo username to save your profile
+                Please enter your email to save your profile
               </p>
             )}
             
             <div className="flex gap-3 pt-4">
               <Button 
                 onClick={handleSave} 
-                disabled={saving || !email.trim() || !venmoId.trim()} 
+                disabled={saving || !email.trim()}
                 className="flex-1 h-11 font-medium shadow-md hover:shadow-lg transition-shadow"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
