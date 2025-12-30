@@ -201,16 +201,16 @@ const Profile = () => {
             <div className="space-y-2">
               <Label htmlFor="venmoId" className="flex items-center gap-2 text-sm font-medium">
                 <DollarSign className="h-4 w-4 text-blue-500" />
-                Venmo ID
+                Venmo Username
               </Label>
               <Input
                 id="venmoId"
                 value={venmoId}
                 onChange={(e) => setVenmoId(e.target.value)}
-                placeholder="@venmo-username"
+                placeholder="@username"
                 className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
               />
-              <p className="text-xs text-muted-foreground">Enter your Venmo ID to receive rewards via Venmo</p>
+              <p className="text-xs text-muted-foreground">Enter your Venmo username to receive rewards via Venmo</p>
             </div>
             
             <div className="space-y-2">
