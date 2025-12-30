@@ -155,33 +155,6 @@ const Profile = () => {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                Email
-              </Label>
-              <Input
-                id="email"
-                value={user?.email || ''}
-                disabled
-                className="h-11 bg-muted/50 border-muted-foreground/20 text-muted-foreground cursor-not-allowed"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="venmoId" className="flex items-center gap-2 text-sm font-medium">
-                <DollarSign className="h-4 w-4 text-blue-500" />
-                Venmo ID
-              </Label>
-              <Input
-                id="venmoId"
-                value={venmoId}
-                onChange={(e) => setVenmoId(e.target.value)}
-                placeholder="@venmo-username"
-                className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
-              />
-            </div>
-            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="instagramId" className="flex items-center gap-2 text-sm font-medium">
@@ -209,6 +182,34 @@ const Profile = () => {
                   className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
                 />
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
+                <Mail className="h-4 w-4 text-muted-foreground" />
+                Email
+              </Label>
+              <Input
+                id="email"
+                value={user?.email || ''}
+                disabled
+                className="h-11 bg-muted/50 border-muted-foreground/20 text-muted-foreground cursor-not-allowed"
+              />
+              <p className="text-xs text-muted-foreground">Amazon gift cards will be sent to this email</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="venmoId" className="flex items-center gap-2 text-sm font-medium">
+                <DollarSign className="h-4 w-4 text-blue-500" />
+                Venmo ID
+              </Label>
+              <Input
+                id="venmoId"
+                value={venmoId}
+                onChange={(e) => setVenmoId(e.target.value)}
+                placeholder="@venmo-username"
+                className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
+              />
             </div>
             
             <div className="space-y-2">
