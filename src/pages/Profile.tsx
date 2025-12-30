@@ -210,6 +210,7 @@ const Profile = () => {
                 placeholder="@venmo-username"
                 className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
               />
+              <p className="text-xs text-muted-foreground">Enter your Venmo ID to receive rewards via Venmo</p>
             </div>
             
             <div className="space-y-2">
