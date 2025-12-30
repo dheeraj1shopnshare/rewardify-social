@@ -56,6 +56,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false);
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
+  const [email, setEmail] = useState('');
   const [instagramId, setInstagramId] = useState('');
   const [tiktokId, setTiktokId] = useState('');
   const [venmoId, setVenmoId] = useState('');
@@ -82,6 +83,7 @@ const Profile = () => {
         setProfile(data);
         setDisplayName(data.display_name || '');
         setBio(data.bio || '');
+        setEmail(data.email || user?.email || '');
         setInstagramId(data.instagram_id || '');
         setTiktokId(data.tiktok_id || '');
         setVenmoId(data.venmo_id || '');
@@ -103,6 +105,7 @@ const Profile = () => {
       .update({
         display_name: displayName,
         bio: bio,
+        email: email,
         instagram_id: instagramId,
         tiktok_id: tiktokId,
         venmo_id: venmoId,
@@ -203,9 +206,11 @@ const Profile = () => {
               </Label>
               <Input
                 id="email"
-                value={user?.email || ''}
-                disabled
-                className="h-11 bg-muted/50 border-muted-foreground/20 text-muted-foreground cursor-not-allowed"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
               />
               <p className="text-xs text-muted-foreground">Amazon gift cards will be sent to this email</p>
             </div>
@@ -237,16 +242,16 @@ const Profile = () => {
               />
             </div>
             
-            {!instagramId.trim() && !tiktokId.trim() && (
+            {(!email.trim() || !venmoId.trim()) && (
               <p className="text-sm text-muted-foreground text-center bg-muted/50 py-2 px-4 rounded-md">
-                Please add at least one social account to save your profile
+                Please enter both email and Venmo username to save your profile
               </p>
             )}
             
             <div className="flex gap-3 pt-4">
               <Button 
                 onClick={handleSave} 
-                disabled={saving || (!instagramId.trim() && !tiktokId.trim())} 
+                disabled={saving || !email.trim() || !venmoId.trim()} 
                 className="flex-1 h-11 font-medium shadow-md hover:shadow-lg transition-shadow"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
