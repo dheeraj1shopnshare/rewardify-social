@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import Navigation from '@/components/Navigation';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { motion } from 'framer-motion';
-import { Shield, Users, Edit, Save, X } from 'lucide-react';
+import { Shield, Users, Edit, Save, X, LogOut, Home } from 'lucide-react';
 import { toast } from 'sonner';
+
+interface AdminInfo {
+  id: string;
+  email: string;
+  display_name: string;
+}
 
 interface UserWithStats {
   user_id: string;
@@ -24,9 +28,8 @@ interface UserWithStats {
 }
 
 const Admin = () => {
-  const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminInfo, setAdminInfo] = useState<AdminInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<UserWithStats[]>([]);
   const [editingUser, setEditingUser] = useState<UserWithStats | null>(null);
@@ -39,80 +42,71 @@ const Admin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate('/auth');
+    validateSession();
+  }, []);
+
+  const validateSession = async () => {
+    const token = localStorage.getItem('admin_token');
+    const storedInfo = localStorage.getItem('admin_info');
+
+    if (!token || !storedInfo) {
+      navigate('/admin/login');
+      return;
     }
-  }, [user, authLoading, navigate]);
 
-  useEffect(() => {
-    const checkAdminAndFetchUsers = async () => {
-      if (!user) return;
-
-      // Check if user is admin
-      const { data: roleData, error: roleError } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .maybeSingle();
-
-      if (roleError) {
-        console.error('Error checking admin role:', roleError);
-        setLoading(false);
-        return;
-      }
-
-      if (!roleData) {
-        setIsAdmin(false);
-        setLoading(false);
-        return;
-      }
-
-      setIsAdmin(true);
-
-      // Fetch all users with their stats
-      const { data: profilesData, error: profilesError } = await supabase
-        .from('profiles')
-        .select('user_id, email, display_name');
-
-      if (profilesError) {
-        console.error('Error fetching profiles:', profilesError);
-        setLoading(false);
-        return;
-      }
-
-      const { data: statsData, error: statsError } = await supabase
-        .from('user_stats')
-        .select('*');
-
-      if (statsError) {
-        console.error('Error fetching stats:', statsError);
-        setLoading(false);
-        return;
-      }
-
-      // Combine profiles with stats
-      const usersWithStats: UserWithStats[] = profilesData.map((profile) => {
-        const stats = statsData?.find((s) => s.user_id === profile.user_id);
-        return {
-          user_id: profile.user_id,
-          email: profile.email,
-          display_name: profile.display_name,
-          total_earned: stats?.total_earned ? Number(stats.total_earned) : 0,
-          posts_submitted: stats?.posts_submitted || 0,
-          rewards_claimed: stats?.rewards_claimed || 0,
-          current_streak: stats?.current_streak || 0,
-        };
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-auth', {
+        body: { action: 'validate', token },
       });
 
-      setUsers(usersWithStats);
-      setLoading(false);
-    };
+      if (error || !data?.valid) {
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_info');
+        navigate('/admin/login');
+        return;
+      }
 
-    if (user) {
-      checkAdminAndFetchUsers();
+      setAdminInfo(data.admin);
+      await fetchUsers(token);
+    } catch (err) {
+      console.error('Session validation error:', err);
+      navigate('/admin/login');
     }
-  }, [user]);
+  };
+
+  const fetchUsers = async (token: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-api', {
+        body: { action: 'getUsers' },
+        headers: { 'x-admin-token': token },
+      });
+
+      if (error || data?.error) {
+        console.error('Error fetching users:', data?.error || error);
+        toast.error('Failed to fetch users');
+        return;
+      }
+
+      setUsers(data.users || []);
+    } catch (err) {
+      console.error('Fetch users error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    const token = localStorage.getItem('admin_token');
+
+    await supabase.functions.invoke('admin-auth', {
+      body: { action: 'logout', token },
+    });
+
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_info');
+    navigate('/admin/login');
+    toast.success('Logged out successfully');
+  };
 
   const handleEdit = (userStats: UserWithStats) => {
     setEditingUser(userStats);
@@ -128,62 +122,44 @@ const Admin = () => {
   const handleSave = async () => {
     if (!editingUser) return;
 
-    // Check if stats exist for this user
-    const { data: existingStats } = await supabase
-      .from('user_stats')
-      .select('id')
-      .eq('user_id', editingUser.user_id)
-      .maybeSingle();
-
-    let error;
-
-    if (existingStats) {
-      // Update existing stats
-      const { error: updateError } = await supabase
-        .from('user_stats')
-        .update({
-          total_earned: editForm.total_earned,
-          posts_submitted: editForm.posts_submitted,
-          rewards_claimed: editForm.rewards_claimed,
-          current_streak: editForm.current_streak,
-        })
-        .eq('user_id', editingUser.user_id);
-      error = updateError;
-    } else {
-      // Insert new stats
-      const { error: insertError } = await supabase
-        .from('user_stats')
-        .insert({
-          user_id: editingUser.user_id,
-          total_earned: editForm.total_earned,
-          posts_submitted: editForm.posts_submitted,
-          rewards_claimed: editForm.rewards_claimed,
-          current_streak: editForm.current_streak,
-        });
-      error = insertError;
-    }
-
-    if (error) {
-      console.error('Error saving stats:', error);
-      toast.error('Failed to save user statistics');
+    const token = localStorage.getItem('admin_token');
+    if (!token) {
+      navigate('/admin/login');
       return;
     }
 
-    // Update local state
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.user_id === editingUser.user_id
-          ? { ...u, ...editForm }
-          : u
-      )
-    );
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-api', {
+        body: {
+          action: 'updateStats',
+          userId: editingUser.user_id,
+          stats: editForm,
+        },
+        headers: { 'x-admin-token': token },
+      });
 
-    toast.success('User statistics updated successfully');
-    setDialogOpen(false);
-    setEditingUser(null);
+      if (error || data?.error) {
+        toast.error('Failed to save user statistics');
+        return;
+      }
+
+      // Update local state
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.user_id === editingUser.user_id ? { ...u, ...editForm } : u
+        )
+      );
+
+      toast.success('User statistics updated successfully');
+      setDialogOpen(false);
+      setEditingUser(null);
+    } catch (err) {
+      console.error('Save error:', err);
+      toast.error('Failed to save changes');
+    }
   };
 
-  if (authLoading || loading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-muted-foreground">Loading...</p>
@@ -191,46 +167,36 @@ const Admin = () => {
     );
   }
 
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="pt-28 pb-16 px-4 max-w-6xl mx-auto">
-          <Card className="border-destructive/50 bg-destructive/5">
-            <CardContent className="flex items-center justify-center py-12">
-              <div className="text-center">
-                <Shield className="h-12 w-12 text-destructive mx-auto mb-4" />
-                <h2 className="text-xl font-semibold text-foreground mb-2">Access Denied</h2>
-                <p className="text-muted-foreground">You don't have permission to access this page.</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-      <Navigation />
-      <div className="pt-28 pb-16 px-4 max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <div className="flex items-center gap-3 mb-2">
+      {/* Admin Header */}
+      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <div className="p-2 rounded-full bg-primary/10">
-              <Shield className="h-6 w-6 text-primary" />
+              <Shield className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground">Admin Panel</h1>
-              <p className="text-muted-foreground">Manage user statistics and rewards</p>
+              <h1 className="font-semibold text-foreground">Admin Panel</h1>
+              <p className="text-xs text-muted-foreground">{adminInfo?.email}</p>
             </div>
           </div>
-        </motion.div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/">
+                <Home className="h-4 w-4 mr-2" />
+                Home
+              </Link>
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </Button>
+          </div>
+        </div>
+      </header>
 
+      <div className="pt-8 pb-16 px-4 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

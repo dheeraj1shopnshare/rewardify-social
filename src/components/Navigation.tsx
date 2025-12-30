@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useUserRole } from "@/hooks/useUserRole";
 import { Button } from "@/components/ui/button";
-import { User, LogOut, Shield } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 
 const Navigation = () => {
   const { user, signOut } = useAuth();
-  const { isAdmin } = useUserRole();
 
   return (
     <nav className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between">
@@ -39,14 +37,6 @@ const Navigation = () => {
             <Link to="/dashboard" className="text-gray-900 font-semibold hover:text-primary transition-colors">
               Dashboard
             </Link>
-            {isAdmin && (
-              <Link to="/admin">
-                <Button variant="outline" size="sm" className="gap-2">
-                  <Shield className="h-4 w-4" />
-                  Admin
-                </Button>
-              </Link>
-            )}
             <Link to="/profile">
               <Button variant="outline" size="sm" className="gap-2">
                 <User className="h-4 w-4" />

@@ -13,6 +13,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import AdminLogin from "./pages/AdminLogin";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/brands" element={<Brands />} />
             <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/marketplace" element={<Marketplace />} />
