@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useToast } from '@/hooks/use-toast';
 import Navigation from '@/components/Navigation';
-import { Instagram } from 'lucide-react';
+import { Instagram, Mail, DollarSign } from 'lucide-react';
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg 
@@ -32,6 +32,7 @@ interface Profile {
   bio: string | null;
   instagram_id: string | null;
   tiktok_id: string | null;
+  venmo_id: string | null;
 }
 
 const Profile = () => {
@@ -45,6 +46,7 @@ const Profile = () => {
   const [bio, setBio] = useState('');
   const [instagramId, setInstagramId] = useState('');
   const [tiktokId, setTiktokId] = useState('');
+  const [venmoId, setVenmoId] = useState('');
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -70,6 +72,7 @@ const Profile = () => {
         setBio(data.bio || '');
         setInstagramId(data.instagram_id || '');
         setTiktokId(data.tiktok_id || '');
+        setVenmoId(data.venmo_id || '');
       }
       setLoading(false);
     };
@@ -90,6 +93,7 @@ const Profile = () => {
         bio: bio,
         instagram_id: instagramId,
         tiktok_id: tiktokId,
+        venmo_id: venmoId,
       })
       .eq('user_id', user.id);
 
@@ -147,6 +151,33 @@ const Profile = () => {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 placeholder="Your display name"
+                className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium">
+                <Mail className="h-4 w-4 text-muted-foreground" />
+                Email
+              </Label>
+              <Input
+                id="email"
+                value={user?.email || ''}
+                disabled
+                className="h-11 bg-muted/50 border-muted-foreground/20 text-muted-foreground cursor-not-allowed"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="venmoId" className="flex items-center gap-2 text-sm font-medium">
+                <DollarSign className="h-4 w-4 text-blue-500" />
+                Venmo ID
+              </Label>
+              <Input
+                id="venmoId"
+                value={venmoId}
+                onChange={(e) => setVenmoId(e.target.value)}
+                placeholder="@venmo-username"
                 className="h-11 bg-background/50 border-muted-foreground/20 focus:border-primary transition-colors"
               />
             </div>
