@@ -179,11 +179,33 @@ Deno.serve(async (req) => {
       );
 
     } else if (action === 'create') {
-      // Create new admin (for initial setup only)
+      // Create new admin - ONLY allowed if no admins exist (one-time setup)
       if (!email || !password) {
         return new Response(
           JSON.stringify({ error: 'Email and password required' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Check if any admin already exists - only allow 1 admin account
+      const { count, error: countError } = await supabase
+        .from('admins')
+        .select('*', { count: 'exact', head: true });
+
+      if (countError) {
+        console.error('Admin count check error:', countError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to verify admin status' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      // Block creation if an admin already exists
+      if (count && count > 0) {
+        console.log('Admin creation blocked - admin account already exists');
+        return new Response(
+          JSON.stringify({ error: 'Admin account already exists. Only one admin is allowed.' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
