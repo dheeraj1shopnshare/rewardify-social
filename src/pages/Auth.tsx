@@ -332,7 +332,7 @@ const Auth = () => {
             </div>
             <DialogTitle className="text-xl">Thank You!</DialogTitle>
             <DialogDescription className="text-base">
-              Post a story tagging the restaurant and berry rewards, DM us the story if your account is private.
+              Share a story tagging the restaurant and @BerryRewards. If your account is private, just DM us the story. We'll send your Amazon gift card to your email once it's verified!
             </DialogDescription>
           </DialogHeader>
           <div className="pt-4">
