@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { supabase } from '@/integrations/supabase/client';
 import { Shield, Home, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
@@ -21,19 +20,30 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('admin-auth', {
-        body: { action: 'login', email, password },
-      });
+      // Call admin-auth edge function directly with credentials
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-auth`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          credentials: 'include', // Important: include cookies in request
+          body: JSON.stringify({ action: 'login', email, password }),
+        }
+      );
 
-      if (error || data?.error) {
+      const data = await response.json();
+
+      if (!response.ok || data?.error) {
         toast.error(data?.error || 'Login failed');
         setLoading(false);
         return;
       }
 
-      // Store admin session
-      localStorage.setItem('admin_token', data.token);
-      localStorage.setItem('admin_info', JSON.stringify(data.admin));
+      // Store only non-sensitive admin info for display purposes
+      sessionStorage.setItem('admin_info', JSON.stringify(data.admin));
 
       toast.success('Welcome back, Admin!');
       navigate('/admin');
