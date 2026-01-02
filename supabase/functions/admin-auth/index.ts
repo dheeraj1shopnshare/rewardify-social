@@ -4,6 +4,7 @@ import * as bcrypt from 'https://deno.land/x/bcrypt@v0.4.1/mod.ts';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Credentials': 'true',
 };
 
 // Hash password using bcrypt with automatic salt generation
@@ -29,6 +30,37 @@ function generateToken(): string {
   return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// Parse cookies from request header
+function parseCookies(cookieHeader: string | null): Record<string, string> {
+  const cookies: Record<string, string> = {};
+  if (!cookieHeader) return cookies;
+  
+  cookieHeader.split(';').forEach(cookie => {
+    const [name, ...rest] = cookie.trim().split('=');
+    if (name && rest.length > 0) {
+      cookies[name] = rest.join('=');
+    }
+  });
+  return cookies;
+}
+
+// Get token from cookies
+function getTokenFromCookies(req: Request): string | null {
+  const cookieHeader = req.headers.get('cookie');
+  const cookies = parseCookies(cookieHeader);
+  return cookies['admin_token'] || null;
+}
+
+// Create secure cookie header
+function createCookieHeader(token: string, maxAge: number): string {
+  return `admin_token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}; Path=/`;
+}
+
+// Create cookie header for deletion
+function createDeleteCookieHeader(): string {
+  return `admin_token=; HttpOnly; Secure; SameSite=Strict; Max-Age=0; Path=/`;
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -41,7 +73,7 @@ Deno.serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const { action, email, password, token, displayName } = await req.json();
+    const { action, email, password, displayName } = await req.json();
 
     console.log(`Admin auth action: ${action}`);
 
@@ -111,21 +143,29 @@ Deno.serve(async (req) => {
 
       console.log(`Admin ${admin.email} logged in successfully`);
 
+      // Return success with httpOnly cookie containing the token
       return new Response(
         JSON.stringify({
           success: true,
-          token: sessionToken,
           admin: {
             id: admin.id,
             email: admin.email,
             display_name: admin.display_name,
           },
         }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { 
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Set-Cookie': createCookieHeader(sessionToken, 86400) // 24 hours
+          } 
+        }
       );
 
     } else if (action === 'validate') {
-      // Validate session token
+      // Validate session token from cookies
+      const token = getTokenFromCookies(req);
+      
       if (!token) {
         return new Response(
           JSON.stringify({ valid: false }),
@@ -160,22 +200,25 @@ Deno.serve(async (req) => {
       );
 
     } else if (action === 'logout') {
-      // Logout - delete session
-      if (!token) {
-        return new Response(
-          JSON.stringify({ success: true }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+      // Logout - delete session and clear cookie
+      const token = getTokenFromCookies(req);
+      
+      if (token) {
+        await supabase
+          .from('admin_sessions')
+          .delete()
+          .eq('token', token);
       }
-
-      await supabase
-        .from('admin_sessions')
-        .delete()
-        .eq('token', token);
 
       return new Response(
         JSON.stringify({ success: true }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { 
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json',
+            'Set-Cookie': createDeleteCookieHeader()
+          } 
+        }
       );
 
     } else if (action === 'create') {

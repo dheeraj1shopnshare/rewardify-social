@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,6 +26,39 @@ interface UserWithStats {
   current_streak: number;
 }
 
+// Helper to make authenticated requests with httpOnly cookie
+async function adminFetch(action: string, body: Record<string, any> = {}) {
+  const response = await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-api`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      },
+      credentials: 'include', // Include httpOnly cookies
+      body: JSON.stringify({ action, ...body }),
+    }
+  );
+  return response.json();
+}
+
+async function adminAuthFetch(action: string) {
+  const response = await fetch(
+    `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-auth`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      },
+      credentials: 'include', // Include httpOnly cookies
+      body: JSON.stringify({ action }),
+    }
+  );
+  return response.json();
+}
+
 const Admin = () => {
   const navigate = useNavigate();
   const [adminInfo, setAdminInfo] = useState<AdminInfo | null>(null);
@@ -46,43 +78,33 @@ const Admin = () => {
   }, []);
 
   const validateSession = async () => {
-    const token = localStorage.getItem('admin_token');
-    const storedInfo = localStorage.getItem('admin_info');
-
-    if (!token || !storedInfo) {
-      navigate('/admin/login');
-      return;
-    }
-
     try {
-      const { data, error } = await supabase.functions.invoke('admin-auth', {
-        body: { action: 'validate', token },
-      });
+      const data = await adminAuthFetch('validate');
 
-      if (error || !data?.valid) {
-        localStorage.removeItem('admin_token');
-        localStorage.removeItem('admin_info');
+      if (!data?.valid) {
+        sessionStorage.removeItem('admin_info');
         navigate('/admin/login');
         return;
       }
 
       setAdminInfo(data.admin);
-      await fetchUsers(token);
+      await fetchUsers();
     } catch (err) {
       console.error('Session validation error:', err);
       navigate('/admin/login');
     }
   };
 
-  const fetchUsers = async (token: string) => {
+  const fetchUsers = async () => {
     try {
-      const { data, error } = await supabase.functions.invoke('admin-api', {
-        body: { action: 'getUsers' },
-        headers: { 'x-admin-token': token },
-      });
+      const data = await adminFetch('getUsers');
 
-      if (error || data?.error) {
-        console.error('Error fetching users:', data?.error || error);
+      if (data?.error) {
+        console.error('Error fetching users:', data.error);
+        if (data.error === 'Unauthorized') {
+          navigate('/admin/login');
+          return;
+        }
         toast.error('Failed to fetch users');
         return;
       }
@@ -96,14 +118,8 @@ const Admin = () => {
   };
 
   const handleLogout = async () => {
-    const token = localStorage.getItem('admin_token');
-
-    await supabase.functions.invoke('admin-auth', {
-      body: { action: 'logout', token },
-    });
-
-    localStorage.removeItem('admin_token');
-    localStorage.removeItem('admin_info');
+    await adminAuthFetch('logout');
+    sessionStorage.removeItem('admin_info');
     navigate('/admin/login');
     toast.success('Logged out successfully');
   };
@@ -122,23 +138,17 @@ const Admin = () => {
   const handleSave = async () => {
     if (!editingUser) return;
 
-    const token = localStorage.getItem('admin_token');
-    if (!token) {
-      navigate('/admin/login');
-      return;
-    }
-
     try {
-      const { data, error } = await supabase.functions.invoke('admin-api', {
-        body: {
-          action: 'updateStats',
-          userId: editingUser.user_id,
-          stats: editForm,
-        },
-        headers: { 'x-admin-token': token },
+      const data = await adminFetch('updateStats', {
+        userId: editingUser.user_id,
+        stats: editForm,
       });
 
-      if (error || data?.error) {
+      if (data?.error) {
+        if (data.error === 'Unauthorized') {
+          navigate('/admin/login');
+          return;
+        }
         toast.error('Failed to save user statistics');
         return;
       }

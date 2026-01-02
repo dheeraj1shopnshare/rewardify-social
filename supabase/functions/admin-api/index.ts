@@ -2,8 +2,30 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-admin-token',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Credentials': 'true',
 };
+
+// Parse cookies from request header
+function parseCookies(cookieHeader: string | null): Record<string, string> {
+  const cookies: Record<string, string> = {};
+  if (!cookieHeader) return cookies;
+  
+  cookieHeader.split(';').forEach(cookie => {
+    const [name, ...rest] = cookie.trim().split('=');
+    if (name && rest.length > 0) {
+      cookies[name] = rest.join('=');
+    }
+  });
+  return cookies;
+}
+
+// Get token from cookies
+function getTokenFromCookies(req: Request): string | null {
+  const cookieHeader = req.headers.get('cookie');
+  const cookies = parseCookies(cookieHeader);
+  return cookies['admin_token'] || null;
+}
 
 async function validateAdminToken(supabase: any, token: string): Promise<boolean> {
   if (!token) return false;
@@ -29,8 +51,8 @@ Deno.serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Validate admin token
-    const adminToken = req.headers.get('x-admin-token');
+    // Validate admin token from httpOnly cookie
+    const adminToken = getTokenFromCookies(req);
     const isValid = await validateAdminToken(supabase, adminToken || '');
 
     if (!isValid) {
