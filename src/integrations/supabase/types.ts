@@ -73,6 +73,27 @@ export type Database = {
         }
         Relationships: []
       }
+      guest_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          instagram_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          instagram_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          instagram_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
