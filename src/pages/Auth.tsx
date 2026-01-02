@@ -25,8 +25,10 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
+  const [showThankYouDialog, setShowThankYouDialog] = useState(false);
   const [instagramId, setInstagramId] = useState('');
   const [rewardEmail, setRewardEmail] = useState('');
+  const [guestSubmitting, setGuestSubmitting] = useState(false);
   const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -65,6 +67,42 @@ const Auth = () => {
       title: 'Great!',
       description: 'Now create an account to start earning rewards.',
     });
+  };
+
+  const handleGuestSubmit = async () => {
+    if (!instagramId.trim() || !rewardEmail.trim()) {
+      toast({
+        title: 'Missing fields',
+        description: 'Please enter both your Instagram ID and email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setGuestSubmitting(true);
+    try {
+      const { error } = await supabase
+        .from('guest_submissions')
+        .insert({
+          instagram_id: instagramId.replace('@', ''),
+          email: rewardEmail.trim(),
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      setShowWelcomeDialog(false);
+      setShowThankYouDialog(true);
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setGuestSubmitting(false);
+    }
   };
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
@@ -274,12 +312,33 @@ const Auth = () => {
               </Button>
               <Button 
                 variant="outline" 
-                onClick={() => setShowWelcomeDialog(false)} 
+                onClick={handleGuestSubmit}
+                disabled={guestSubmitting}
                 className="w-full"
               >
-                Use as Guest
+                {guestSubmitting ? 'Submitting...' : 'Use as Guest'}
               </Button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Thank You Dialog for Guest Submissions */}
+      <Dialog open={showThankYouDialog} onOpenChange={setShowThankYouDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+              <Gift className="h-6 w-6 text-green-600" />
+            </div>
+            <DialogTitle className="text-xl">Thank You!</DialogTitle>
+            <DialogDescription className="text-base">
+              We've received your details. Post a story tagging the restaurant and we'll send your Amazon gift card to {rewardEmail}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="pt-4">
+            <Button onClick={() => setShowThankYouDialog(false)} className="w-full">
+              Got it!
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
