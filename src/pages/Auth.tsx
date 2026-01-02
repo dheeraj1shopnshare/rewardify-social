@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -9,14 +9,25 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '@/components/ui/separator';
-import { ArrowLeft, Home } from 'lucide-react';
+import { ArrowLeft, Home, Gift } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false);
+  const [instagramId, setInstagramId] = useState('');
+  const [rewardEmail, setRewardEmail] = useState('');
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -26,6 +37,35 @@ const Auth = () => {
       navigate('/dashboard');
     }
   }, [user, navigate]);
+
+  // Show welcome dialog for QR code visitors
+  useEffect(() => {
+    const fromQr = searchParams.get('qr');
+    if (fromQr === 'true') {
+      setShowWelcomeDialog(true);
+    }
+  }, [searchParams]);
+
+  const handleWelcomeSubmit = () => {
+    if (!instagramId.trim() || !rewardEmail.trim()) {
+      toast({
+        title: 'Missing fields',
+        description: 'Please enter both your Instagram ID and email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Store in localStorage for later use after signup
+    localStorage.setItem('qr_instagram_id', instagramId.replace('@', ''));
+    localStorage.setItem('qr_reward_email', rewardEmail);
+    
+    setShowWelcomeDialog(false);
+    toast({
+      title: 'Great!',
+      description: 'Now create an account to start earning rewards.',
+    });
+  };
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -190,6 +230,51 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      {/* Welcome Dialog for QR visitors */}
+      <Dialog open={showWelcomeDialog} onOpenChange={setShowWelcomeDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+              <Gift className="h-6 w-6 text-primary" />
+            </div>
+            <DialogTitle className="text-xl">Welcome to Berry Rewards!</DialogTitle>
+            <DialogDescription className="text-base">
+              Thank you for visiting a Berry Rewards partner. Earn rewards for posting a story of your experience.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="space-y-2">
+              <Label htmlFor="instagram-id">Instagram ID</Label>
+              <Input
+                id="instagram-id"
+                placeholder="@yourusername"
+                value={instagramId}
+                onChange={(e) => setInstagramId(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                The Instagram account you'll use to post your story
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="reward-email">Email for Gift Card</Label>
+              <Input
+                id="reward-email"
+                type="email"
+                placeholder="you@example.com"
+                value={rewardEmail}
+                onChange={(e) => setRewardEmail(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Where you'd like to receive your Amazon gift card
+              </p>
+            </div>
+            <Button onClick={handleWelcomeSubmit} className="w-full">
+              Continue to Sign Up
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
