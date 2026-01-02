@@ -268,9 +268,18 @@ const Auth = () => {
                 Where you'd like to receive your Amazon gift card
               </p>
             </div>
-            <Button onClick={handleWelcomeSubmit} className="w-full">
-              Continue to Sign Up
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button onClick={handleWelcomeSubmit} className="w-full">
+                Create an Account
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowWelcomeDialog(false)} 
+                className="w-full"
+              >
+                Use as Guest
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
