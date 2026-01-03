@@ -1,10 +1,14 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  'Access-Control-Allow-Credentials': 'true',
-};
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get('origin') || '*';
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+}
 
 // Parse cookies from request header
 function parseCookies(cookieHeader: string | null): Record<string, string> {
@@ -41,6 +45,8 @@ async function validateAdminToken(supabase: any, token: string): Promise<boolean
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req);
+  
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -93,7 +99,7 @@ Deno.serve(async (req) => {
       }
 
       // Combine profiles with stats
-      const users = profiles.map((profile: any) => {
+      const users = (profiles || []).map((profile: any) => {
         const userStats = statsData?.find((s: any) => s.user_id === profile.user_id);
         return {
           user_id: profile.user_id,
@@ -177,7 +183,7 @@ Deno.serve(async (req) => {
     console.error('Admin API error:', error);
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
     );
   }
 });
