@@ -117,6 +117,26 @@ Deno.serve(async (req) => {
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
 
+    } else if (action === 'getGuestSubmissions') {
+      // Get all guest submissions (QR code scans)
+      const { data: submissions, error: submissionsError } = await supabase
+        .from('guest_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (submissionsError) {
+        console.error('Error fetching guest submissions:', submissionsError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to fetch guest submissions' }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({ submissions: submissions || [] }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+
     } else if (action === 'updateStats') {
       // Update user stats
       if (!userId || !stats) {
