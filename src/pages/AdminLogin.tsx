@@ -121,9 +121,17 @@ const AdminLogin = () => {
           </CardContent>
         </Card>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
-          This is a restricted area for administrators only.
-        </p>
+        <div className="text-center mt-6 space-y-2">
+          <Link
+            to="/admin/reset-password"
+            className="text-sm text-primary hover:underline block"
+          >
+            Forgot your password?
+          </Link>
+          <p className="text-sm text-muted-foreground">
+            This is a restricted area for administrators only.
+          </p>
+        </div>
       </motion.div>
     </div>
   );
