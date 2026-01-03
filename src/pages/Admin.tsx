@@ -6,8 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
-import { Shield, Users, Edit, Save, X, LogOut, Home } from 'lucide-react';
+import { Shield, Users, Edit, Save, X, LogOut, Home, QrCode } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface AdminInfo {
@@ -24,6 +25,13 @@ interface UserWithStats {
   posts_submitted: number;
   rewards_claimed: number;
   current_streak: number;
+}
+
+interface GuestSubmission {
+  id: string;
+  email: string;
+  instagram_id: string;
+  created_at: string;
 }
 
 // Helper to make authenticated requests with httpOnly cookie
@@ -64,6 +72,7 @@ const Admin = () => {
   const [adminInfo, setAdminInfo] = useState<AdminInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<UserWithStats[]>([]);
+  const [guestSubmissions, setGuestSubmissions] = useState<GuestSubmission[]>([]);
   const [editingUser, setEditingUser] = useState<UserWithStats | null>(null);
   const [editForm, setEditForm] = useState({
     total_earned: 0,
@@ -88,7 +97,7 @@ const Admin = () => {
       }
 
       setAdminInfo(data.admin);
-      await fetchUsers();
+      await Promise.all([fetchUsers(), fetchGuestSubmissions()]);
     } catch (err) {
       console.error('Session validation error:', err);
       navigate('/admin/login');
@@ -114,6 +123,21 @@ const Admin = () => {
       console.error('Fetch users error:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchGuestSubmissions = async () => {
+    try {
+      const data = await adminFetch('getGuestSubmissions');
+
+      if (data?.error) {
+        console.error('Error fetching guest submissions:', data.error);
+        return;
+      }
+
+      setGuestSubmissions(data.submissions || []);
+    } catch (err) {
+      console.error('Fetch guest submissions error:', err);
     }
   };
 
@@ -169,6 +193,10 @@ const Admin = () => {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString();
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -212,56 +240,109 @@ const Admin = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <Card className="border-0 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                User Statistics
-              </CardTitle>
-              <CardDescription>View and edit user statistics</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {users.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">No users found</p>
-              ) : (
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>User</TableHead>
-                        <TableHead className="text-right">Total Earned</TableHead>
-                        <TableHead className="text-right">Posts</TableHead>
-                        <TableHead className="text-right">Rewards</TableHead>
-                        <TableHead className="text-right">Streak</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {users.map((userStats) => (
-                        <TableRow key={userStats.user_id}>
-                          <TableCell>
-                            <div>
-                              <p className="font-medium">{userStats.display_name || 'No name'}</p>
-                              <p className="text-xs text-muted-foreground">{userStats.email}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-right font-mono">${userStats.total_earned.toFixed(2)}</TableCell>
-                          <TableCell className="text-right font-mono">{userStats.posts_submitted}</TableCell>
-                          <TableCell className="text-right font-mono">{userStats.rewards_claimed}</TableCell>
-                          <TableCell className="text-right font-mono">{userStats.current_streak}</TableCell>
-                          <TableCell className="text-right">
-                            <Button variant="ghost" size="sm" onClick={() => handleEdit(userStats)}>
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <Tabs defaultValue="users" className="w-full">
+            <TabsList className="mb-6">
+              <TabsTrigger value="users" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                Registered Users
+              </TabsTrigger>
+              <TabsTrigger value="guests" className="flex items-center gap-2">
+                <QrCode className="h-4 w-4" />
+                QR Code Submissions
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="users">
+              <Card className="border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5" />
+                    User Statistics
+                  </CardTitle>
+                  <CardDescription>View and edit registered user statistics</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {users.length === 0 ? (
+                    <p className="text-muted-foreground text-center py-8">No registered users found</p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>User</TableHead>
+                            <TableHead className="text-right">Total Earned</TableHead>
+                            <TableHead className="text-right">Posts</TableHead>
+                            <TableHead className="text-right">Rewards</TableHead>
+                            <TableHead className="text-right">Streak</TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {users.map((userStats) => (
+                            <TableRow key={userStats.user_id}>
+                              <TableCell>
+                                <div>
+                                  <p className="font-medium">{userStats.display_name || 'No name'}</p>
+                                  <p className="text-xs text-muted-foreground">{userStats.email}</p>
+                                </div>
+                              </TableCell>
+                              <TableCell className="text-right font-mono">${userStats.total_earned.toFixed(2)}</TableCell>
+                              <TableCell className="text-right font-mono">{userStats.posts_submitted}</TableCell>
+                              <TableCell className="text-right font-mono">{userStats.rewards_claimed}</TableCell>
+                              <TableCell className="text-right font-mono">{userStats.current_streak}</TableCell>
+                              <TableCell className="text-right">
+                                <Button variant="ghost" size="sm" onClick={() => handleEdit(userStats)}>
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="guests">
+              <Card className="border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <QrCode className="h-5 w-5" />
+                    QR Code Guest Submissions
+                  </CardTitle>
+                  <CardDescription>View Instagram IDs submitted by guests via QR code</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {guestSubmissions.length === 0 ? (
+                    <p className="text-muted-foreground text-center py-8">No guest submissions found</p>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Instagram ID</TableHead>
+                            <TableHead>Email</TableHead>
+                            <TableHead>Submitted At</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {guestSubmissions.map((submission) => (
+                            <TableRow key={submission.id}>
+                              <TableCell className="font-medium">@{submission.instagram_id}</TableCell>
+                              <TableCell>{submission.email}</TableCell>
+                              <TableCell className="text-muted-foreground">{formatDate(submission.created_at)}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </motion.div>
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
