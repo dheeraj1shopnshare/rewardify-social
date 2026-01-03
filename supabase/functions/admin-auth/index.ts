@@ -53,12 +53,12 @@ function getTokenFromCookies(req: Request): string | null {
 
 // Create secure cookie header
 function createCookieHeader(token: string, maxAge: number): string {
-  return `admin_token=${token}; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}; Path=/`;
+  return `admin_token=${token}; HttpOnly; Secure; SameSite=None; Max-Age=${maxAge}; Path=/`;
 }
 
 // Create cookie header for deletion
 function createDeleteCookieHeader(): string {
-  return `admin_token=; HttpOnly; Secure; SameSite=Strict; Max-Age=0; Path=/`;
+  return `admin_token=; HttpOnly; Secure; SameSite=None; Max-Age=0; Path=/`;
 }
 
 Deno.serve(async (req) => {
