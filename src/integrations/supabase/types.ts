@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_password_resets: {
+        Row: {
+          admin_id: string
+          code_hash: string
+          created_at: string
+          expires_at: string
+          id: string
+          used_at: string | null
+        }
+        Insert: {
+          admin_id: string
+          code_hash: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          used_at?: string | null
+        }
+        Update: {
+          admin_id?: string
+          code_hash?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          used_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "admin_password_resets_admin_id_fkey"
+            columns: ["admin_id"]
+            isOneToOne: false
+            referencedRelation: "admins"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       admin_sessions: {
         Row: {
           admin_id: string
@@ -53,6 +88,7 @@ export type Database = {
           email: string
           id: string
           password_hash: string
+          recovery_code_hash: string | null
           updated_at: string
         }
         Insert: {
@@ -61,6 +97,7 @@ export type Database = {
           email: string
           id?: string
           password_hash: string
+          recovery_code_hash?: string | null
           updated_at?: string
         }
         Update: {
@@ -69,6 +106,7 @@ export type Database = {
           email?: string
           id?: string
           password_hash?: string
+          recovery_code_hash?: string | null
           updated_at?: string
         }
         Relationships: []

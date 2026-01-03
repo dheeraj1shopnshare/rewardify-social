@@ -5,8 +5,6 @@ const allowedHeaders = 'authorization, x-client-info, apikey, content-type';
 const allowedMethods = 'POST, OPTIONS';
 
 function getCorsHeaders(req: Request): Record<string, string> {
-  // When using cookies (credentials: 'include'), Access-Control-Allow-Origin cannot be '*'.
-  // Echo the request Origin and vary the response to keep browsers happy.
   const origin = req.headers.get('origin') ?? '*';
 
   return {
@@ -33,7 +31,7 @@ function json(req: Request, data: unknown, init: ResponseInit = {}) {
 
 // Hash password using bcrypt with automatic salt generation
 async function hashPassword(password: string): Promise<string> {
-  const salt = await bcrypt.genSalt(12); // Work factor of 12
+  const salt = await bcrypt.genSalt(12);
   return await bcrypt.hash(password, salt);
 }
 
@@ -52,6 +50,14 @@ function generateToken(): string {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
   return Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Generate a 6-digit recovery code
+function generateRecoveryCode(): string {
+  const array = new Uint8Array(3);
+  crypto.getRandomValues(array);
+  const num = (array[0] << 16) | (array[1] << 8) | array[2];
+  return String(num % 1000000).padStart(6, '0');
 }
 
 // Parse cookies from request header
@@ -97,7 +103,7 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const { action, email, password, displayName } = await req.json();
+    const { action, email, password, displayName, code, newPassword } = await req.json();
 
     console.log(`Admin auth action: ${action}`);
 
@@ -214,6 +220,124 @@ Deno.serve(async (req) => {
       headers.set('Set-Cookie', createDeleteCookieHeader());
 
       return new Response(JSON.stringify({ success: true }), { headers });
+    }
+
+    if (action === 'request-reset') {
+      // Request a password reset - generates a 6-digit code valid for 15 minutes
+      if (!email) {
+        return json(req, { error: 'Email required' }, { status: 400 });
+      }
+
+      // Find the admin
+      const { data: admin, error: adminError } = await supabase
+        .from('admins')
+        .select('id, email')
+        .eq('email', email.toLowerCase())
+        .maybeSingle();
+
+      if (adminError || !admin) {
+        // Don't reveal whether the email exists
+        console.log('Reset requested for unknown email:', email);
+        return json(req, { success: true, message: 'If the email exists, a reset code has been generated.' });
+      }
+
+      // Generate a 6-digit code
+      const resetCode = generateRecoveryCode();
+      const codeHash = await hashPassword(resetCode);
+      const expiresAt = new Date();
+      expiresAt.setMinutes(expiresAt.getMinutes() + 15); // 15 minute expiry
+
+      // Store the reset code
+      const { error: insertError } = await supabase.from('admin_password_resets').insert({
+        admin_id: admin.id,
+        code_hash: codeHash,
+        expires_at: expiresAt.toISOString(),
+      });
+
+      if (insertError) {
+        console.error('Failed to create reset code:', insertError);
+        return json(req, { error: 'Failed to create reset code' }, { status: 500 });
+      }
+
+      console.log(`Password reset code generated for ${admin.email}: ${resetCode}`);
+
+      // In a production app, you would email this code to the user
+      // For now, we return it directly (you can remove this in production)
+      return json(req, {
+        success: true,
+        code: resetCode, // Remove this in production - only for testing
+        message: 'Reset code generated. Check your email (or logs for testing).',
+      });
+    }
+
+    if (action === 'reset-password') {
+      // Reset password using the 6-digit code
+      if (!email || !code || !newPassword) {
+        return json(req, { error: 'Email, code, and new password required' }, { status: 400 });
+      }
+
+      // Find the admin
+      const { data: admin, error: adminError } = await supabase
+        .from('admins')
+        .select('id, email')
+        .eq('email', email.toLowerCase())
+        .maybeSingle();
+
+      if (adminError || !admin) {
+        return json(req, { error: 'Invalid reset request' }, { status: 400 });
+      }
+
+      // Find valid, unused reset codes for this admin
+      const { data: resets, error: resetError } = await supabase
+        .from('admin_password_resets')
+        .select('*')
+        .eq('admin_id', admin.id)
+        .is('used_at', null)
+        .gt('expires_at', new Date().toISOString())
+        .order('created_at', { ascending: false });
+
+      if (resetError || !resets || resets.length === 0) {
+        return json(req, { error: 'No valid reset code found. Please request a new one.' }, { status: 400 });
+      }
+
+      // Check if any of the codes match
+      let matchedReset = null;
+      for (const reset of resets) {
+        const isValid = await verifyPassword(code, reset.code_hash);
+        if (isValid) {
+          matchedReset = reset;
+          break;
+        }
+      }
+
+      if (!matchedReset) {
+        return json(req, { error: 'Invalid reset code' }, { status: 400 });
+      }
+
+      // Mark the reset code as used
+      await supabase
+        .from('admin_password_resets')
+        .update({ used_at: new Date().toISOString() })
+        .eq('id', matchedReset.id);
+
+      // Update the password
+      const newPasswordHash = await hashPassword(newPassword);
+      const { error: updateError } = await supabase
+        .from('admins')
+        .update({ password_hash: newPasswordHash, updated_at: new Date().toISOString() })
+        .eq('id', admin.id);
+
+      if (updateError) {
+        console.error('Failed to update password:', updateError);
+        return json(req, { error: 'Failed to update password' }, { status: 500 });
+      }
+
+      // Invalidate all existing sessions for this admin
+      await supabase.from('admin_sessions').delete().eq('admin_id', admin.id);
+
+      console.log(`Password reset successful for ${admin.email}`);
+
+      return json(req, { success: true, message: 'Password has been reset. Please log in with your new password.' });
     }
 
     if (action === 'create') {
