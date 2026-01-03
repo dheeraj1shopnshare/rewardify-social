@@ -1,5 +1,4 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import * as bcrypt from 'https://deno.land/x/bcrypt@v0.4.1/mod.ts';
 
 const allowedHeaders = 'authorization, x-client-info, apikey, content-type';
 const allowedMethods = 'POST, OPTIONS';
@@ -29,16 +28,53 @@ function json(req: Request, data: unknown, init: ResponseInit = {}) {
   });
 }
 
-// Hash password using bcrypt with automatic salt generation
-async function hashPassword(password: string): Promise<string> {
-  const salt = await bcrypt.genSalt(12);
-  return await bcrypt.hash(password, salt);
+// Generate a random salt
+function generateSalt(length = 16): string {
+  const array = new Uint8Array(length);
+  crypto.getRandomValues(array);
+  return Array.from(array, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Hash password using PBKDF2 (Web Crypto compatible)
+async function hashPassword(password: string, salt?: string): Promise<string> {
+  const useSalt = salt || generateSalt();
+  const encoder = new TextEncoder();
+  const passwordData = encoder.encode(password);
+  const saltData = encoder.encode(useSalt);
+
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    passwordData,
+    'PBKDF2',
+    false,
+    ['deriveBits']
+  );
+
+  const derivedBits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt: saltData,
+      iterations: 100000,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    256
+  );
+
+  const hashArray = Array.from(new Uint8Array(derivedBits));
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+
+  return `${useSalt}:${hashHex}`;
 }
 
 // Verify password against stored hash
 async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
   try {
-    return await bcrypt.compare(password, storedHash);
+    const [salt, _] = storedHash.split(':');
+    if (!salt) return false;
+
+    const newHash = await hashPassword(password, salt);
+    return newHash === storedHash;
   } catch (error) {
     console.error('Password verification error:', error);
     return false;
@@ -130,7 +166,7 @@ Deno.serve(async (req) => {
         return json(req, { error: 'Invalid credentials' }, { status: 401 });
       }
 
-      // Verify password using bcrypt
+      // Verify password
       const isValidPassword = await verifyPassword(password, admin.password_hash);
 
       if (!isValidPassword) {
@@ -366,7 +402,7 @@ Deno.serve(async (req) => {
         );
       }
 
-      // Hash password with bcrypt (includes automatic salt)
+      // Hash password with PBKDF2
       const passwordHash = await hashPassword(password);
 
       const { data: newAdmin, error: createError } = await supabase
