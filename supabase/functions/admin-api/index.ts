@@ -24,8 +24,18 @@ function parseCookies(cookieHeader: string | null): Record<string, string> {
   return cookies;
 }
 
-// Get token from cookies
-function getTokenFromCookies(req: Request): string | null {
+// Get token from request (header, body, or cookies)
+function getTokenFromRequest(req: Request, body: any): string | null {
+  // First try Authorization header
+  const authHeader = req.headers.get('authorization');
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return authHeader.substring(7);
+  }
+  // Then try body
+  if (body?.token) {
+    return body.token;
+  }
+  // Finally try cookies (for backward compatibility)
   const cookieHeader = req.headers.get('cookie');
   const cookies = parseCookies(cookieHeader);
   return cookies['admin_token'] || null;
@@ -57,8 +67,11 @@ Deno.serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Validate admin token from httpOnly cookie
-    const adminToken = getTokenFromCookies(req);
+    const body = await req.json();
+    const { action, userId, stats } = body;
+
+    // Validate admin token from header, body, or cookie
+    const adminToken = getTokenFromRequest(req, body);
     const isValid = await validateAdminToken(supabase, adminToken || '');
 
     if (!isValid) {
@@ -67,8 +80,6 @@ Deno.serve(async (req) => {
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-
-    const { action, userId, stats } = await req.json();
 
     console.log(`Admin API action: ${action}`);
 

@@ -42,8 +42,11 @@ const AdminLogin = () => {
         return;
       }
 
-      // Store only non-sensitive admin info for display purposes
-      sessionStorage.setItem('admin_info', JSON.stringify(data.admin));
+      // Store token and admin info in localStorage for cross-domain compatibility
+      if (data.token) {
+        localStorage.setItem('admin_token', data.token);
+      }
+      localStorage.setItem('admin_info', JSON.stringify(data.admin));
 
       toast.success('Welcome back, Admin!');
       navigate('/admin');

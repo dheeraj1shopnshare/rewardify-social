@@ -34,8 +34,14 @@ interface GuestSubmission {
   created_at: string;
 }
 
-// Helper to make authenticated requests with httpOnly cookie
+// Helper to get admin token
+function getAdminToken(): string | null {
+  return localStorage.getItem('admin_token');
+}
+
+// Helper to make authenticated requests
 async function adminFetch(action: string, body: Record<string, any> = {}) {
+  const token = getAdminToken();
   const response = await fetch(
     `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-api`,
     {
@@ -43,15 +49,16 @@ async function adminFetch(action: string, body: Record<string, any> = {}) {
       headers: {
         'Content-Type': 'application/json',
         'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       },
-      credentials: 'include', // Include httpOnly cookies
       body: JSON.stringify({ action, ...body }),
     }
   );
   return response.json();
 }
 
-async function adminAuthFetch(action: string) {
+async function adminAuthFetch(action: string, extraBody: Record<string, any> = {}) {
+  const token = getAdminToken();
   const response = await fetch(
     `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-auth`,
     {
@@ -59,13 +66,14 @@ async function adminAuthFetch(action: string) {
       headers: {
         'Content-Type': 'application/json',
         'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       },
-      credentials: 'include', // Include httpOnly cookies
-      body: JSON.stringify({ action }),
+      body: JSON.stringify({ action, token, ...extraBody }),
     }
   );
   return response.json();
 }
+
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -91,7 +99,8 @@ const Admin = () => {
       const data = await adminAuthFetch('validate');
 
       if (!data?.valid) {
-        sessionStorage.removeItem('admin_info');
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_info');
         navigate('/admin/login');
         return;
       }
@@ -143,7 +152,8 @@ const Admin = () => {
 
   const handleLogout = async () => {
     await adminAuthFetch('logout');
-    sessionStorage.removeItem('admin_info');
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_info');
     navigate('/admin/login');
     toast.success('Logged out successfully');
   };
