@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Download } from "lucide-react";
 
 async function adminAuthFetch(action: string) {
@@ -21,16 +23,26 @@ async function adminAuthFetch(action: string) {
 
 const QRCode = () => {
   const navigate = useNavigate();
-  const [qrUrl, setQrUrl] = useState("");
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [baseUrl, setBaseUrl] = useState(() => {
+    return localStorage.getItem('qr_base_url') || '';
+  });
 
-  const baseUrl = window.location.origin;
-  const targetUrl = `${baseUrl}/auth?qr=true`;
+  const targetUrl = baseUrl ? `${baseUrl}/auth?qr=true` : '';
+  const qrUrl = targetUrl 
+    ? `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(targetUrl)}`
+    : '';
 
   useEffect(() => {
     validateAdminSession();
   }, []);
+
+  useEffect(() => {
+    if (baseUrl) {
+      localStorage.setItem('qr_base_url', baseUrl);
+    }
+  }, [baseUrl]);
 
   const validateAdminSession = async () => {
     try {
@@ -42,8 +54,6 @@ const QRCode = () => {
       }
 
       setIsAuthorized(true);
-      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(targetUrl)}`;
-      setQrUrl(qrApiUrl);
     } catch (err) {
       console.error('Session validation error:', err);
       navigate('/admin/login');
@@ -53,6 +63,7 @@ const QRCode = () => {
   };
 
   const handleDownload = async () => {
+    if (!qrUrl) return;
     try {
       const response = await fetch(qrUrl);
       const blob = await response.blob();
@@ -86,27 +97,49 @@ const QRCode = () => {
       <div className="bg-card rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
         <h1 className="text-2xl font-bold text-foreground mb-2">Berry Rewards QR Code</h1>
         <p className="text-muted-foreground mb-6">
-          Scan this QR code to access the welcome page
+          Enter your published app URL to generate the QR code
         </p>
+
+        <div className="space-y-2 mb-6 text-left">
+          <Label htmlFor="base-url">Published App URL</Label>
+          <Input
+            id="base-url"
+            type="url"
+            placeholder="https://yourapp.lovable.app"
+            value={baseUrl}
+            onChange={(e) => setBaseUrl(e.target.value.replace(/\/$/, ''))}
+          />
+          <p className="text-xs text-muted-foreground">
+            Enter your published URL (e.g., https://yourapp.lovable.app)
+          </p>
+        </div>
         
-        {qrUrl && (
-          <div className="bg-white p-4 rounded-xl inline-block mb-6">
-            <img 
-              src={qrUrl} 
-              alt="QR Code to Berry Rewards" 
-              className="w-[300px] h-[300px]"
-            />
+        {qrUrl ? (
+          <>
+            <div className="bg-white p-4 rounded-xl inline-block mb-6">
+              <img 
+                src={qrUrl} 
+                alt="QR Code to Berry Rewards" 
+                className="w-[300px] h-[300px]"
+              />
+            </div>
+
+            <Button onClick={handleDownload} className="mb-4 w-full">
+              <Download className="mr-2 h-4 w-4" />
+              Download QR Code
+            </Button>
+            
+            <p className="text-sm text-muted-foreground break-all">
+              {targetUrl}
+            </p>
+          </>
+        ) : (
+          <div className="bg-muted/50 p-8 rounded-xl mb-4">
+            <p className="text-muted-foreground">
+              Enter your published URL above to generate the QR code
+            </p>
           </div>
         )}
-
-        <Button onClick={handleDownload} className="mb-4">
-          <Download className="mr-2 h-4 w-4" />
-          Download QR Code
-        </Button>
-        
-        <p className="text-sm text-muted-foreground break-all">
-          {targetUrl}
-        </p>
       </div>
     </div>
   );
