@@ -110,21 +110,21 @@ function parseCookies(cookieHeader: string | null): Record<string, string> {
   return cookies;
 }
 
-// Get token from cookies
-function getTokenFromCookies(req: Request): string | null {
+// Get token from request (header or body)
+function getTokenFromRequest(req: Request, body: any): string | null {
+  // First try Authorization header
+  const authHeader = req.headers.get('authorization');
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return authHeader.substring(7);
+  }
+  // Then try body
+  if (body?.token) {
+    return body.token;
+  }
+  // Finally try cookies (for backward compatibility)
   const cookieHeader = req.headers.get('cookie');
   const cookies = parseCookies(cookieHeader);
   return cookies['admin_token'] || null;
-}
-
-// Create secure cookie header
-function createCookieHeader(token: string, maxAge: number): string {
-  return `admin_token=${token}; HttpOnly; Secure; SameSite=None; Max-Age=${maxAge}; Path=/`;
-}
-
-// Create cookie header for deletion
-function createDeleteCookieHeader(): string {
-  return `admin_token=; HttpOnly; Secure; SameSite=None; Max-Age=0; Path=/`;
 }
 
 Deno.serve(async (req) => {
@@ -139,7 +139,8 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const { action, email, password, displayName, code, newPassword } = await req.json();
+    const body = await req.json();
+    const { action, email, password, displayName, code, newPassword } = body;
 
     console.log(`Admin auth action: ${action}`);
 
@@ -192,29 +193,21 @@ Deno.serve(async (req) => {
 
       console.log(`Admin ${admin.email} logged in successfully`);
 
-      // Return success with httpOnly cookie containing the token
-      const headers = new Headers();
-      const cors = getCorsHeaders(req);
-      for (const [k, v] of Object.entries(cors)) headers.set(k, v);
-      headers.set('Content-Type', 'application/json');
-      headers.set('Set-Cookie', createCookieHeader(sessionToken, 86400)); // 24 hours
-
-      return new Response(
-        JSON.stringify({
-          success: true,
-          admin: {
-            id: admin.id,
-            email: admin.email,
-            display_name: admin.display_name,
-          },
-        }),
-        { headers }
-      );
+      // Return success with token in response body (for cross-domain compatibility)
+      return json(req, {
+        success: true,
+        token: sessionToken,
+        admin: {
+          id: admin.id,
+          email: admin.email,
+          display_name: admin.display_name,
+        },
+      });
     }
 
     if (action === 'validate') {
-      // Validate session token from cookies
-      const token = getTokenFromCookies(req);
+      // Validate session token from header, body, or cookies
+      const token = getTokenFromRequest(req, body);
 
       if (!token) {
         return json(req, { valid: false });
@@ -242,20 +235,14 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'logout') {
-      // Logout - delete session and clear cookie
-      const token = getTokenFromCookies(req);
+      // Logout - delete session
+      const token = getTokenFromRequest(req, body);
 
       if (token) {
         await supabase.from('admin_sessions').delete().eq('token', token);
       }
 
-      const headers = new Headers();
-      const cors = getCorsHeaders(req);
-      for (const [k, v] of Object.entries(cors)) headers.set(k, v);
-      headers.set('Content-Type', 'application/json');
-      headers.set('Set-Cookie', createDeleteCookieHeader());
-
-      return new Response(JSON.stringify({ success: true }), { headers });
+      return json(req, { success: true });
     }
 
     if (action === 'request-reset') {
