@@ -22,14 +22,14 @@ const healthBeautyProducts = [
   },
   {
     id: 2,
-    name: "COLOR WOW Dream Coat Supernatural Spray – Keep Your Hair Frizz-Free and Shiny No Matter the Weather with Award-Winning Anti-Humidity Treatment",
-    category: "Hair Care",
-    price: "$28.00",
-    originalPrice: "$28.00",
-    rating: 4.3,
-    reviews: 99000,
+    name: "Fisher Chef's Naturals Pecan Halves 24 oz Resealable Bag, Unsalted Raw Nuts for Cooking, Baking & Snacking, Healthy Snacks for Adults, Vegan Protein, Keto Snack, Gluten Free Raw Pecans Halves",
+    category: "Super Food",
+    price: "$17.02",
+    originalPrice: "$17.02",
+    rating: 4.6,
+    reviews: 18453,
     image: "/lovable-uploads/81cbc84d-b796-4297-a718-0f8ee584fabc.png",
-    amazonUrl: "https://amzn.to/3GMvrwi",
+    amazonUrl: "https://amzn.to/4rvQghv",
     description:
       "Heat-activated polymers in this breakthrough anti-humidity treatment help to block out moisture and banish frizz.",
   },
@@ -44,7 +44,7 @@ const healthBeautyProducts = [
     image: "/lovable-uploads/9d1ba64e-de9e-4f82-8e5b-29666b3eaaff.png",
     amazonUrl: "https://amzn.to/44RJPva",
     description:
-      "EltaMD UV Clear Face Sunscreen is an oil free sunscreen made with Zinc Oxide. This SPF 46 facial sunscreen is lightweight and silky and helps calm and protect sensitive skin types prone to acne, rosacea and discoloration.",
+      "Add a nutritious, crunchy, and buttery accent to your favorite dishes with Fisher Chefs Naturals pecans. Whether you're baking, adding flavor to salads, or topping off a smoothie, our pecans infuse a delicious nutty flavor and aromatic taste for a mouth-watering experience. Fisher unsalted pecans use only the highest quality and responsibly sourced pecans from trusted growers. Fisher Pecans are a delicious addition to any meal, or even as a snack on their own.",
   },
   {
     id: 4,
