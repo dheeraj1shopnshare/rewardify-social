@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,15 +9,16 @@ import { Search, Star, ExternalLink, Filter } from "lucide-react";
 const healthBeautyProducts = [
   {
     id: 1,
-    name: "La Roche-Posay Toleriane Double Repair Face Moisturizer, Daily Moisturizer Face Cream with Ceramide & Niacinamide for All Skin Types, Immediate Comfort & Long Lasting Hydration, Fragrance Free",
+    name: "AXIS-Y Vegan Collagen Eye Serum - K Beauty Triple Hyaluronic Acid & Peptide Collagen Serum Improve Skin Elasticity, Reduce Fine Lines & Dark Circles - Vegan Korean Skin Care Eye Cream - 0.33 fl. oz.",
     category: "Skincare",
-    price: "$23.99",
-    originalPrice: "$23.99",
-    rating: 4.6,
-    reviews: 68277,
+    price: "$13.05",
+    originalPrice: "$15.99",
+    rating: 4.4,
+    reviews: 2612,
     image: "/lovable-uploads/d806e2a4-8a3d-4bba-bde2-892fa83cfde0.png",
     amazonUrl: "https://amzn.to/3TLjOZo",
-    description: "Ultra hydrating face moisturizer helps restore skin barrier for healthy looking skin. Formulated with a high concentration of Prebiotic Thermal Water, Ceramide-3, Niacinamide & Glycerin. Fragrance free & oil free, wont clog pores",
+    description:
+      "Under Eye Brightener: Targets puffiness, dark circles, and fine lines with a vegan collagen and peptide complex that improves circulation and supports skin elasticity for a smoother, firmer, and more refreshed under-eye area.",
   },
   {
     id: 2,
@@ -30,7 +30,8 @@ const healthBeautyProducts = [
     reviews: 99000,
     image: "/lovable-uploads/81cbc84d-b796-4297-a718-0f8ee584fabc.png",
     amazonUrl: "https://amzn.to/3GMvrwi",
-    description: "Heat-activated polymers in this breakthrough anti-humidity treatment help to block out moisture and banish frizz."
+    description:
+      "Heat-activated polymers in this breakthrough anti-humidity treatment help to block out moisture and banish frizz.",
   },
   {
     id: 3,
@@ -42,7 +43,8 @@ const healthBeautyProducts = [
     reviews: 45000,
     image: "/lovable-uploads/9d1ba64e-de9e-4f82-8e5b-29666b3eaaff.png",
     amazonUrl: "https://amzn.to/44RJPva",
-    description: "EltaMD UV Clear Face Sunscreen is an oil free sunscreen made with Zinc Oxide. This SPF 46 facial sunscreen is lightweight and silky and helps calm and protect sensitive skin types prone to acne, rosacea and discoloration."
+    description:
+      "EltaMD UV Clear Face Sunscreen is an oil free sunscreen made with Zinc Oxide. This SPF 46 facial sunscreen is lightweight and silky and helps calm and protect sensitive skin types prone to acne, rosacea and discoloration.",
   },
   {
     id: 4,
@@ -54,7 +56,8 @@ const healthBeautyProducts = [
     reviews: 51000,
     image: "/lovable-uploads/b4d7e090-2449-4a6a-a5e0-df24670e5ff6.png",
     amazonUrl: "https://amzn.to/450c5vA",
-    description: "A leave-in reparative styling cream that eliminates frizz, hydrates, and protects all hair types. Cruelty free."
+    description:
+      "A leave-in reparative styling cream that eliminates frizz, hydrates, and protects all hair types. Cruelty free.",
   },
   {
     id: 5,
@@ -66,7 +69,7 @@ const healthBeautyProducts = [
     reviews: 50000,
     image: "/lovable-uploads/d347b7c1-8de7-438e-a1a7-9d95af768ad1.png",
     amazonUrl: "https://amazon.com/dp/example5",
-    description: "At-home bond building hair treatment"
+    description: "At-home bond building hair treatment",
   },
   {
     id: 6,
@@ -78,7 +81,8 @@ const healthBeautyProducts = [
     reviews: 62000,
     image: "/lovable-uploads/883a36af-bb7f-4f68-9fce-8eaa741096d9.png",
     amazonUrl: "https://amzn.to/45oNH8k",
-    description: "CHI 44 Iron Guard offers superior thermal protection from the inside out for all hair types. It will shield your hair from the harsh heat of hair styling tools like irons, curlers and dryers. Helps turn frizzy, dry hair into silky, manageable hair. Weightless formula. No build up. Ideal with all CHI Irons."
+    description:
+      "CHI 44 Iron Guard offers superior thermal protection from the inside out for all hair types. It will shield your hair from the harsh heat of hair styling tools like irons, curlers and dryers. Helps turn frizzy, dry hair into silky, manageable hair. Weightless formula. No build up. Ideal with all CHI Irons.",
   },
   {
     id: 7,
@@ -90,7 +94,8 @@ const healthBeautyProducts = [
     reviews: 35000,
     image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
     amazonUrl: "https://amzn.to/3Effaclar",
-    description: "Medicated gel cleanser with salicylic acid targets excess oil while gently removing impurities. Ideal for oily, acne-prone skin. Oil-free and fragrance-free formula."
+    description:
+      "Medicated gel cleanser with salicylic acid targets excess oil while gently removing impurities. Ideal for oily, acne-prone skin. Oil-free and fragrance-free formula.",
   },
   {
     id: 8,
@@ -102,34 +107,35 @@ const healthBeautyProducts = [
     reviews: 55000,
     image: "/lovable-uploads/d7a6f816-680a-4839-b0e5-30b9c863e633.png",
     amazonUrl: "https://amzn.to/410zKer",
-    description: "Award-winning lash enhancing serum created with vitamins peptides & amino acids for the appearance of longer, thicker looking lashes in just 4-6 weeks with full improvement in 3 months. Winner of Harper’s BAZAAR Anti-aging Award & Cosmo Beauty Award"
+    description:
+      "Award-winning lash enhancing serum created with vitamins peptides & amino acids for the appearance of longer, thicker looking lashes in just 4-6 weeks with full improvement in 3 months. Winner of Harper’s BAZAAR Anti-aging Award & Cosmo Beauty Award",
   },
   {
     id: 9,
     name: "Biolage Color Last Conditioner - Protects & Preserves Color Treated Hair, Nourishes & Repairs, Vegan, Paraben-Free, Packaging may vary",
-    category:"Hair Care",
+    category: "Hair Care",
     price: "$45.00",
     originalPrice: "$45.00",
     rating: 4.7,
     reviews: 32000,
     image: "/lovable-uploads/d3e7062b-dbc0-4baa-a065-5baee0a331d3.png",
     amazonUrl: "https://amzn.to/4occ4gK",
-    description: "Infused with micro-dosed soybean oil & stearic acid to help prevent color fade for up to 4 weeks* while adding shine *Consumer test after application of Color Last Shampoo & Conditioner."
+    description:
+      "Infused with micro-dosed soybean oil & stearic acid to help prevent color fade for up to 4 weeks* while adding shine *Consumer test after application of Color Last Shampoo & Conditioner.",
   },
 
-   {
+  {
     id: 10,
     name: "Paul Mitchell Extra-Body Sculpting Foam, Thickens + Builds Body, For Fine Hair",
-    category:"Hair Care",
+    category: "Hair Care",
     price: "$16.50",
     originalPrice: "$16.50",
     rating: 4.3,
     reviews: 16000,
     image: "/lovable-uploads/bd2d23e5-b1f8-417e-b3bc-bc7f9d90d8ab.png",
     amazonUrl: "https://amzn.to/4l1Uqd0",
-    description: "Hair-thickening mousse gives fine hair extra body and boosts volume."
-  }
-
+    description: "Hair-thickening mousse gives fine hair extra body and boosts volume.",
+  },
 ];
 
 const categories = ["All", "Skincare", "Makeup", "Hair Care", "Supplements", "Tools & Accessories"];
@@ -148,14 +154,15 @@ const Marketplace = () => {
 
     // Filter by category
     if (selectedCategory !== "All") {
-      filtered = filtered.filter(product => product.category === selectedCategory);
+      filtered = filtered.filter((product) => product.category === selectedCategory);
     }
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(
+        (product) =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.category.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
@@ -164,7 +171,7 @@ const Marketplace = () => {
 
   const handleAffiliateClick = (amazonUrl: string, productName: string) => {
     console.log(`Affiliate link clicked for: ${productName}`);
-    window.open(amazonUrl, '_blank');
+    window.open(amazonUrl, "_blank");
   };
 
   return (
@@ -174,12 +181,10 @@ const Marketplace = () => {
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Top Health & Beauty Products
-            </h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Top Health & Beauty Products</h1>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Discover the most popular health and beauty products on Amazon. 
-              Carefully curated selection of top-rated items with exclusive deals.
+              Discover the most popular health and beauty products on Amazon. Carefully curated selection of top-rated
+              items with exclusive deals.
             </p>
           </div>
 
@@ -226,9 +231,7 @@ const Marketplace = () => {
                 </div>
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                      {product.category}
-                    </span>
+                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{product.category}</span>
                     <div className="flex items-center">
                       <Star className="h-4 w-4 text-yellow-400 fill-current" />
                       <span className="text-sm text-gray-600 ml-1">
@@ -236,22 +239,14 @@ const Marketplace = () => {
                       </span>
                     </div>
                   </div>
-                  <CardTitle className="text-sm font-semibold leading-tight">
-                    {product.name}
-                  </CardTitle>
+                  <CardTitle className="text-sm font-semibold leading-tight">{product.name}</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                    {product.description}
-                  </p>
+                  <p className="text-xs text-gray-600 mb-3 line-clamp-2">{product.description}</p>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold text-green-600">
-                        {product.price}
-                      </span>
-                      <span className="text-sm text-gray-400 line-through">
-                        {product.originalPrice}
-                      </span>
+                      <span className="text-lg font-bold text-green-600">{product.price}</span>
+                      <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
                     </div>
                   </div>
                   <Button
@@ -269,12 +264,10 @@ const Marketplace = () => {
 
           {/* Call-to-Action Section */}
           <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Find Your Perfect Health & Beauty Products
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Find Your Perfect Health & Beauty Products</h2>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Join thousands of satisfied customers who trust our curated selection. 
-              All products are sourced from Amazon with verified reviews and competitive prices.
+              Join thousands of satisfied customers who trust our curated selection. All products are sourced from
+              Amazon with verified reviews and competitive prices.
             </p>
             <Button size="lg" className="bg-primary hover:bg-primary/90">
               Explore More Products
@@ -284,8 +277,8 @@ const Marketplace = () => {
           {/* Disclaimer */}
           <div className="mt-8 text-center text-xs text-gray-500">
             <p>
-              * Prices and availability are subject to change. 
-              As an Amazon Associate, we earn from qualifying purchases.
+              * Prices and availability are subject to change. As an Amazon Associate, we earn from qualifying
+              purchases.
             </p>
           </div>
         </div>
