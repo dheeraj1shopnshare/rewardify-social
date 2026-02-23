@@ -28,7 +28,7 @@ const healthBeautyProducts = [
     originalPrice: "$17.02",
     rating: 4.6,
     reviews: 18453,
-    image: "/lovable-uploads/81cbc84d-b796-4297-a718-0f8ee584fabc.png",
+    image: "/lovable-uploads/peacons.jpg",
     amazonUrl: "https://amzn.to/4rvQghv",
     description:
       "Heat-activated polymers in this breakthrough anti-humidity treatment help to block out moisture and banish frizz.",
