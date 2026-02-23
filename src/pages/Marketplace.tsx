@@ -16,7 +16,7 @@ const healthBeautyProducts = [
     rating: 4.4,
     reviews: 2612,
     image: "/lovable-uploads/d806e2a4-8a3d-4bba-bde2-892fa83cfde0.png",
-    amazonUrl: "https://amzn.to/3TLjOZo",
+    amazonUrl: "https://amzn.to/46mcme1",
     description:
       "Under Eye Brightener: Targets puffiness, dark circles, and fine lines with a vegan collagen and peptide complex that improves circulation and supports skin elasticity for a smoother, firmer, and more refreshed under-eye area.",
   },
