@@ -35,14 +35,14 @@ const healthBeautyProducts = [
   },
   {
     id: 3,
-    name: "EltaMD UV Clear Face Sunscreen SPF 46, Oil-Free Sunscreen with Zinc Oxide, Dermatologist Recommended",
+    name: "Beauty of Joseon Green Plum Refreshing Cleanser Gel Type Deep Pore Cleansing, Acne Face Wash, Blackhead Remover for All Skin Types, Korean Skincare 100ml, 3.38 fl.oz",
     category: "Skincare",
     price: "$13.00",
     originalPrice: "$13.00",
     rating: 4.5,
     reviews: 45000,
     image: "/lovable-uploads/614JLcBp8uL._AC_SL1500.jpg",
-    amazonUrl: "https://amzn.to/4rAEJgT",
+    amazonUrl: "https://amzn.to/4qUzx6B",
     description:
       "Deep Cleansing: This facial skin care product delves deep into your pores, exfoliating blackheads and congestion. Say goodbye to dullness and welcome a revitalized, glowing complexion that reflects the true beauty of your skin.",
   },
