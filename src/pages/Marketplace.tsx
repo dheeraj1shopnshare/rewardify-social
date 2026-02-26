@@ -41,7 +41,7 @@ const healthBeautyProducts = [
     originalPrice: "$13.00",
     rating: 4.5,
     reviews: 45000,
-    image: "/lovable-uploads/9d1ba64e-de9e-4f82-8e5b-29666b3eaaff.png",
+    image: "/lovable-uploads/614JLcBp8uL._AC_SL1500.jpg",
     amazonUrl: "https://amzn.to/4rAEJgT",
     description:
       "Deep Cleansing: This facial skin care product delves deep into your pores, exfoliating blackheads and congestion. Say goodbye to dullness and welcome a revitalized, glowing complexion that reflects the true beauty of your skin.",
