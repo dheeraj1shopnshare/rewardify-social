@@ -37,14 +37,14 @@ const healthBeautyProducts = [
     id: 3,
     name: "EltaMD UV Clear Face Sunscreen SPF 46, Oil-Free Sunscreen with Zinc Oxide, Dermatologist Recommended",
     category: "Skincare",
-    price: "$43.00",
-    originalPrice: "$43.00",
+    price: "$13.00",
+    originalPrice: "$13.00",
     rating: 4.5,
     reviews: 45000,
     image: "/lovable-uploads/9d1ba64e-de9e-4f82-8e5b-29666b3eaaff.png",
-    amazonUrl: "https://amzn.to/44RJPva",
+    amazonUrl: "https://amzn.to/4rAEJgT",
     description:
-      "Add a nutritious, crunchy, and buttery accent to your favorite dishes with Fisher Chefs Naturals pecans. Whether you're baking, adding flavor to salads, or topping off a smoothie, our pecans infuse a delicious nutty flavor and aromatic taste for a mouth-watering experience. Fisher unsalted pecans use only the highest quality and responsibly sourced pecans from trusted growers. Fisher Pecans are a delicious addition to any meal, or even as a snack on their own.",
+      "Deep Cleansing: This facial skin care product delves deep into your pores, exfoliating blackheads and congestion. Say goodbye to dullness and welcome a revitalized, glowing complexion that reflects the true beauty of your skin.",
   },
   {
     id: 4,
