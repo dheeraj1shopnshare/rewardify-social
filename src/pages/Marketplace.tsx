@@ -48,16 +48,16 @@ const healthBeautyProducts = [
   },
   {
     id: 4,
-    name: "Olaplex No. 6 Bond Smoother, Leave-In Styling Hair Cream Treatment, Smooths, Conditions, & Strengthens, Frizz Control for Up to 72 Hours, For All Hair Types, 3.3 fl oz",
+    name: "Dyvicl Metallic Marker Pens - Set of 10 Medium Point Metallic Markers for Rock Painting, Black Paper, Card Making, Scrapbooking Crafts, DIY Photo Album",
     category: "Hair Care",
-    price: "$30.00",
-    originalPrice: "$30.00",
+    price: "$13.28",
+    originalPrice: "$13.98",
     rating: 4.7,
     reviews: 51000,
     image: "/lovable-uploads/b4d7e090-2449-4a6a-a5e0-df24670e5ff6.png",
-    amazonUrl: "https://amzn.to/450c5vA",
+    amazonUrl: "https://amzn.to/4sdKeCf",
     description:
-      "A leave-in reparative styling cream that eliminates frizz, hydrates, and protects all hair types. Cruelty free.",
+      "Vibrant Metallic Colors - 10 vivid metallic colors, including Green, Dark Red, Purple, Light Green, Blue, Silver, Black, Gold, White, Bronze. Our metallic artist markers are great for adding sparkle and embellishments to various craft work. NOTE: The white marker pen appears transparent when first applied, but becomes opaque as it dries",
   },
   {
     id: 5,
