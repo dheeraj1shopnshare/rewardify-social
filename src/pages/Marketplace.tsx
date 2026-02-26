@@ -54,7 +54,7 @@ const healthBeautyProducts = [
     originalPrice: "$13.98",
     rating: 4.7,
     reviews: 51000,
-    image: "/lovable-uploads/b4d7e090-2449-4a6a-a5e0-df24670e5ff6.png",
+    image: "/lovable-uploads/71rv7RldAvL._AC_SX679.jpg",
     amazonUrl: "https://amzn.to/4sdKeCf",
     description:
       "Vibrant Metallic Colors - 10 vivid metallic colors, including Green, Dark Red, Purple, Light Green, Blue, Silver, Black, Gold, White, Bronze. Our metallic artist markers are great for adding sparkle and embellishments to various craft work. NOTE: The white marker pen appears transparent when first applied, but becomes opaque as it dries",
