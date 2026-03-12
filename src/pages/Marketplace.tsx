@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Star, ExternalLink, Filter } from "lucide-react";
+import { Search, Filter, Loader2 } from "lucide-react";
+import { useAmazonSearch } from "@/hooks/useAmazonProducts";
+import ProductCard from "@/components/marketplace/ProductCard";
+import StaticProductCard from "@/components/marketplace/StaticProductCard";
+import type { StaticProduct } from "@/components/marketplace/StaticProductCard";
 
-// Mock data for top 50 health and beauty products
-const healthBeautyProducts = [
+// Fallback static products (used when API is unavailable)
+const staticProducts: StaticProduct[] = [
   {
     id: 1,
-    name: "AXIS-Y Vegan Collagen Eye Serum - K Beauty Triple Hyaluronic Acid & Peptide Collagen Serum Improve Skin Elasticity, Reduce Fine Lines & Dark Circles - Vegan Korean Skin Care Eye Cream - 0.33 fl. oz.",
+    name: "AXIS-Y Vegan Collagen Eye Serum - K Beauty Triple Hyaluronic Acid & Peptide Collagen Serum",
     category: "Skincare",
     price: "$13.05",
     originalPrice: "$15.99",
@@ -17,12 +20,11 @@ const healthBeautyProducts = [
     reviews: 2612,
     image: "/lovable-uploads/eye_serum.jpg",
     amazonUrl: "https://amzn.to/46mcme1",
-    description:
-      "Under Eye Brightener: Targets puffiness, dark circles, and fine lines with a vegan collagen and peptide complex that improves circulation and supports skin elasticity for a smoother, firmer, and more refreshed under-eye area.",
+    description: "Under Eye Brightener: Targets puffiness, dark circles, and fine lines.",
   },
   {
     id: 2,
-    name: "Fisher Chef's Naturals Pecan Halves 24 oz Resealable Bag, Unsalted Raw Nuts for Cooking, Baking & Snacking, Healthy Snacks for Adults, Vegan Protein, Keto Snack, Gluten Free Raw Pecans Halves",
+    name: "Fisher Chef's Naturals Pecan Halves 24 oz",
     category: "Super Food",
     price: "$17.02",
     originalPrice: "$17.02",
@@ -30,12 +32,11 @@ const healthBeautyProducts = [
     reviews: 18453,
     image: "/lovable-uploads/peacons.jpg",
     amazonUrl: "https://amzn.to/4rvQghv",
-    description:
-      "Heat-activated polymers in this breakthrough anti-humidity treatment help to block out moisture and banish frizz.",
+    description: "Unsalted Raw Nuts for Cooking, Baking & Snacking.",
   },
   {
     id: 3,
-    name: "Beauty of Joseon Green Plum Refreshing Cleanser Gel Type Deep Pore Cleansing, Acne Face Wash, Blackhead Remover for All Skin Types, Korean Skincare 100ml, 3.38 fl.oz",
+    name: "Beauty of Joseon Green Plum Refreshing Cleanser",
     category: "Skincare",
     price: "$13.00",
     originalPrice: "$13.00",
@@ -43,242 +44,171 @@ const healthBeautyProducts = [
     reviews: 45000,
     image: "/lovable-uploads/614JLcBp8uL._AC_SL1500.jpg",
     amazonUrl: "https://amzn.to/4qUzx6B",
-    description:
-      "Deep Cleansing: This facial skin care product delves deep into your pores, exfoliating blackheads and congestion. Say goodbye to dullness and welcome a revitalized, glowing complexion that reflects the true beauty of your skin.",
+    description: "Deep Cleansing facial skin care product for pore refinement.",
   },
   {
     id: 4,
-    name: "Dyvicl Metallic Marker Pens - Set of 10 Medium Point Metallic Markers for Rock Painting, Black Paper, Card Making, Scrapbooking Crafts, DIY Photo Album",
-    category: "Hair Care",
+    name: "Dyvicl Metallic Marker Pens - Set of 10",
+    category: "Art Supplies",
     price: "$13.28",
     originalPrice: "$13.98",
     rating: 4.7,
     reviews: 51000,
     image: "/lovable-uploads/71rv7RldAvL._AC_SX679.jpg",
     amazonUrl: "https://amzn.to/4sdKeCf",
-    description:
-      "Vibrant Metallic Colors - 10 vivid metallic colors, including Green, Dark Red, Purple, Light Green, Blue, Silver, Black, Gold, White, Bronze. Our metallic artist markers are great for adding sparkle and embellishments to various craft work. NOTE: The white marker pen appears transparent when first applied, but becomes opaque as it dries",
-  },
-  {
-    id: 5,
-    name: "Olaplex No. 3 Hair Perfector",
-    category: "Hair Care",
-    price: "$28.00",
-    originalPrice: "$30.00",
-    rating: 4.2,
-    reviews: 50000,
-    image: "/lovable-uploads/d347b7c1-8de7-438e-a1a7-9d95af768ad1.png",
-    amazonUrl: "https://amazon.com/dp/example5",
-    description: "At-home bond building hair treatment",
-  },
-  {
-    id: 6,
-    name: "CHI 44 Iron Guard Thermal Protection Spray, Nourishing Formula Helps Resist Heat Damage to Hair & Tame Frizz, 2 Oz",
-    category: "Hair Care",
-    price: "$4.55",
-    originalPrice: "$4.52",
-    rating: 4.5,
-    reviews: 62000,
-    image: "/lovable-uploads/883a36af-bb7f-4f68-9fce-8eaa741096d9.png",
-    amazonUrl: "https://amzn.to/45oNH8k",
-    description:
-      "CHI 44 Iron Guard offers superior thermal protection from the inside out for all hair types. It will shield your hair from the harsh heat of hair styling tools like irons, curlers and dryers. Helps turn frizzy, dry hair into silky, manageable hair. Weightless formula. No build up. Ideal with all CHI Irons.",
-  },
-  {
-    id: 7,
-    name: "La Roche-Posay Effaclar Medicated Gel Cleanser, Salicylic Acid Face Wash for Oily Skin, Pore Refining, Oil-Free, Fragrance-Free",
-    category: "Skincare",
-    price: "$14.99",
-    originalPrice: "$16.99",
-    rating: 4.4,
-    reviews: 35000,
-    image: "/lovable-uploads/0033cd30-6517-4da3-9733-355598524a3c.png",
-    amazonUrl: "https://amzn.to/3Effaclar",
-    description:
-      "Medicated gel cleanser with salicylic acid targets excess oil while gently removing impurities. Ideal for oily, acne-prone skin. Oil-free and fragrance-free formula.",
-  },
-  {
-    id: 8,
-    name: "Grande Cosmetics GrandeLASH-MD Lash Enhancing Serum",
-    category: "Makeup",
-    price: "$68.00",
-    originalPrice: "$68.00",
-    rating: 4.2,
-    reviews: 55000,
-    image: "/lovable-uploads/d7a6f816-680a-4839-b0e5-30b9c863e633.png",
-    amazonUrl: "https://amzn.to/410zKer",
-    description:
-      "Award-winning lash enhancing serum created with vitamins peptides & amino acids for the appearance of longer, thicker looking lashes in just 4-6 weeks with full improvement in 3 months. Winner of Harper’s BAZAAR Anti-aging Award & Cosmo Beauty Award",
-  },
-  {
-    id: 9,
-    name: "Biolage Color Last Conditioner - Protects & Preserves Color Treated Hair, Nourishes & Repairs, Vegan, Paraben-Free, Packaging may vary",
-    category: "Hair Care",
-    price: "$45.00",
-    originalPrice: "$45.00",
-    rating: 4.7,
-    reviews: 32000,
-    image: "/lovable-uploads/d3e7062b-dbc0-4baa-a065-5baee0a331d3.png",
-    amazonUrl: "https://amzn.to/4occ4gK",
-    description:
-      "Infused with micro-dosed soybean oil & stearic acid to help prevent color fade for up to 4 weeks* while adding shine *Consumer test after application of Color Last Shampoo & Conditioner.",
-  },
-
-  {
-    id: 10,
-    name: "Paul Mitchell Extra-Body Sculpting Foam, Thickens + Builds Body, For Fine Hair",
-    category: "Hair Care",
-    price: "$16.50",
-    originalPrice: "$16.50",
-    rating: 4.3,
-    reviews: 16000,
-    image: "/lovable-uploads/bd2d23e5-b1f8-417e-b3bc-bc7f9d90d8ab.png",
-    amazonUrl: "https://amzn.to/4l1Uqd0",
-    description: "Hair-thickening mousse gives fine hair extra body and boosts volume.",
+    description: "Vibrant Metallic Colors for rock painting, card making, scrapbooking.",
   },
 ];
 
-const categories = ["All", "Skincare", "Makeup", "Hair Care", "Supplements", "Tools & Accessories"];
+const searchCategories = [
+  { label: "All", value: "All" },
+  { label: "Beauty", value: "Beauty" },
+  { label: "Health", value: "HealthPersonalCare" },
+  { label: "Skin Care", value: "Beauty" },
+  { label: "Hair Care", value: "Beauty" },
+  { label: "Supplements", value: "HealthPersonalCare" },
+];
 
 const Marketplace = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeSearch, setActiveSearch] = useState("health beauty skincare");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [filteredProducts, setFilteredProducts] = useState(healthBeautyProducts);
 
-  useEffect(() => {
-    console.log("Marketplace component mounted");
-  }, []);
+  const {
+    data: apiProducts,
+    isLoading,
+    isError,
+  } = useAmazonSearch(activeSearch, selectedCategory);
 
-  useEffect(() => {
-    let filtered = healthBeautyProducts;
-
-    // Filter by category
-    if (selectedCategory !== "All") {
-      filtered = filtered.filter((product) => product.category === selectedCategory);
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      setActiveSearch(searchTerm.trim());
     }
-
-    // Filter by search term
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (product) =>
-          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.category.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-    }
-
-    setFilteredProducts(filtered);
-  }, [searchTerm, selectedCategory]);
-
-  const handleAffiliateClick = (amazonUrl: string, productName: string) => {
-    console.log(`Affiliate link clicked for: ${productName}`);
-    window.open(amazonUrl, "_blank");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    // Re-trigger search with the current search term and new category
+    setActiveSearch(searchTerm.trim() || "health beauty skincare");
+  };
+
+  const showApiResults = apiProducts && apiProducts.length > 0;
+  const showFallback = !isLoading && (!apiProducts || apiProducts.length === 0);
+
   return (
-    <div className="min-h-screen bg-white font-['Inter']">
+    <div className="min-h-screen bg-background font-['Inter']">
       <Navigation />
       <div className="pt-32 px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
+          {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Top Health & Beauty Products</h1>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Discover the most popular health and beauty products on Amazon. Carefully curated selection of top-rated
-              items with exclusive deals.
+            <h1 className="text-4xl font-bold text-foreground mb-4">
+              Top Health & Beauty Products
+            </h1>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Discover the most popular health and beauty products on Amazon.
+              Live data powered by Amazon Creators API.
             </p>
           </div>
 
-          {/* Search and Filter Section */}
+          {/* Search */}
           <div className="mb-8 space-y-4">
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+            <div className="relative max-w-md mx-auto flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  type="text"
+                  placeholder="Search products on Amazon..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="pl-10"
+                />
+              </div>
+              <Button onClick={handleSearch}>Search</Button>
             </div>
 
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2">
-              {categories.map((category) => (
+              {searchCategories.map((cat) => (
                 <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
+                  key={cat.label}
+                  variant={selectedCategory === cat.value ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleCategoryChange(cat.value)}
                   className="text-sm"
                 >
                   <Filter className="h-3 w-3 mr-1" />
-                  {category}
+                  {cat.label}
                 </Button>
               ))}
             </div>
           </div>
 
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-            {filteredProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                  />
-                </div>
-                <CardHeader className="pb-2">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{product.category}</span>
-                    <div className="flex items-center">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="text-sm text-gray-600 ml-1">
-                        {product.rating} ({product.reviews.toLocaleString()})
-                      </span>
-                    </div>
-                  </div>
-                  <CardTitle className="text-sm font-semibold leading-tight">{product.name}</CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-xs text-gray-600 mb-3 line-clamp-2">{product.description}</p>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold text-green-600">{product.price}</span>
-                      <span className="text-sm text-gray-400 line-through">{product.originalPrice}</span>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={() => handleAffiliateClick(product.amazonUrl, product.name)}
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-                    size="sm"
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View on Amazon
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {/* Loading */}
+          {isLoading && (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <span className="ml-3 text-muted-foreground">
+                Searching Amazon...
+              </span>
+            </div>
+          )}
 
-          {/* Call-to-Action Section */}
+          {/* API Error banner */}
+          {isError && (
+            <div className="text-center py-4 mb-6 bg-destructive/10 rounded-lg">
+              <p className="text-sm text-destructive">
+                Unable to fetch live data from Amazon. Showing curated picks below.
+              </p>
+            </div>
+          )}
+
+          {/* API Products Grid */}
+          {showApiResults && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+              {apiProducts.map((product) => (
+                <ProductCard key={product.asin} product={product} />
+              ))}
+            </div>
+          )}
+
+          {/* Fallback Static Products */}
+          {showFallback && (
+            <>
+              {isError && (
+                <h2 className="text-xl font-semibold text-foreground mb-6">
+                  Our Curated Picks
+                </h2>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                {staticProducts.map((product) => (
+                  <StaticProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* CTA */}
           <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Find Your Perfect Health & Beauty Products</h2>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Join thousands of satisfied customers who trust our curated selection. All products are sourced from
-              Amazon with verified reviews and competitive prices.
+            <h2 className="text-2xl font-bold text-foreground mb-4">
+              Find Your Perfect Health & Beauty Products
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Search millions of products on Amazon with live pricing and
+              availability. All links include our affiliate tag.
             </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
-              Explore More Products
-            </Button>
           </div>
 
           {/* Disclaimer */}
-          <div className="mt-8 text-center text-xs text-gray-500">
+          <div className="mt-8 text-center text-xs text-muted-foreground pb-8">
             <p>
-              * Prices and availability are subject to change. As an Amazon Associate, we earn from qualifying
-              purchases.
+              * Prices and availability are subject to change. As an Amazon
+              Associate, we earn from qualifying purchases.
             </p>
           </div>
         </div>
