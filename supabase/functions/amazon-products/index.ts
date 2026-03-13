@@ -131,7 +131,11 @@ serve(async (req) => {
           "offersV2.listings.price",
           "offersV2.listings.savingBasis",
         ],
-      });
+      };
+      if (itemPage && itemPage > 1) {
+        searchPayload.itemPage = itemPage;
+      }
+      result = await callCreatorsApi("searchItems", searchPayload);
     } else if (action === "getItems") {
       if (!itemIds || !Array.isArray(itemIds) || itemIds.length === 0) {
         throw new Error("itemIds array is required for getItems action");
