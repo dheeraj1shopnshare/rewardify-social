@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Filter, Loader2 } from "lucide-react";
+import { Search, Filter, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAmazonSearch } from "@/hooks/useAmazonProducts";
 import ProductCard from "@/components/marketplace/ProductCard";
 import StaticProductCard from "@/components/marketplace/StaticProductCard";
