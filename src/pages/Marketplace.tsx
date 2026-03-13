@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Filter, Loader2 } from "lucide-react";
+import { Search, Filter, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useAmazonSearch } from "@/hooks/useAmazonProducts";
 import ProductCard from "@/components/marketplace/ProductCard";
 import StaticProductCard from "@/components/marketplace/StaticProductCard";
@@ -70,16 +70,19 @@ const searchCategories = [
   { label: "Supplements", value: "HealthPersonalCare" },
 ];
 
+const ITEMS_PER_PAGE = 20;
+
 const Marketplace = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeSearch, setActiveSearch] = useState("health beauty skincare");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [activeSearch, setActiveSearch] = useState("fashion");
+  const [selectedCategory, setSelectedCategory] = useState("Fashion");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     data: apiProducts,
     isLoading,
     isError,
-  } = useAmazonSearch(activeSearch, selectedCategory);
+  } = useAmazonSearch(activeSearch, selectedCategory, 100);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
@@ -93,11 +96,17 @@ const Marketplace = () => {
 
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
-    // Re-trigger search with the current search term and new category
-    setActiveSearch(searchTerm.trim() || "health beauty skincare");
+    setCurrentPage(1);
+    setActiveSearch(searchTerm.trim() || (value === "Fashion" ? "fashion" : "health beauty skincare"));
   };
 
-  const showApiResults = apiProducts && apiProducts.length > 0;
+  const totalProducts = apiProducts?.length || 0;
+  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+  const paginatedProducts = apiProducts?.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+  const showApiResults = paginatedProducts && paginatedProducts.length > 0;
   const showFallback = !isLoading && (!apiProducts || apiProducts.length === 0);
 
   return (
@@ -108,7 +117,7 @@ const Marketplace = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">
-              Top Health & Beauty Products
+              Top 100 Fashion Products
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
               Discover the most popular health and beauty products on Amazon.
@@ -171,11 +180,47 @@ const Marketplace = () => {
 
           {/* API Products Grid */}
           {showApiResults && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-              {apiProducts.map((product) => (
-                <ProductCard key={product.asin} product={product} />
-              ))}
-            </div>
+            <>
+              <p className="text-sm text-muted-foreground mb-4 text-center">
+                Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, totalProducts)} of {totalProducts} products
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+                {paginatedProducts.map((product) => (
+                  <ProductCard key={product.asin} product={product} />
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mb-12">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-1" /> Previous
+                  </Button>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <Button
+                      key={i + 1}
+                      variant={currentPage === i + 1 ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => { setCurrentPage(i + 1); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                      className="w-9"
+                    >
+                      {i + 1}
+                    </Button>
+                  ))}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    disabled={currentPage === totalPages}
+                  >
+                    Next <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </div>
+              )}
+            </>
           )}
 
           {/* Fallback Static Products */}
@@ -195,7 +240,7 @@ const Marketplace = () => {
           )}
 
           {/* CTA */}
-          <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-lg p-8 text-center">
+          <div className="bg-gradient-to-r from-accent/50 to-secondary/50 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               Find Your Perfect Health & Beauty Products
             </h2>

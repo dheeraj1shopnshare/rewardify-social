@@ -106,7 +106,7 @@ serve(async (req) => {
   }
 
   try {
-    const { action, keywords, searchIndex, itemIds, itemCount } =
+    const { action, keywords, searchIndex, itemIds, itemCount, itemPage } =
       await req.json();
 
     const partnerTag = Deno.env.get("AMAZON_ASSOCIATE_TAG");
@@ -117,7 +117,7 @@ serve(async (req) => {
     let result;
 
     if (action === "search") {
-      result = await callCreatorsApi("searchItems", {
+      const searchPayload: Record<string, unknown> = {
         keywords: keywords || "health beauty",
         searchIndex: searchIndex || "All",
         itemCount: itemCount || 10,
@@ -131,7 +131,11 @@ serve(async (req) => {
           "offersV2.listings.price",
           "offersV2.listings.savingBasis",
         ],
-      });
+      };
+      if (itemPage && itemPage > 1) {
+        searchPayload.itemPage = itemPage;
+      }
+      result = await callCreatorsApi("searchItems", searchPayload);
     } else if (action === "getItems") {
       if (!itemIds || !Array.isArray(itemIds) || itemIds.length === 0) {
         throw new Error("itemIds array is required for getItems action");

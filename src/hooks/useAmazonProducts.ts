@@ -41,27 +41,39 @@ function formatPrice(priceObj: any): string {
   return "";
 }
 
-export function useAmazonSearch(keywords: string, searchIndex?: string) {
+export function useAmazonSearch(keywords: string, searchIndex?: string, totalItems: number = 10) {
   return useQuery({
-    queryKey: ["amazon-search", keywords, searchIndex],
+    queryKey: ["amazon-search", keywords, searchIndex, totalItems],
     queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke(
-        "amazon-products",
-        {
+      const pages = Math.min(Math.ceil(totalItems / 10), 10); // max 10 pages
+      const requests = Array.from({ length: pages }, (_, i) =>
+        supabase.functions.invoke("amazon-products", {
           body: {
             action: "search",
             keywords,
             searchIndex: searchIndex || "All",
             itemCount: 10,
+            itemPage: i + 1,
           },
-        }
+        })
       );
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return parseProducts(data);
+      const results = await Promise.allSettled(requests);
+      const allProducts: AmazonProduct[] = [];
+      for (const result of results) {
+        if (result.status === "fulfilled") {
+          const { data, error } = result.value;
+          if (!error && !data?.error) {
+            allProducts.push(...parseProducts(data));
+          }
+        }
+      }
+      if (allProducts.length === 0) {
+        throw new Error("No products found");
+      }
+      return allProducts;
     },
     enabled: keywords.length > 0,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 }
 
