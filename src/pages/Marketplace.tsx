@@ -70,16 +70,19 @@ const searchCategories = [
   { label: "Supplements", value: "HealthPersonalCare" },
 ];
 
+const ITEMS_PER_PAGE = 20;
+
 const Marketplace = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeSearch, setActiveSearch] = useState("health beauty skincare");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [activeSearch, setActiveSearch] = useState("fashion");
+  const [selectedCategory, setSelectedCategory] = useState("Fashion");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     data: apiProducts,
     isLoading,
     isError,
-  } = useAmazonSearch(activeSearch, selectedCategory);
+  } = useAmazonSearch(activeSearch, selectedCategory, 100);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
