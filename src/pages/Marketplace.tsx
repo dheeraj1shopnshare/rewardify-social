@@ -100,7 +100,13 @@ const Marketplace = () => {
     setActiveSearch(searchTerm.trim() || (value === "Fashion" ? "fashion" : "health beauty skincare"));
   };
 
-  const showApiResults = apiProducts && apiProducts.length > 0;
+  const totalProducts = apiProducts?.length || 0;
+  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
+  const paginatedProducts = apiProducts?.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+  const showApiResults = paginatedProducts && paginatedProducts.length > 0;
   const showFallback = !isLoading && (!apiProducts || apiProducts.length === 0);
 
   return (
