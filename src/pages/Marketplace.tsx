@@ -62,6 +62,7 @@ const staticProducts: StaticProduct[] = [
 
 const searchCategories = [
   { label: "All", value: "All" },
+  { label: "Fashion", value: "Fashion" },
   { label: "Beauty", value: "Beauty" },
   { label: "Health", value: "HealthPersonalCare" },
   { label: "Skin Care", value: "Beauty" },
