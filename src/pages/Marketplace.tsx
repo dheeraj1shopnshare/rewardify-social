@@ -96,8 +96,8 @@ const Marketplace = () => {
 
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
-    // Re-trigger search with the current search term and new category
-    setActiveSearch(searchTerm.trim() || "health beauty skincare");
+    setCurrentPage(1);
+    setActiveSearch(searchTerm.trim() || (value === "Fashion" ? "fashion" : "health beauty skincare"));
   };
 
   const showApiResults = apiProducts && apiProducts.length > 0;
