@@ -106,7 +106,7 @@ serve(async (req) => {
   }
 
   try {
-    const { action, keywords, searchIndex, itemIds, itemCount } =
+    const { action, keywords, searchIndex, itemIds, itemCount, itemPage } =
       await req.json();
 
     const partnerTag = Deno.env.get("AMAZON_ASSOCIATE_TAG");
