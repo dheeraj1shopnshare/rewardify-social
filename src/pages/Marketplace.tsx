@@ -240,7 +240,7 @@ const Marketplace = () => {
           )}
 
           {/* CTA */}
-          <div className="bg-gradient-to-r from-pink-50 to-blue-50 rounded-lg p-8 text-center">
+          <div className="bg-gradient-to-r from-accent/50 to-secondary/50 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               Find Your Perfect Health & Beauty Products
             </h2>
