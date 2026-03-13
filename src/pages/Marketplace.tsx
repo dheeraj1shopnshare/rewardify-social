@@ -117,7 +117,7 @@ const Marketplace = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">
-              Top Health & Beauty Products
+              Top 100 Fashion Products
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
               Discover the most popular health and beauty products on Amazon.
