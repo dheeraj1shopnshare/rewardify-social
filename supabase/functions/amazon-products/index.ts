@@ -117,7 +117,7 @@ serve(async (req) => {
     let result;
 
     if (action === "search") {
-      result = await callCreatorsApi("searchItems", {
+      const searchPayload: Record<string, unknown> = {
         keywords: keywords || "health beauty",
         searchIndex: searchIndex || "All",
         itemCount: itemCount || 10,
