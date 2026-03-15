@@ -11,10 +11,46 @@ const CREATORS_API_BASE = "https://creatorsapi.amazon";
 // Token cache
 let cachedToken: string | null = null;
 let tokenExpiresAt = 0;
+let pendingTokenRequest: Promise<string> | null = null;
+
+async function requestOAuthToken(
+  url: string,
+  headers: Record<string, string>,
+  body: string,
+  label: string
+): Promise<{ access_token: string; expires_in?: number }> {
+  const response = await fetch(url, {
+    method: "POST",
+    headers,
+    body,
+  });
+
+  const raw = await response.text();
+  if (!response.ok) {
+    throw new Error(`${label} failed [${response.status}]: ${raw}`);
+  }
+
+  let data: { access_token?: string; expires_in?: number };
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    throw new Error(`${label} returned non-JSON response: ${raw}`);
+  }
+
+  if (!data.access_token) {
+    throw new Error(`${label} response missing access_token`);
+  }
+
+  return { access_token: data.access_token, expires_in: data.expires_in };
+}
 
 async function getAccessToken(): Promise<string> {
   if (cachedToken && Date.now() < tokenExpiresAt) {
     return cachedToken;
+  }
+
+  if (pendingTokenRequest) {
+    return pendingTokenRequest;
   }
 
   const clientId = Deno.env.get("AMAZON_CLIENT_ID");
@@ -24,51 +60,79 @@ async function getAccessToken(): Promise<string> {
     throw new Error("Amazon API credentials not configured");
   }
 
-  // Try v3.x (LwA) first, fall back to v2.x (Cognito)
-  let tokenUrl: string;
-  let requestInit: RequestInit;
+  pendingTokenRequest = (async () => {
+    const attemptErrors: string[] = [];
 
-  // Attempt v3.x LwA auth
-  tokenUrl = "https://api.amazon.com/auth/o2/token";
-  requestInit = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      grant_type: "client_credentials",
-      client_id: clientId,
-      client_secret: clientSecret,
-      scope: "creatorsapi::default",
-    }),
-  };
+    const attempts: Array<{
+      url: string;
+      headers: Record<string, string>;
+      body: string;
+      label: string;
+    }> = [
+      {
+        label: "v3.x LwA (form credentials)",
+        url: "https://api.amazon.com/auth/o2/token",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type: "client_credentials",
+          client_id: clientId,
+          client_secret: clientSecret,
+          scope: "creatorsapi::default",
+        }).toString(),
+      },
+      {
+        label: "v3.x LwA (basic auth)",
+        url: "https://api.amazon.com/auth/o2/token",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+        },
+        body: new URLSearchParams({
+          grant_type: "client_credentials",
+          scope: "creatorsapi::default",
+        }).toString(),
+      },
+      {
+        label: "v2.x Cognito",
+        url: "https://creatorsapi.auth.us-east-1.amazoncognito.com/oauth2/token",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          grant_type: "client_credentials",
+          client_id: clientId,
+          client_secret: clientSecret,
+          scope: "creatorsapi/default",
+        }).toString(),
+      },
+    ];
 
-  let response = await fetch(tokenUrl, requestInit);
+    for (const attempt of attempts) {
+      try {
+        const tokenResponse = await requestOAuthToken(
+          attempt.url,
+          attempt.headers,
+          attempt.body,
+          attempt.label
+        );
 
-  // If v3.x fails, try v2.x Cognito (NA)
-  if (!response.ok) {
-    console.log("v3.x auth failed, trying v2.x Cognito...");
-    tokenUrl =
-      "https://creatorsapi.auth.us-east-1.amazoncognito.com/oauth2/token";
-    requestInit = {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `grant_type=client_credentials&client_id=${encodeURIComponent(clientId)}&client_secret=${encodeURIComponent(clientSecret)}&scope=creatorsapi/default`,
-    };
-    response = await fetch(tokenUrl, requestInit);
+        cachedToken = tokenResponse.access_token;
+        const expiresIn = Number(tokenResponse.expires_in ?? 3600);
+        tokenExpiresAt = Date.now() + Math.max(expiresIn - 300, 60) * 1000;
+
+        return cachedToken;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        attemptErrors.push(message);
+      }
+    }
+
+    throw new Error(`Token request failed: ${attemptErrors.join(" | ")}`);
+  })();
+
+  try {
+    return await pendingTokenRequest;
+  } finally {
+    pendingTokenRequest = null;
   }
-
-  if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(
-      `Token request failed [${response.status}]: ${errorBody}`
-    );
-  }
-
-  const data = await response.json();
-  cachedToken = data.access_token;
-  // Expire 5 minutes early to be safe
-  tokenExpiresAt = Date.now() + (data.expires_in - 300) * 1000;
-
-  return cachedToken!;
 }
 
 async function callCreatorsApi(
