@@ -170,8 +170,26 @@ serve(async (req) => {
   }
 
   try {
-    const { action, keywords, searchIndex, itemIds, itemCount, itemPage } =
-      await req.json();
+    const body = await req.json();
+    const { action, keywords, searchIndex, itemIds, itemCount, itemPage } = body;
+
+    // Debug mode: log first/last chars of credentials
+    if (action === "debug") {
+      const clientId = Deno.env.get("AMAZON_CLIENT_ID") || "";
+      const clientSecret = Deno.env.get("AMAZON_CLIENT_SECRET") || "";
+      const tag = Deno.env.get("AMAZON_ASSOCIATE_TAG") || "";
+      return new Response(JSON.stringify({
+        clientId_start: clientId.substring(0, 20),
+        clientId_end: clientId.substring(clientId.length - 6),
+        clientId_length: clientId.length,
+        secret_length: clientSecret.length,
+        secret_start: clientSecret.substring(0, 3),
+        tag: tag,
+      }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const partnerTag = Deno.env.get("AMAZON_ASSOCIATE_TAG");
     if (!partnerTag) {
