@@ -1,14 +1,7 @@
-import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Filter, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
-import { useAmazonSearch } from "@/hooks/useAmazonProducts";
-import ProductCard from "@/components/marketplace/ProductCard";
 import StaticProductCard from "@/components/marketplace/StaticProductCard";
 import type { StaticProduct } from "@/components/marketplace/StaticProductCard";
 
-// Fallback static products (used when API is unavailable)
 const staticProducts: StaticProduct[] = [
   {
     id: 1,
@@ -60,197 +53,27 @@ const staticProducts: StaticProduct[] = [
   },
 ];
 
-const searchCategories = [
-  { label: "All", value: "All" },
-  { label: "Fashion", value: "Fashion" },
-  { label: "Beauty", value: "Beauty" },
-  { label: "Health", value: "HealthPersonalCare" },
-  { label: "Skin Care", value: "Beauty" },
-  { label: "Hair Care", value: "Beauty" },
-  { label: "Supplements", value: "HealthPersonalCare" },
-];
-
-const ITEMS_PER_PAGE = 20;
-
 const Marketplace = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeSearch, setActiveSearch] = useState("fashion");
-  const [selectedCategory, setSelectedCategory] = useState("Fashion");
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const {
-    data: apiProducts,
-    isLoading,
-    isError,
-  } = useAmazonSearch(activeSearch, selectedCategory, 100);
-
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      setActiveSearch(searchTerm.trim());
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") handleSearch();
-  };
-
-  const handleCategoryChange = (value: string) => {
-    setSelectedCategory(value);
-    setCurrentPage(1);
-    setActiveSearch(searchTerm.trim() || (value === "Fashion" ? "fashion" : "health beauty skincare"));
-  };
-
-  const totalProducts = apiProducts?.length || 0;
-  const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE);
-  const paginatedProducts = apiProducts?.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
-  const showApiResults = paginatedProducts && paginatedProducts.length > 0;
-  const showFallback = !isLoading && (!apiProducts || apiProducts.length === 0);
-
   return (
     <div className="min-h-screen bg-background font-['Inter']">
       <Navigation />
       <div className="pt-32 px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">
-              Top 100 Fashion Products
+              Our Curated Picks
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Discover the most popular health and beauty products on Amazon.
-              Live data powered by Amazon Creators API.
+              Discover our hand-picked health and beauty products.
             </p>
           </div>
 
-          {/* Search */}
-          <div className="mb-8 space-y-4">
-            <div className="relative max-w-md mx-auto flex gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  type="text"
-                  placeholder="Search products on Amazon..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="pl-10"
-                />
-              </div>
-              <Button onClick={handleSearch}>Search</Button>
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-2">
-              {searchCategories.map((cat) => (
-                <Button
-                  key={cat.label}
-                  variant={selectedCategory === cat.value ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => handleCategoryChange(cat.value)}
-                  className="text-sm"
-                >
-                  <Filter className="h-3 w-3 mr-1" />
-                  {cat.label}
-                </Button>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+            {staticProducts.map((product) => (
+              <StaticProductCard key={product.id} product={product} />
+            ))}
           </div>
 
-          {/* Loading */}
-          {isLoading && (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <span className="ml-3 text-muted-foreground">
-                Searching Amazon...
-              </span>
-            </div>
-          )}
-
-          {/* API Error banner */}
-          {isError && (
-            <div className="text-center py-4 mb-6 bg-destructive/10 rounded-lg">
-              <p className="text-sm text-destructive">
-                Unable to fetch live data from Amazon. Showing curated picks below.
-              </p>
-            </div>
-          )}
-
-          {/* API Products Grid */}
-          {showApiResults && (
-            <>
-              <p className="text-sm text-muted-foreground mb-4 text-center">
-                Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, totalProducts)} of {totalProducts} products
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-                {paginatedProducts.map((product) => (
-                  <ProductCard key={product.asin} product={product} />
-                ))}
-              </div>
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mb-12">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                    disabled={currentPage === 1}
-                  >
-                    <ChevronLeft className="h-4 w-4 mr-1" /> Previous
-                  </Button>
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <Button
-                      key={i + 1}
-                      variant={currentPage === i + 1 ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => { setCurrentPage(i + 1); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                      className="w-9"
-                    >
-                      {i + 1}
-                    </Button>
-                  ))}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                    disabled={currentPage === totalPages}
-                  >
-                    Next <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
-                </div>
-              )}
-            </>
-          )}
-
-          {/* Fallback Static Products */}
-          {showFallback && (
-            <>
-              {isError && (
-                <h2 className="text-xl font-semibold text-foreground mb-6">
-                  Our Curated Picks
-                </h2>
-              )}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-                {staticProducts.map((product) => (
-                  <StaticProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* CTA */}
-          <div className="bg-gradient-to-r from-accent/50 to-secondary/50 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-4">
-              Find Your Perfect Health & Beauty Products
-            </h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Search millions of products on Amazon with live pricing and
-              availability. All links include our affiliate tag.
-            </p>
-          </div>
-
-          {/* Disclaimer */}
           <div className="mt-8 text-center text-xs text-muted-foreground pb-8">
             <p>
               * Prices and availability are subject to change. As an Amazon
