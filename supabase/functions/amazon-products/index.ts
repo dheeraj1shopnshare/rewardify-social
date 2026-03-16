@@ -106,7 +106,7 @@ serve(async (req) => {
     const products = items.map((item: any) => {
       const itemInfo = item.itemInfo || item.ItemInfo;
       const images = item.images || item.Images;
-      const offers = item.offers || item.Offers;
+      const offers = item.offersV2 || item.offers || item.Offers;
 
       return {
         asin: item.asin || item.ASIN,
