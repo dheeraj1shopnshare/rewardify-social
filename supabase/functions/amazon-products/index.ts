@@ -74,11 +74,12 @@ serve(async (req) => {
       itemPage: page || 1,
     };
 
-    const apiResponse = await fetch("https://creatorsapi.amazon/catalog/v1/searchItems", {
+    const apiResponse = await fetch("https://creatorsapi.amazon/catalog/v1/searchItems?marketplace=www.amazon.com", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
+        "x-marketplace": "www.amazon.com",
       },
       body: JSON.stringify(payload),
     });
