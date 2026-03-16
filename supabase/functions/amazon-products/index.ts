@@ -1,71 +1,53 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createHmac } from "https://deno.land/std@0.168.0/crypto/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// PA-API 5.0 request signing
-function getSignatureKey(key: string, dateStamp: string, regionName: string, serviceName: string): Uint8Array {
-  const kDate = hmacSHA256(`AWS4${key}`, dateStamp);
-  const kRegion = hmacSHA256(kDate, regionName);
-  const kService = hmacSHA256(kRegion, serviceName);
-  const kSigning = hmacSHA256(kService, "aws4_request");
+async function hmacSHA256(key: Uint8Array, data: string): Promise<Uint8Array> {
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw", key, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", cryptoKey, new TextEncoder().encode(data));
+  return new Uint8Array(sig);
+}
+
+async function sha256Hex(data: string): Promise<string> {
+  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(data));
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function toHex(buf: Uint8Array): string {
+  return Array.from(buf).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function getSignatureKey(key: string, dateStamp: string, region: string, service: string): Promise<Uint8Array> {
+  const kDate = await hmacSHA256(new TextEncoder().encode(`AWS4${key}`), dateStamp);
+  const kRegion = await hmacSHA256(kDate, region);
+  const kService = await hmacSHA256(kRegion, service);
+  const kSigning = await hmacSHA256(kService, "aws4_request");
   return kSigning;
 }
 
-function hmacSHA256(key: string | Uint8Array, data: string): Uint8Array {
-  const hmac = createHmac("sha256", typeof key === "string" ? new TextEncoder().encode(key) : key);
-  hmac.update(new TextEncoder().encode(data));
-  return new Uint8Array(hmac.digest());
-}
-
-function sha256Hex(data: string): string {
-  const hash = new Uint8Array(
-    // @ts-ignore Deno crypto
-    crypto.subtle ? [] : []
-  );
-  // Use Web Crypto API
-  return "";
-}
-
-async function sha256(data: string): Promise<string> {
-  const encoded = new TextEncoder().encode(data);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", encoded);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
 async function signRequest(
-  accessKey: string,
-  secretKey: string,
-  host: string,
-  region: string,
-  path: string,
-  payload: string,
-  amzDate: string,
-  dateStamp: string,
+  accessKey: string, secretKey: string, host: string, region: string,
+  path: string, payload: string, amzDate: string, dateStamp: string,
 ) {
   const service = "ProductAdvertisingAPI";
-  const method = "POST";
   const contentType = "application/json; charset=UTF-8";
-  const canonicalHeaders = `content-encoding:amz-1.0\ncontent-type:${contentType}\nhost:${host}\nx-amz-date:${amzDate}\nx-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n`;
+  const target = "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems";
+  const canonicalHeaders = `content-encoding:amz-1.0\ncontent-type:${contentType}\nhost:${host}\nx-amz-date:${amzDate}\nx-amz-target:${target}\n`;
   const signedHeaders = "content-encoding;content-type;host;x-amz-date;x-amz-target";
-  const payloadHash = await sha256(payload);
-  const canonicalRequest = `${method}\n${path}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
+  const payloadHash = await sha256Hex(payload);
+  const canonicalRequest = `POST\n${path}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
   const algorithm = "AWS4-HMAC-SHA256";
   const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
-  const canonicalRequestHash = await sha256(canonicalRequest);
+  const canonicalRequestHash = await sha256Hex(canonicalRequest);
   const stringToSign = `${algorithm}\n${amzDate}\n${credentialScope}\n${canonicalRequestHash}`;
-  const signingKey = getSignatureKey(secretKey, dateStamp, region, service);
-  const signatureBytes = hmacSHA256(signingKey, stringToSign);
-  const signature = Array.from(signatureBytes)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  const authorization = `${algorithm} Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
-  return authorization;
+  const signingKey = await getSignatureKey(secretKey, dateStamp, region, service);
+  const signature = toHex(await hmacSHA256(signingKey, stringToSign));
+  return `${algorithm} Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
 }
 
 serve(async (req) => {
@@ -96,7 +78,6 @@ serve(async (req) => {
         "ItemInfo.Features",
         "Offers.Listings.Price",
         "ItemInfo.ByLineInfo",
-        "BrowseNodeInfo.BrowseNodes",
       ],
       ItemCount: 10,
       ItemPage: page || 1,
@@ -106,26 +87,17 @@ serve(async (req) => {
     const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, "");
     const dateStamp = amzDate.slice(0, 8);
 
-    const authorization = await signRequest(
-      accessKey,
-      secretKey,
-      host,
-      region,
-      path,
-      payload,
-      amzDate,
-      dateStamp,
-    );
+    const authorization = await signRequest(accessKey, secretKey, host, region, path, payload, amzDate, dateStamp);
 
     const response = await fetch(`https://${host}${path}`, {
       method: "POST",
       headers: {
         "content-encoding": "amz-1.0",
         "content-type": "application/json; charset=UTF-8",
-        host: host,
+        "host": host,
         "x-amz-date": amzDate,
         "x-amz-target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
-        Authorization: authorization,
+        "Authorization": authorization,
       },
       body: payload,
     });
@@ -140,7 +112,6 @@ serve(async (req) => {
       });
     }
 
-    // Transform response into a simpler format
     const products = (data.SearchResult?.Items || []).map((item: any) => ({
       asin: item.ASIN,
       title: item.ItemInfo?.Title?.DisplayValue || "Unknown Product",
