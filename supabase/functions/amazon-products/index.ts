@@ -5,49 +5,35 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-async function hmacSHA256(key: Uint8Array, data: string): Promise<Uint8Array> {
-  const cryptoKey = await crypto.subtle.importKey(
-    "raw", key, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
-  );
-  const sig = await crypto.subtle.sign("HMAC", cryptoKey, new TextEncoder().encode(data));
-  return new Uint8Array(sig);
-}
+// Token cache
+let cachedToken: string | null = null;
+let tokenExpiry = 0;
 
-async function sha256Hex(data: string): Promise<string> {
-  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(data));
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
-}
+async function getAccessToken(clientId: string, clientSecret: string): Promise<string> {
+  const now = Date.now();
+  if (cachedToken && now < tokenExpiry) {
+    return cachedToken;
+  }
 
-function toHex(buf: Uint8Array): string {
-  return Array.from(buf).map(b => b.toString(16).padStart(2, "0")).join("");
-}
+  const response = await fetch("https://api.amazon.com/auth/o2/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      grant_type: "client_credentials",
+      client_id: clientId,
+      client_secret: clientSecret,
+    }),
+  });
 
-async function getSignatureKey(key: string, dateStamp: string, region: string, service: string): Promise<Uint8Array> {
-  const kDate = await hmacSHA256(new TextEncoder().encode(`AWS4${key}`), dateStamp);
-  const kRegion = await hmacSHA256(kDate, region);
-  const kService = await hmacSHA256(kRegion, service);
-  const kSigning = await hmacSHA256(kService, "aws4_request");
-  return kSigning;
-}
+  const data = await response.json();
+  if (!response.ok || !data.access_token) {
+    console.error("Token error:", JSON.stringify(data));
+    throw new Error(`Failed to get access token: ${data.error_description || data.error || "Unknown error"}`);
+  }
 
-async function signRequest(
-  accessKey: string, secretKey: string, host: string, region: string,
-  path: string, payload: string, amzDate: string, dateStamp: string,
-) {
-  const service = "ProductAdvertisingAPI";
-  const contentType = "application/json; charset=UTF-8";
-  const target = "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems";
-  const canonicalHeaders = `content-encoding:amz-1.0\ncontent-type:${contentType}\nhost:${host}\nx-amz-date:${amzDate}\nx-amz-target:${target}\n`;
-  const signedHeaders = "content-encoding;content-type;host;x-amz-date;x-amz-target";
-  const payloadHash = await sha256Hex(payload);
-  const canonicalRequest = `POST\n${path}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
-  const algorithm = "AWS4-HMAC-SHA256";
-  const credentialScope = `${dateStamp}/${region}/${service}/aws4_request`;
-  const canonicalRequestHash = await sha256Hex(canonicalRequest);
-  const stringToSign = `${algorithm}\n${amzDate}\n${credentialScope}\n${canonicalRequestHash}`;
-  const signingKey = await getSignatureKey(secretKey, dateStamp, region, service);
-  const signature = toHex(await hmacSHA256(signingKey, stringToSign));
-  return `${algorithm} Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+  cachedToken = data.access_token;
+  tokenExpiry = now + (data.expires_in - 60) * 1000; // refresh 60s before expiry
+  return cachedToken!;
 }
 
 serve(async (req) => {
@@ -57,73 +43,84 @@ serve(async (req) => {
 
   try {
     const { keywords, category, page } = await req.json();
-    
-    const accessKey = Deno.env.get("AMAZON_CLIENT_ID")!;
-    const secretKey = Deno.env.get("AMAZON_CLIENT_SECRET")!;
+
+    const clientId = Deno.env.get("AMAZON_CLIENT_ID")!;
+    const clientSecret = Deno.env.get("AMAZON_CLIENT_SECRET")!;
     const partnerTag = Deno.env.get("AMAZON_ASSOCIATE_TAG")!;
 
-    const host = "webservices.amazon.com";
-    const region = "us-east-1";
-    const path = "/paapi5/searchitems";
+    if (!clientId || !clientSecret || !partnerTag) {
+      throw new Error("Amazon credentials not configured");
+    }
 
-    const payload = JSON.stringify({
-      Keywords: keywords || "beauty skincare",
-      SearchIndex: category || "Beauty",
-      PartnerTag: partnerTag,
-      PartnerType: "Associates",
-      Marketplace: "www.amazon.com",
-      Resources: [
-        "Images.Primary.Large",
-        "ItemInfo.Title",
-        "ItemInfo.Features",
-        "Offers.Listings.Price",
-        "ItemInfo.ByLineInfo",
+    // Get OAuth token
+    const accessToken = await getAccessToken(clientId, clientSecret);
+
+    // Call Creators API
+    const payload = {
+      keywords: keywords || "beauty skincare",
+      searchIndex: category || "Beauty",
+      partnerTag: partnerTag,
+      partnerType: "Associates",
+      marketplace: "www.amazon.com",
+      resources: [
+        "images.primary.large",
+        "itemInfo.title",
+        "itemInfo.features",
+        "offers.listings.price",
+        "itemInfo.byLineInfo",
       ],
-      ItemCount: 10,
-      ItemPage: page || 1,
-    });
+      itemCount: 10,
+      itemPage: page || 1,
+    };
 
-    const now = new Date();
-    const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, "");
-    const dateStamp = amzDate.slice(0, 8);
-
-    const authorization = await signRequest(accessKey, secretKey, host, region, path, payload, amzDate, dateStamp);
-
-    const response = await fetch(`https://${host}${path}`, {
+    const apiResponse = await fetch("https://creatorsapi.amazon/catalog/v1/searchItems", {
       method: "POST",
       headers: {
-        "content-encoding": "amz-1.0",
-        "content-type": "application/json; charset=UTF-8",
-        "host": host,
-        "x-amz-date": amzDate,
-        "x-amz-target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
-        "Authorization": authorization,
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
       },
-      body: payload,
+      body: JSON.stringify(payload),
     });
 
-    const data = await response.json();
+    const data = await apiResponse.json();
 
-    if (!response.ok) {
-      console.error("Amazon PA-API error:", JSON.stringify(data));
+    if (!apiResponse.ok) {
+      console.error("Creators API error:", JSON.stringify(data));
+      // Clear token cache if auth error
+      if (apiResponse.status === 401) {
+        cachedToken = null;
+        tokenExpiry = 0;
+      }
       return new Response(JSON.stringify({ error: "Failed to fetch products", details: data }), {
-        status: response.status,
+        status: apiResponse.status,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const products = (data.SearchResult?.Items || []).map((item: any) => ({
-      asin: item.ASIN,
-      title: item.ItemInfo?.Title?.DisplayValue || "Unknown Product",
-      image: item.Images?.Primary?.Large?.URL || "",
-      price: item.Offers?.Listings?.[0]?.Price?.DisplayAmount || "N/A",
-      priceValue: item.Offers?.Listings?.[0]?.Price?.Amount || 0,
-      url: item.DetailPageURL,
-      brand: item.ItemInfo?.ByLineInfo?.Brand?.DisplayValue || "",
-      features: item.ItemInfo?.Features?.DisplayValues || [],
-    }));
+    // Transform response
+    const searchResult = data.searchResult || data.SearchResult;
+    const items = searchResult?.items || searchResult?.Items || [];
 
-    return new Response(JSON.stringify({ products, totalResults: data.SearchResult?.TotalResultCount || 0 }), {
+    const products = items.map((item: any) => {
+      const itemInfo = item.itemInfo || item.ItemInfo;
+      const images = item.images || item.Images;
+      const offers = item.offers || item.Offers;
+
+      return {
+        asin: item.asin || item.ASIN,
+        title: itemInfo?.title?.displayValue || itemInfo?.Title?.DisplayValue || "Unknown Product",
+        image: images?.primary?.large?.url || images?.Primary?.Large?.URL || "",
+        price: offers?.listings?.[0]?.price?.displayAmount || offers?.Listings?.[0]?.Price?.DisplayAmount || "N/A",
+        priceValue: offers?.listings?.[0]?.price?.amount || offers?.Listings?.[0]?.Price?.Amount || 0,
+        url: item.detailPageURL || item.DetailPageURL,
+        brand: itemInfo?.byLineInfo?.brand?.displayValue || itemInfo?.ByLineInfo?.Brand?.DisplayValue || "",
+        features: itemInfo?.features?.displayValues || itemInfo?.Features?.DisplayValues || [],
+      };
+    });
+
+    const totalResults = searchResult?.totalResultCount || searchResult?.TotalResultCount || 0;
+
+    return new Response(JSON.stringify({ products, totalResults }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
