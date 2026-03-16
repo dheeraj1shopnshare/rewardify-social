@@ -22,6 +22,7 @@ async function getAccessToken(clientId: string, clientSecret: string): Promise<s
       grant_type: "client_credentials",
       client_id: clientId,
       client_secret: clientSecret,
+      scope: "creatorsapi::default",
     }),
   });
 
