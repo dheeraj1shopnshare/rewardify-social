@@ -67,7 +67,7 @@ serve(async (req) => {
         "images.primary.large",
         "itemInfo.title",
         "itemInfo.features",
-        "offers.listings.price",
+        "offersV2.listings.price",
         "itemInfo.byLineInfo",
       ],
       itemCount: 10,
