@@ -103,6 +103,13 @@ serve(async (req) => {
     const searchResult = data.searchResult || data.SearchResult;
     const items = searchResult?.items || searchResult?.Items || [];
 
+    // Debug: log first item's full structure
+    if (items.length > 0) {
+      console.log("RAW ITEM KEYS:", JSON.stringify(Object.keys(items[0])));
+      console.log("RAW ITEM OFFERS:", JSON.stringify(items[0].offersV2 || items[0].offers || items[0].Offers || "NO_OFFERS_KEY"));
+      console.log("RAW ITEM FULL:", JSON.stringify(items[0]));
+    }
+
     const products = items.map((item: any) => {
       const itemInfo = item.itemInfo || item.ItemInfo;
       const images = item.images || item.Images;
