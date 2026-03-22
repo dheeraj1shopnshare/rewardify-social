@@ -103,24 +103,21 @@ serve(async (req) => {
     const searchResult = data.searchResult || data.SearchResult;
     const items = searchResult?.items || searchResult?.Items || [];
 
-    // Debug: log first item's full structure
-    if (items.length > 0) {
-      console.log("RAW ITEM KEYS:", JSON.stringify(Object.keys(items[0])));
-      console.log("RAW ITEM OFFERS:", JSON.stringify(items[0].offersV2 || items[0].offers || items[0].Offers || "NO_OFFERS_KEY"));
-      console.log("RAW ITEM FULL:", JSON.stringify(items[0]));
-    }
-
     const products = items.map((item: any) => {
       const itemInfo = item.itemInfo || item.ItemInfo;
       const images = item.images || item.Images;
       const offers = item.offersV2 || item.offers || item.Offers;
+      const listing = offers?.listings?.[0] || offers?.Listings?.[0];
+      const price = listing?.price;
 
       return {
         asin: item.asin || item.ASIN,
         title: itemInfo?.title?.displayValue || itemInfo?.Title?.DisplayValue || "Unknown Product",
         image: images?.primary?.large?.url || images?.Primary?.Large?.URL || "",
-        price: offers?.listings?.[0]?.price?.displayAmount || offers?.Listings?.[0]?.Price?.DisplayAmount || "N/A",
-        priceValue: offers?.listings?.[0]?.price?.amount || offers?.Listings?.[0]?.Price?.Amount || 0,
+        price: price?.money?.displayAmount || price?.displayAmount || price?.Money?.DisplayAmount || "N/A",
+        priceValue: price?.money?.amount || price?.amount || price?.Money?.Amount || 0,
+        listPrice: price?.savingBasis?.money?.displayAmount || null,
+        savings: price?.savings?.percentage || null,
         url: item.detailPageURL || item.DetailPageURL,
         brand: itemInfo?.byLineInfo?.brand?.displayValue || itemInfo?.ByLineInfo?.Brand?.DisplayValue || "",
         features: itemInfo?.features?.displayValues || itemInfo?.Features?.DisplayValues || [],
