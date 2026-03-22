@@ -158,9 +158,23 @@ const Marketplace = () => {
                       {product.title}
                     </h3>
                     <div className="flex items-center justify-between mt-auto">
-                      <span className="text-lg font-bold text-foreground">
-                        {product.price}
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-lg font-bold text-foreground">
+                          {product.price}
+                        </span>
+                        {product.listPrice && (
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs text-muted-foreground line-through">
+                              {product.listPrice}
+                            </span>
+                            {product.savings && (
+                              <span className="text-xs font-medium text-green-600">
+                                -{product.savings}%
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
                       <span className="text-xs text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         View <ExternalLink className="h-3 w-3" />
                       </span>
