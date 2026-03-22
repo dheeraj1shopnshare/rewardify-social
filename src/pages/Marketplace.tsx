@@ -23,6 +23,8 @@ interface Product {
   image: string;
   price: string;
   priceValue: number;
+  listPrice?: string | null;
+  savings?: number | null;
   url: string;
   brand: string;
   features: string[];
