@@ -68,10 +68,10 @@ const Marketplace = () => {
           {/* Header */}
           <div className="text-center mb-10">
             <h1 className="text-4xl font-bold text-foreground mb-3">
-              Marketplace
+              How Berry Rewards Works
             </h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Discover top-rated products. Shop through our links to earn rewards!
+              Shop, Share and earn in 3 steps
             </p>
           </div>
 
