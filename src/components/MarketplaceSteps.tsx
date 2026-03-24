@@ -1,4 +1,4 @@
-import { Search, Camera, Star, ArrowRight } from "lucide-react";
+import { Search, Instagram, Star, ArrowRight } from "lucide-react";
 
 const steps = [
   {
