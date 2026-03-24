@@ -90,6 +90,9 @@ const Marketplace = () => {
             <Button type="submit">Search</Button>
           </form>
 
+          {/* Steps */}
+          <MarketplaceSteps />
+
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-2 mb-10">
             {CATEGORIES.map((cat) => (
