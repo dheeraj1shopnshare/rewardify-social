@@ -1,4 +1,4 @@
-import { Search, Camera, Star, ArrowRight } from "lucide-react";
+import { Search, Instagram, Star, ArrowRight } from "lucide-react";
 
 const steps = [
   {
@@ -11,7 +11,7 @@ const steps = [
   },
   {
     step: "STEP 2",
-    icon: <Camera className="w-8 h-8 text-pink-500" />,
+    icon: <Instagram className="w-8 h-8 text-pink-500" />,
     iconBg: "bg-pink-100",
     badgeBg: "bg-pink-100 text-pink-500",
     title: "Post your story",
