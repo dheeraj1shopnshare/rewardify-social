@@ -30,10 +30,10 @@ const steps = [
 
 const MarketplaceSteps = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-4 max-w-4xl mx-auto mb-10">
+    <div className="flex flex-col md:flex-row items-start justify-center gap-6 md:gap-4 max-w-4xl mx-auto mb-10">
       {steps.map((step, index) => (
         <div key={step.step} className="flex items-center gap-4">
-          <div className="flex flex-col items-center text-center max-w-[200px]">
+          <div className="flex flex-col items-center text-center w-[200px]">
             <span className={`text-xs font-semibold px-3 py-1 rounded-full mb-3 ${step.badgeBg}`}>
               {step.step}
             </span>
@@ -49,7 +49,7 @@ const MarketplaceSteps = () => {
             )}
           </div>
           {index < steps.length - 1 && (
-            <ArrowRight className="hidden md:block w-5 h-5 text-muted-foreground/40 flex-shrink-0" />
+            <ArrowRight className="hidden md:block w-5 h-5 text-muted-foreground/40 flex-shrink-0 mt-10" />
           )}
         </div>
       ))}
