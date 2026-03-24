@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Search, ExternalLink, Star, ShoppingCart } from "lucide-react";
+import MarketplaceSteps from "@/components/MarketplaceSteps";
 
 const CATEGORIES = [
   { label: "Beauty", value: "Beauty" },
