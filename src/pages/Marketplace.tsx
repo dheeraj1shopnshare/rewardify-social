@@ -72,7 +72,7 @@ const Marketplace = () => {
               How Berry Rewards Works
             </h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Shop, Share and earn in 3 steps
+              Shop, Share and Earn in 3 steps
             </p>
           </div>
 
