@@ -24,7 +24,7 @@ const steps = [
     iconBg: "bg-amber-100",
     badgeBg: "bg-amber-100 text-amber-600",
     title: "Get rewarded",
-    description: "We verify your post and send your gift card",
+    description: "We verify your post and send you another gift card",
     badge: "$10 Amazon gift card",
   },
 ];
