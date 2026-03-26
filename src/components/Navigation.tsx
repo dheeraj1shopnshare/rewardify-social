@@ -30,6 +30,9 @@ const Navigation = () => {
             <Link to="/marketplace" className="text-gray-900 font-semibold hover:text-primary transition-colors">
               Marketplace
             </Link>
+            <Link to="/blog" className="text-gray-900 font-semibold hover:text-primary transition-colors">
+              Blog
+            </Link>
           </>
         )}
         {user ? (
