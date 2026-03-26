@@ -6,8 +6,8 @@ const steps = [
     icon: <Search className="w-8 h-8 text-primary" />,
     iconBg: "bg-primary/10",
     badgeBg: "bg-primary/10 text-primary",
-    title: "Search & shop",
-    description: "Find a product and buy via the affiliate link",
+    title: "Shop & screenshot",
+    description: "Buy via the affiliate link, then DM your purchase screenshot to @Berry_rewards get $5 Amazon gift card",
   },
   {
     step: "STEP 2",
