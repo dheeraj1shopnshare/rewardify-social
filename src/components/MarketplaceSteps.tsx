@@ -7,8 +7,7 @@ const steps = [
     iconBg: "bg-primary/10",
     badgeBg: "bg-primary/10 text-primary",
     title: "Shop & screenshot",
-    description: "Buy via the affiliate link, then DM your purchase screenshot to",
-    handle: "@Berry_rewards",
+    description: "Buy via the affiliate link, then DM your purchase screenshot to @Berry_rewards",
     badge: "$5 Amazon gift card",
   },
   {
@@ -32,7 +31,7 @@ const steps = [
 
 const MarketplaceSteps = () => {
   return (
-    <div className="flex flex-col md:flex-row items-start justify-center gap-6 md:gap-4 max-w-4xl mx-auto mb-10">
+    <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-4 max-w-4xl mx-auto mb-10">
       {steps.map((step, index) => (
         <div key={step.step} className="flex items-center gap-4">
           <div className="flex flex-col items-center text-center w-[200px]">
@@ -44,11 +43,6 @@ const MarketplaceSteps = () => {
             </div>
             <h3 className="font-bold text-foreground mb-1">{step.title}</h3>
             <p className="text-sm text-muted-foreground">{step.description}</p>
-            {step.handle && (
-              <span className="mt-2 inline-block text-sm font-semibold px-4 py-1.5 rounded-full text-foreground">
-                {step.handle}
-              </span>
-            )}
             {step.badge && (
               <span className="mt-2 inline-block text-xs font-semibold px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                 {step.badge}
@@ -56,7 +50,7 @@ const MarketplaceSteps = () => {
             )}
           </div>
           {index < steps.length - 1 && (
-            <ArrowRight className="hidden md:block w-5 h-5 text-muted-foreground/40 flex-shrink-0 mt-10" />
+            <ArrowRight className="hidden md:block w-5 h-5 text-muted-foreground/40 flex-shrink-0" />
           )}
         </div>
       ))}
