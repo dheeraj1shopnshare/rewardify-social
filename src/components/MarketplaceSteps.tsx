@@ -44,8 +44,13 @@ const MarketplaceSteps = () => {
             </div>
             <h3 className="font-bold text-foreground mb-1">{step.title}</h3>
             <p className="text-sm text-muted-foreground">{step.description}</p>
+            {step.handle && (
+              <span className="mt-2 inline-block text-sm font-semibold px-4 py-1.5 rounded-full border border-border text-foreground">
+                {step.handle}
+              </span>
+            )}
             {step.badge && (
-              <span className="mt-2 inline-block text-xs font-semibold px-3 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+              <span className="mt-2 inline-block text-xs font-semibold px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                 {step.badge}
               </span>
             )}
