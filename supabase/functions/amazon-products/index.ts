@@ -59,7 +59,7 @@ serve(async (req) => {
     // Call Creators API
     const payload = {
       keywords: keywords || "beauty skincare",
-      searchIndex: category || "Beauty",
+      
       partnerTag: partnerTag,
       partnerType: "Associates",
       marketplace: "www.amazon.com",
