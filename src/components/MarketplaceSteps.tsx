@@ -9,7 +9,7 @@ const steps = [
     title: "Shop & screenshot",
     description: "Buy via the affiliate link, then DM your purchase screenshot to",
     handle: "@Berry_rewards",
-    badge: "5% cashback",
+    badge: "$5 Amazon gift card",
   },
   {
     step: "STEP 2",
@@ -45,7 +45,7 @@ const MarketplaceSteps = () => {
             <h3 className="font-bold text-foreground mb-1">{step.title}</h3>
             <p className="text-sm text-muted-foreground">{step.description}</p>
             {step.handle && (
-              <span className="mt-2 inline-block text-sm font-semibold px-4 py-1.5 rounded-full border border-border text-foreground">
+              <span className="mt-2 inline-block text-sm font-semibold px-4 py-1.5 rounded-full text-foreground">
                 {step.handle}
               </span>
             )}
