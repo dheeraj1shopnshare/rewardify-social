@@ -7,7 +7,9 @@ const steps = [
     iconBg: "bg-primary/10",
     badgeBg: "bg-primary/10 text-primary",
     title: "Shop & screenshot",
-    description: "Buy via the affiliate link, then DM your purchase screenshot to @Berry_rewards get $5 Amazon gift card",
+    description: "Buy via the affiliate link, then DM your purchase screenshot to",
+    handle: "@Berry_rewards",
+    badge: "5% cashback",
   },
   {
     step: "STEP 2",
