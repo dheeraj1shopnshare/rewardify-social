@@ -77,8 +77,11 @@ const Blog = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {BLOG_POSTS.map((post) => (
-              <Card
+              <Link
+                to={post.id === 1 ? "/blog/berry-rewards-bay-area-influencers" : "#"}
                 key={post.id}
+              >
+              <Card
                 className="group overflow-hidden border hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
                 <div className="aspect-[3/2] overflow-hidden">
@@ -114,7 +117,7 @@ const Blog = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              </Link>
           </div>
         </div>
       </div>
