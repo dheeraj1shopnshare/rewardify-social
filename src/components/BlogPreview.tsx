@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 const FEATURED_POSTS = [
   {
     id: 1,
-    title: "How to Maximize Your Cashback with Berry Rewards",
+    title: "Berry Rewards: The Easiest Way for Bay Area Influencers to Get Paid for Shopping and Posting on Instagram",
     excerpt: "Learn the best strategies to earn more rewards on every purchase.",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
     category: "Tips & Tricks",

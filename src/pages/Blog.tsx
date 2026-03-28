@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const BLOG_POSTS = [
   {
     id: 1,
-    title: "How to Maximize Your Cashback with Berry Rewards",
+    title: "Berry Rewards: The Easiest Way for Bay Area Influencers to Get Paid for Shopping and Posting on Instagram",
     excerpt: "Learn the best strategies to earn more rewards on every purchase. From timing your buys to stacking deals, we cover it all.",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
     category: "Tips & Tricks",
