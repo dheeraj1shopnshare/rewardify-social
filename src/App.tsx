@@ -18,6 +18,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminResetPassword from "./pages/AdminResetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Blog from "./pages/Blog";
+import BlogPost1 from "./pages/BlogPost1";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/berry-rewards-bay-area-influencers" element={<BlogPost1 />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
