@@ -14,51 +14,7 @@ const BLOG_POSTS = [
     category: "Tips & Tricks",
     date: "Mar 20, 2026",
     readTime: "4 min read",
-  },
-  {
-    id: 2,
-    title: "Top 10 Beauty Products Worth Buying This Spring",
-    excerpt: "Spring is here and so are amazing beauty deals. Check out our curated list of must-have skincare and makeup products.",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop",
-    category: "Product Picks",
-    date: "Mar 15, 2026",
-    readTime: "5 min read",
-  },
-  {
-    id: 3,
-    title: "Why Brands Love Working with Micro-Influencers",
-    excerpt: "Discover why brands are shifting their marketing budgets toward micro-influencers and how you can benefit from this trend.",
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=400&fit=crop",
-    category: "Industry",
-    date: "Mar 10, 2026",
-    readTime: "6 min read",
-  },
-  {
-    id: 4,
-    title: "5 Ways to Create Scroll-Stopping Instagram Content",
-    excerpt: "Stand out in the feed with these proven content creation tips that will boost your engagement and help you earn more rewards.",
-    image: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&h=400&fit=crop",
-    category: "Content Creation",
-    date: "Mar 5, 2026",
-    readTime: "3 min read",
-  },
-  {
-    id: 5,
-    title: "The Ultimate Guide to Affiliate Shopping",
-    excerpt: "Everything you need to know about affiliate links, how they work, and how to make the most of every click.",
-    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&h=400&fit=crop",
-    category: "Guides",
-    date: "Feb 28, 2026",
-    readTime: "7 min read",
-  },
-  {
-    id: 6,
-    title: "Berry Rewards: Our Story and Mission",
-    excerpt: "From a simple idea to a thriving community of shoppers and creators — here's how Berry Rewards came to be.",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
-    category: "Company",
-    date: "Feb 20, 2026",
-    readTime: "4 min read",
+    slug: "/blog/berry-rewards-bay-area-influencers",
   },
 ];
 
@@ -75,10 +31,10 @@ const Blog = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-md">
             {BLOG_POSTS.map((post) => (
               <Link
-                to={post.id === 1 ? "/blog/berry-rewards-bay-area-influencers" : "#"}
+                to={post.slug || "#"}
                 key={post.id}
               >
               <Card
