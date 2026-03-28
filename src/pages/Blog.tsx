@@ -118,6 +118,7 @@ const Blog = () => {
                 </CardContent>
               </Card>
               </Link>
+            ))}
           </div>
         </div>
       </div>
