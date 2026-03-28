@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Search, ExternalLink, Star, ShoppingCart } from "lucide-react";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
+import BlogPreview from "@/components/BlogPreview";
+import Footer from "@/components/Footer";
 
 const CATEGORIES = [
   { label: "Beauty", value: "Beauty" },
@@ -198,6 +200,8 @@ const Marketplace = () => {
           )}
         </div>
       </div>
+      <BlogPreview />
+      <Footer />
     </div>
   );
 };

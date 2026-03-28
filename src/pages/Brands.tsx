@@ -4,6 +4,8 @@ import { ShoppingBag, Gift, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import BlogPreview from "@/components/BlogPreview";
+import Footer from "@/components/Footer";
 
 const Brands = () => {
   const { toast } = useToast();
@@ -209,6 +211,8 @@ const Brands = () => {
           </div>
         </div>
       </section>
+      <BlogPreview />
+      <Footer />
     </div>
   );
 };
