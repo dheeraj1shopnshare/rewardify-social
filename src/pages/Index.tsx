@@ -6,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import BlogPreview from "@/components/BlogPreview";
 
 const Index = () => {
   const { user, loading } = useAuth();
@@ -40,6 +41,7 @@ const Index = () => {
       <HeroSection onLearnMoreClick={scrollToHowItWorks} />
       <HowItWorksSection />
       <CTASection />
+      <BlogPreview />
       <Footer />
     </div>
   );

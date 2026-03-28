@@ -4,6 +4,8 @@ import { UtensilsCrossed, Gift, MessageSquare, Building } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import BlogPreview from "@/components/BlogPreview";
+import Footer from "@/components/Footer";
 
 const Restaurants = () => {
   const { toast } = useToast();
@@ -209,6 +211,8 @@ const Restaurants = () => {
           </div>
         </div>
       </section>
+      <BlogPreview />
+      <Footer />
     </div>
   );
 };
