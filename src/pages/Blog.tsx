@@ -31,10 +31,10 @@ const Blog = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-md">
             {BLOG_POSTS.map((post) => (
               <Link
-                to={post.id === 1 ? "/blog/berry-rewards-bay-area-influencers" : "#"}
+                to={post.slug || "#"}
                 key={post.id}
               >
               <Card
