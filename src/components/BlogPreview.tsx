@@ -25,7 +25,7 @@ const BlogPreview = () => {
           <p className="text-muted-foreground">Tips, guides, and stories to help you shop smarter</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-md">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
           {FEATURED_POSTS.map((post) => (
             <Card
               key={post.id}
