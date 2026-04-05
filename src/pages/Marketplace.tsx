@@ -2,7 +2,6 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Search, ExternalLink } from "lucide-react";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
 import BlogPreview from "@/components/BlogPreview";
@@ -11,10 +10,6 @@ import { supabase } from "@/integrations/supabase/client";
 
 const AFFILIATE_TAG = "berryrewardss-20";
 
-const POPULAR_SEARCHES = [
-  "Beauty", "Skincare", "Haircare", "Wellness", "Fashion", "Electronics",
-  "AirPods", "Vitamins", "Makeup", "Perfume",
-];
 
 const Marketplace = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -72,23 +67,6 @@ const Marketplace = () => {
 
           {/* Steps */}
           <MarketplaceSteps />
-
-          {/* Popular Searches */}
-          <div className="text-center mb-4 mt-10">
-            <p className="text-sm font-medium text-muted-foreground mb-3">Popular searches</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {POPULAR_SEARCHES.map((term) => (
-                <Badge
-                  key={term}
-                  variant="outline"
-                  className="cursor-pointer px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
-                  onClick={() => handleSearch(term)}
-                >
-                  {term}
-                </Badge>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
       <BlogPreview />
