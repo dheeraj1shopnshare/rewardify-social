@@ -10,10 +10,6 @@ import { supabase } from "@/integrations/supabase/client";
 
 const AFFILIATE_TAG = "berryrewardss-20";
 
-const POPULAR_SEARCHES = [
-  "Beauty", "Skincare", "Haircare", "Wellness", "Fashion", "Electronics",
-  "AirPods", "Vitamins", "Makeup", "Perfume",
-];
 
 const Marketplace = () => {
   const [searchInput, setSearchInput] = useState("");
