@@ -72,23 +72,6 @@ const Marketplace = () => {
 
           {/* Steps */}
           <MarketplaceSteps />
-
-          {/* Popular Searches */}
-          <div className="text-center mb-4 mt-10">
-            <p className="text-sm font-medium text-muted-foreground mb-3">Popular searches</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {POPULAR_SEARCHES.map((term) => (
-                <Badge
-                  key={term}
-                  variant="outline"
-                  className="cursor-pointer px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
-                  onClick={() => handleSearch(term)}
-                >
-                  {term}
-                </Badge>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
       <BlogPreview />
