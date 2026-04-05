@@ -174,6 +174,27 @@ export type Database = {
         }
         Relationships: []
       }
+      search_logs: {
+        Row: {
+          created_at: string
+          id: string
+          search_term: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          search_term: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          search_term?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

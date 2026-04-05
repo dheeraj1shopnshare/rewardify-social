@@ -7,6 +7,7 @@ import { Search, ExternalLink } from "lucide-react";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
 import BlogPreview from "@/components/BlogPreview";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
 
 const AFFILIATE_TAG = "berryrewardss-20";
 
@@ -18,9 +19,13 @@ const POPULAR_SEARCHES = [
 const Marketplace = () => {
   const [searchInput, setSearchInput] = useState("");
 
-  const handleSearch = (term: string) => {
+  const handleSearch = async (term: string) => {
     const query = term.trim();
     if (!query) return;
+
+    // Log the search
+    supabase.from("search_logs").insert({ search_term: query }).then();
+
     const url = `https://www.amazon.com/s?k=${encodeURIComponent(query)}&tag=${AFFILIATE_TAG}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
