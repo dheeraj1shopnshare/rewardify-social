@@ -7,6 +7,7 @@ import { Search, ExternalLink } from "lucide-react";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
 import BlogPreview from "@/components/BlogPreview";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
 
 const AFFILIATE_TAG = "berryrewardss-20";
 
