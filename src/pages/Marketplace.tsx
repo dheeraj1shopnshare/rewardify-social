@@ -2,7 +2,6 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Search, ExternalLink } from "lucide-react";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
 import BlogPreview from "@/components/BlogPreview";
