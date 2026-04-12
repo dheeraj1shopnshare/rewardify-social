@@ -7,7 +7,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({ onLearnMoreClick }: HeroSectionProps) => {
   return (
-    <section className="container mx-auto px-4 py-28 md:py-40">
+    <section className="container mx-auto px-4 pt-24 pb-12 md:py-40">
       <div className="text-center max-w-3xl mx-auto">
         <motion.span 
           initial={{ opacity: 0, y: 20 }}

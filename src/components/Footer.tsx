@@ -13,7 +13,7 @@ const Footer = () => {
               className="h-12 w-auto object-contain"
             />
           </div>
-          <div className="flex gap-6 text-sm text-gray-600">
+          <div className="flex flex-wrap justify-center md:justify-end gap-4 md:gap-6 text-sm text-muted-foreground">
             <Link to="/blog" className="hover:text-primary transition-colors">
               Blog
             </Link>

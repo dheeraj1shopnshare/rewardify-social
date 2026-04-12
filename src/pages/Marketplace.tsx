@@ -46,7 +46,7 @@ const Marketplace = () => {
           </div>
 
           {/* Search */}
-          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-4 flex gap-2">
+          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-4 flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -56,7 +56,7 @@ const Marketplace = () => {
                 className="pl-10"
               />
             </div>
-            <Button type="submit" className="gap-2">
+            <Button type="submit" className="gap-2 whitespace-nowrap">
               Shop on Amazon <ExternalLink className="h-4 w-4" />
             </Button>
           </form>
