@@ -62,10 +62,10 @@ const MarketplaceHero = () => {
               Start Shopping
             </button>
             <button
-              onClick={() => navigate("/auth")}
+              onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}
               className="border border-primary text-primary hover:bg-primary/5 px-7 py-3 rounded-full font-semibold text-base transition-colors"
             >
-              Create Account
+              How it Works
             </button>
           </motion.div>
 
