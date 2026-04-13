@@ -1,61 +1,83 @@
-import { Search, Instagram, Star, ArrowRight } from "lucide-react";
+import { Search, Instagram, Star, Gift, ArrowRight } from "lucide-react";
 
 const steps = [
   {
-    step: "STEP 1",
-    icon: <Search className="w-8 h-8 text-primary" />,
+    number: "01",
+    icon: <Search className="w-4 h-4 text-primary" />,
     iconBg: "bg-primary/10",
-    badgeBg: "bg-primary/10 text-primary",
-    title: "Shop & screenshot",
-    description: "Buy via the affiliate link, then DM your purchase screenshot to @Berry_rewards",
-    badge: "$5 Amazon gift card",
+    title: "Shop via our link",
+    description: "Browse and buy any product on Amazon through our affiliate link.",
   },
   {
-    step: "STEP 2",
-    icon: <Instagram className="w-8 h-8 text-pink-500" />,
+    number: "02",
+    icon: <Instagram className="w-4 h-4 text-pink-500" />,
     iconBg: "bg-pink-100",
-    badgeBg: "bg-pink-100 text-pink-500",
-    title: "Post your story",
-    description: "Share on Instagram & send us the screenshot",
+    title: "DM your receipt",
+    description: "Send a screenshot of your purchase to @Berry_rewards on Instagram.",
   },
   {
-    step: "STEP 3",
-    icon: <Star className="w-8 h-8 text-amber-500" />,
+    number: "03",
+    icon: <Star className="w-4 h-4 text-amber-500" />,
     iconBg: "bg-amber-100",
-    badgeBg: "bg-amber-100 text-amber-600",
+    title: "Post your story",
+    description: "Share the product on your Instagram story and send us the screenshot.",
+    pill: "Verified in 24 hrs",
+    pillColor: "bg-primary/10 text-primary border-primary/20",
+  },
+  {
+    number: "04",
+    icon: <Gift className="w-4 h-4 text-green-600" />,
+    iconBg: "bg-green-100",
     title: "Get rewarded",
-    description: "We verify your post and send you another gift card",
-    badge: "$10 Amazon gift card",
+    description: "We verify your post and send you an Amazon gift card reward.",
+    pill: "+$10 for tagged posts",
+    pillColor: "bg-green-50 text-green-700 border-green-200",
   },
 ];
 
 const MarketplaceSteps = () => {
   return (
-    <div className="flex flex-col md:flex-row items-start justify-center gap-6 md:gap-0 max-w-4xl mx-auto mb-10">
-      {steps.map((step, index) => (
-        <div key={step.step} className="flex items-start gap-0">
-          <div className="flex flex-col items-center text-center w-[220px]">
-            <span className={`text-xs font-semibold px-3 py-1 rounded-full mb-3 ${step.badgeBg}`}>
-              {step.step}
+    <div className="max-w-4xl mx-auto mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-border rounded-xl overflow-hidden bg-card">
+        {steps.map((step, index) => (
+          <div
+            key={step.number}
+            className={`relative p-5 flex flex-col gap-3 ${
+              index < steps.length - 1 ? "border-b sm:border-b md:border-b-0 md:border-r border-border" : ""
+            } ${index === 1 ? "sm:border-r sm:border-b md:border-b-0 border-border" : ""}`}
+          >
+            {/* Large faded number */}
+            <span className="text-4xl font-bold text-muted-foreground/15 leading-none select-none">
+              {step.number}
             </span>
-            <div className={`w-16 h-16 rounded-full ${step.iconBg} flex items-center justify-center mb-3`}>
+
+            {/* Icon in rounded square */}
+            <div className={`w-8 h-8 rounded-lg ${step.iconBg} flex items-center justify-center`}>
               {step.icon}
             </div>
-            <h3 className="font-bold text-foreground mb-1">{step.title}</h3>
-            <p className="text-sm text-muted-foreground min-h-[40px]">{step.description}</p>
-            {step.badge && (
-              <span className="mt-2 inline-block text-xs font-semibold px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
-                {step.badge}
+
+            {/* Title */}
+            <h3 className="font-bold text-sm text-foreground">{step.title}</h3>
+
+            {/* Description */}
+            <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
+
+            {/* Pill tag */}
+            {step.pill && (
+              <span className={`self-start text-[10px] font-semibold px-2 py-0.5 rounded-full border ${step.pillColor}`}>
+                {step.pill}
               </span>
             )}
+
+            {/* Arrow indicator between cells */}
+            {index < steps.length - 1 && (
+              <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-background border border-border items-center justify-center">
+                <ArrowRight className="w-3 h-3 text-muted-foreground" />
+              </div>
+            )}
           </div>
-          {index < steps.length - 1 && (
-            <div className="hidden md:flex items-center h-16 mt-[2.25rem]">
-              <ArrowRight className="w-5 h-5 text-muted-foreground/40 flex-shrink-0" />
-            </div>
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
