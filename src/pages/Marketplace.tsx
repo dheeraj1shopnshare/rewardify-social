@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, ExternalLink } from "lucide-react";
 import MarketplaceHero from "@/components/MarketplaceHero";
+import TrustBar from "@/components/TrustBar";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
 import BlogPreview from "@/components/BlogPreview";
 import Footer from "@/components/Footer";
