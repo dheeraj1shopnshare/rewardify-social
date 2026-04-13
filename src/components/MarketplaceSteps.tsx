@@ -6,7 +6,7 @@ const steps = [
     icon: <Search className="w-4 h-4 text-primary" />,
     iconBg: "bg-primary/10",
     title: "Shop via our link",
-    description: "Browse and buy any product on Amazon through our affiliate link.",
+    description: "Use our search to find anything on Amazon. Complete checkout on Amazon as you normally do.",
   },
   {
     number: "02",
