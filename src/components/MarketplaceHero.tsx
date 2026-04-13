@@ -78,7 +78,7 @@ const MarketplaceHero = () => {
             className="flex gap-8 pt-6 border-t border-border"
           >
             <div>
-              <p className="text-2xl font-bold text-foreground">$12K+</p>
+              <p className="text-2xl font-bold text-foreground">$1K+</p>
               <p className="text-sm text-muted-foreground">Cashback paid out</p>
             </div>
             <div>
@@ -86,7 +86,7 @@ const MarketplaceHero = () => {
               <p className="text-sm text-muted-foreground">Avg. cashback rate</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">7 days</p>
+              <p className="text-2xl font-bold text-foreground">1 day</p>
               <p className="text-sm text-muted-foreground">Avg. payout time</p>
             </div>
           </motion.div>
