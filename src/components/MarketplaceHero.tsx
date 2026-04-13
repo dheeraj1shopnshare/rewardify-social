@@ -9,7 +9,7 @@ const MarketplaceHero = () => {
   };
 
   return (
-    <section className="pt-28 pb-16 px-4 sm:px-6">
+    <section className="pt-36 pb-16 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* Left column */}
         <div>
