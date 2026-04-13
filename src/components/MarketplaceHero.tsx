@@ -34,7 +34,8 @@ const MarketplaceHero = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4"
           >
-            Shop. Post.{" "}
+            Shop. Post.
+            <br />
             <span className="italic font-serif">Get paid.</span>
           </motion.h1>
 
