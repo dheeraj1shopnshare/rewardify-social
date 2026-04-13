@@ -98,66 +98,85 @@ const MarketplaceHero = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="hidden md:flex items-center justify-center"
         >
-          <div className="relative w-[280px] rounded-[2.5rem] bg-foreground shadow-2xl p-2">
-            {/* Status bar */}
-            <div className="bg-foreground rounded-t-[2rem] px-5 py-2 flex items-center justify-between text-background/70 text-[10px] font-medium">
-              <span>9:41</span>
-              <div className="w-20 h-5 bg-foreground rounded-full mx-auto" />
-              <div className="flex items-center gap-1">
-                <span>📶</span>
-                <span>🔋</span>
-              </div>
-            </div>
-
-            {/* Screen content */}
-            <div className="bg-background rounded-[1.8rem] rounded-t-none px-3 pb-4 pt-3 space-y-3">
-              {/* Product card 1 */}
-              <div className="rounded-xl border border-border bg-card p-3 flex gap-3 items-center shadow-sm">
-                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-2xl shrink-0">
-                  🎧
+          <div className="relative w-[280px] h-full flex items-stretch">
+            <div className="w-full rounded-[2.5rem] bg-foreground shadow-2xl p-2 flex flex-col">
+              {/* Status bar */}
+              <div className="bg-foreground rounded-t-[2rem] px-5 py-2 flex items-center justify-between text-background/70 text-[10px] font-medium">
+                <span>9:41</span>
+                <div className="w-20 h-5 bg-foreground rounded-full mx-auto" />
+                <div className="flex items-center gap-1">
+                  <span>📶</span>
+                  <span>🔋</span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold text-foreground truncate">Wireless Earbuds Pro</p>
-                  <p className="text-[10px] text-muted-foreground">Electronics</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs font-bold text-foreground">$49.99</span>
-                    <span className="text-[10px] font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">5% back</span>
+              </div>
+
+              {/* Screen content */}
+              <div className="bg-background rounded-[1.8rem] rounded-t-none px-3 pb-4 pt-3 flex-1 flex flex-col justify-between">
+                <div className="space-y-3">
+                  {/* Product card 1 */}
+                  <div className="rounded-xl border border-border bg-card p-3 flex gap-3 items-center shadow-sm">
+                    <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center text-2xl shrink-0">
+                      🎧
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-foreground truncate">Wireless Earbuds Pro</p>
+                      <p className="text-[10px] text-muted-foreground">Electronics</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs font-bold text-foreground">$49.99</span>
+                        <span className="text-[10px] font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">5% back</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Product card 2 */}
+                  <div className="rounded-xl border border-border bg-card p-3 flex gap-3 items-center shadow-sm">
+                    <div className="w-14 h-14 rounded-lg bg-accent/40 flex items-center justify-center text-2xl shrink-0">
+                      ✨
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-foreground truncate">Skincare Set Bundle</p>
+                      <p className="text-[10px] text-muted-foreground">Beauty</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs font-bold text-foreground">$34.99</span>
+                        <span className="text-[10px] font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">5% back</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Product card 3 */}
+                  <div className="rounded-xl border border-border bg-card p-3 flex gap-3 items-center shadow-sm">
+                    <div className="w-14 h-14 rounded-lg bg-secondary/40 flex items-center justify-center text-2xl shrink-0">
+                      📱
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-foreground truncate">Phone Case Premium</p>
+                      <p className="text-[10px] text-muted-foreground">Accessories</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs font-bold text-foreground">$19.99</span>
+                        <span className="text-[10px] font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">5% back</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Product card 2 */}
-              <div className="rounded-xl border border-border bg-card p-3 flex gap-3 items-center shadow-sm">
-                <div className="w-14 h-14 rounded-lg bg-accent/40 flex items-center justify-center text-2xl shrink-0">
-                  ✨
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold text-foreground truncate">Skincare Set Bundle</p>
-                  <p className="text-[10px] text-muted-foreground">Beauty</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs font-bold text-foreground">$34.99</span>
-                    <span className="text-[10px] font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">5% back</span>
+                {/* DM preview bubble */}
+                <div className="mt-3 rounded-2xl bg-primary/10 border border-primary/20 px-4 py-3">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                      <span className="text-[8px] text-primary-foreground font-bold">BR</span>
+                    </div>
+                    <span className="text-[10px] font-semibold text-foreground">@Berry_rewards</span>
                   </div>
+                  <p className="text-[11px] text-muted-foreground leading-snug">
+                    Hey! 🎉 Your $10 gift card is ready. Thanks for posting!
+                  </p>
                 </div>
               </div>
 
-              {/* DM preview bubble */}
-              <div className="mt-2 rounded-2xl bg-primary/10 border border-primary/20 px-4 py-3">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                    <span className="text-[8px] text-primary-foreground font-bold">BR</span>
-                  </div>
-                  <span className="text-[10px] font-semibold text-foreground">@Berry_rewards</span>
-                </div>
-                <p className="text-[11px] text-muted-foreground leading-snug">
-                  Hey! 🎉 Your $10 gift card is ready. Thanks for posting!
-                </p>
+              {/* Home indicator */}
+              <div className="flex justify-center py-2">
+                <div className="w-28 h-1 rounded-full bg-background/30" />
               </div>
-            </div>
-
-            {/* Home indicator */}
-            <div className="flex justify-center py-2">
-              <div className="w-28 h-1 rounded-full bg-background/30" />
             </div>
           </div>
         </motion.div>
