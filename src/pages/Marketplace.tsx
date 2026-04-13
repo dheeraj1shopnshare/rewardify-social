@@ -34,6 +34,7 @@ const Marketplace = () => {
 
       {/* Hero */}
       <MarketplaceHero />
+      <TrustBar />
 
       {/* Search section */}
       <div id="marketplace-search" className="px-4 sm:px-6 pb-16">
