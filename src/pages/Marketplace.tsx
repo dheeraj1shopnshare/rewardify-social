@@ -37,7 +37,7 @@ const Marketplace = () => {
       <TrustBar />
 
       {/* Search section */}
-      <div id="marketplace-search" className="px-4 sm:px-6 pb-16">
+      <div id="marketplace-search" className="px-4 sm:px-6 pt-12 pb-16">
         <div className="max-w-2xl mx-auto">
           <form onSubmit={handleSubmit} className="mb-4 flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
