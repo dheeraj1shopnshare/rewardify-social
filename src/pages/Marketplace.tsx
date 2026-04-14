@@ -6,6 +6,7 @@ import { Search, ExternalLink } from "lucide-react";
 import MarketplaceHero from "@/components/MarketplaceHero";
 import TrustBar from "@/components/TrustBar";
 import MarketplaceSteps from "@/components/MarketplaceSteps";
+import DMExplainer from "@/components/DMExplainer";
 import BlogPreview from "@/components/BlogPreview";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
@@ -61,6 +62,8 @@ const Marketplace = () => {
         {/* Steps */}
         <MarketplaceSteps />
       </div>
+
+      <DMExplainer />
 
       <BlogPreview />
       <Footer />
