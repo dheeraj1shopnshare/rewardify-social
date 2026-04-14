@@ -1,37 +1,37 @@
-import { Search, Instagram, Star, Gift, ArrowRight } from "lucide-react";
+import { Search, ShoppingCart, Instagram, Star, Gift, ArrowRight } from "lucide-react";
 
 const steps = [
   {
     number: "01",
     icon: <Search className="w-4 h-4 text-primary" />,
     iconBg: "bg-primary/10",
-    title: "Shop via our link",
-    description: "Use our search to find anything on Amazon. Complete checkout on Amazon as you normally do.",
+    title: "Search via Berry",
+    description: "Use our search to find anything on Amazon. We'll take you to Amazon.",
   },
   {
     number: "02",
-    icon: <Instagram className="w-4 h-4 text-pink-500" />,
-    iconBg: "bg-pink-100",
-    title: "DM your receipt",
-    description: "Send a screenshot of your purchase to @Berry_rewards on Instagram.",
+    icon: <ShoppingCart className="w-4 h-4 text-blue-500" />,
+    iconBg: "bg-blue-100",
+    title: "Checkout on Amazon",
+    description: "Buy on Amazon normally and checkout as usual. Our affiliate tag tracks your order automatically.",
   },
   {
     number: "03",
+    icon: <Instagram className="w-4 h-4 text-pink-500" />,
+    iconBg: "bg-pink-100",
+    title: "DM your receipt",
+    description: "Send a screenshot of your purchase to @Berry_Rewards on Instagram.",
+    pill: "$5 reward",
+    pillColor: "bg-green-50 text-green-700 border-green-200",
+  },
+  {
+    number: "04",
     icon: <Star className="w-4 h-4 text-amber-500" />,
     iconBg: "bg-amber-100",
     title: "Post your story",
     description: "Share the product on your Instagram story and send us the screenshot.",
     pill: "Verified in 24 hrs",
     pillColor: "bg-primary/10 text-primary border-primary/20",
-  },
-  {
-    number: "04",
-    icon: <Gift className="w-4 h-4 text-green-600" />,
-    iconBg: "bg-green-100",
-    title: "Get rewarded",
-    description: "We verify your post and send you an Amazon gift card reward.",
-    pill: "+$10 for tagged posts",
-    pillColor: "bg-green-50 text-green-700 border-green-200",
   },
 ];
 
