@@ -39,7 +39,7 @@ const DMExplainer = () => {
               {/* Berry reply */}
               <div className="self-start max-w-[75%]">
                 <div className="bg-muted text-foreground text-sm px-4 py-2.5 rounded-2xl rounded-bl-md">
-                  Got it! ✅ Your $5 reward is confirmed. Sending to your Venmo now! 💸
+                  Got it! ✅ Your $5 amazon reward is confirmed. 💸
                 </div>
                 <p className="text-[10px] text-muted-foreground mt-1">2:41 PM</p>
               </div>
@@ -74,7 +74,7 @@ const DMExplainer = () => {
                 <div>
                   <p className="text-sm font-semibold text-foreground">Faster payouts</p>
                   <p className="text-xs text-muted-foreground">
-                    No waiting for automated systems. Once verified, we pay within 24 hours via Venmo.
+                    No waiting for automated systems. Once verified, we pay within 24 hours.
                   </p>
                 </div>
               </li>
