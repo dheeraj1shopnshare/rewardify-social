@@ -29,9 +29,9 @@ const steps = [
     icon: <Star className="w-4 h-4 text-amber-500" />,
     iconBg: "bg-amber-100",
     title: "Post your story",
-    description: "Share the product on your Instagram story and send us the screenshot.",
-    pill: "Verified in 24 hrs",
-    pillColor: "bg-primary/10 text-primary border-primary/20",
+    description: "Share a story featuring the brand to earn an additional reward.",
+    pill: "$10 reward",
+    pillColor: "bg-green-50 text-green-700 border-green-200",
   },
 ];
 
